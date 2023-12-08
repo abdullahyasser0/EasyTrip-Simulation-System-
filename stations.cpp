@@ -70,6 +70,8 @@ int main (){
     S1.addstation();
     S1.addstation();
     S1.addstation();
+    S1.addstation();
     S1.display();
+    
     return 0;
 }
