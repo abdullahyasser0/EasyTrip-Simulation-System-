@@ -8,6 +8,14 @@ public :
     Nodestation<T>* next;
     Nodestation<T>* back;
     int Snumber;
+    /*
+    must add a variable for the waitiing passangers of type <queue> 
+    this is the link between me and the passengers class
+
+    how the buses and me will operate ?
+    the buses will maintain <queue> , garage in station 0 <stack>, stop into the bus stops <queue> 
+    */
+
     Nodestation(){
         next = nullptr;
         back = nullptr;
