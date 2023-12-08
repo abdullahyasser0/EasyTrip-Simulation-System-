@@ -1,5 +1,6 @@
 #include "Stack.h"
 #include "LinkedQueue.h"
+#include "NoramlQueue.h"
 #include <iostream>
 using namespace std;
 
@@ -9,11 +10,13 @@ class Nodestation{
 public :
     Nodestation<T>* next;
     Nodestation<T>* back;
-    //waition pass
-    //busses mantain 
-    //buss stop 
-
+    LinkedQueue<T>* watingpass; //waiting passangers pirority queue, Another one for normal passangers
+    Queue<T>* busstop; //buss stop
+    
+    //busses mantain "bayoumi says is should be on station 0 "
+    
     int Snumber;
+
     /*
     must add a variable for the waitiing passangers of type <queue> 
     this is the link between me and the passengers class
@@ -23,8 +26,15 @@ public :
     */
 
     Nodestation(){
+
         next = nullptr;
         back = nullptr; 
+
+        watingpass = nullptr; 
+        busstop = nullptr; 
+
+        Snumber , watingpass = NULL;
+
     }
 
 
@@ -36,29 +46,40 @@ class StationsDLL{
 
 public:
     Nodestation<T>* Fstation;
-    Stacks<T>* garage;
+    Stacks<T>* garage; //the one containing all the busses in the begining and the end
 
-    StationsDLL() : Fstation(nullptr){}
+    StationsDLL(){ 
+        Fstation = nullptr;
+        garage = nullptr;
+    }
+
     bool nostation(){
         return (Fstation==nullptr);
     }
 
-    void garagebus(T bus){
+    void garagebus(T* bus){
         garage->push(bus);
     }
 
     void addstation(){
         Nodestation<T>* newstation= new Nodestation<T>;
+
         if(nostation()){
+
             newstation->Snumber=0;
             Fstation=newstation;
+
         }    
+
         else{
+
             Nodestation<T>* temp=Fstation;
+
             while (temp->next !=nullptr)
             {
                 temp=temp->next;
             }
+
             newstation->Snumber=temp->Snumber+1;
             temp->next=newstation;
             newstation->back=temp;
@@ -78,18 +99,9 @@ public:
         }
     }
 
+    //try to make a funtion to return current station 
+
 };
 
 
 
-int main (){
-
-    StationsDLL<int> S1;
-    S1.addstation();
-    S1.addstation();
-    S1.addstation();
-    S1.addstation();
-    S1.display();
-    
-    return 0;
-}
