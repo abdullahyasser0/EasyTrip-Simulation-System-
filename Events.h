@@ -5,7 +5,7 @@ using namespace std;
 class Events {
 protected:
     string PassengerType, Priority;
-    int ID, STRT, END, Hours, Minutes;
+    int ID, STRT, END, Hours, Minutes,OnOffTime;
 
 public:
     virtual void execute() = 0;

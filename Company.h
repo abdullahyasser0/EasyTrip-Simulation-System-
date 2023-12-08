@@ -38,7 +38,7 @@ public:
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
 
-                ArrivalEvents* arrivalEvent = new ArrivalEvents(PType, priority, id, STRT, END, hours, minutes);
+                ArrivalEvents* arrivalEvent = new ArrivalEvents(PType, priority, id, STRT, END, hours, minutes,OnOffTime);
                 eventsList.Insert(arrivalEvent);
             } else if (eventType == 'L') {    
                 string PType,time;
@@ -48,7 +48,7 @@ public:
 
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
-                
+
                 LeaveEvents* leaveEvent = new LeaveEvents(id, STRT, hours, mins);
                 eventsList.Insert(leaveEvent);
             }

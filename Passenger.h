@@ -4,13 +4,13 @@ class Passenger
 {
 private:
 	int ID;
-	string arrivalTime;
+	int Hours, Minutes;
 	int startStation, endStation;
-	int getOn, getOff;
+	int OnOffTime;
 	string priority;
 public:
-	Passenger(int id, string& arrivalTime, int startStation, int endStation, int getOn, int getOff, string& priority)
-		: ID(id), arrivalTime(arrivalTime), startStation(startStation), endStation(endStation), getOn(getOn), getOff(getOff), priority(priority)
+	Passenger(int id, int hours, int mins, int startStation, int endStation, int OnoffTime, string& priority)
+		: ID(id), Hours(hours),Minutes(mins), startStation(startStation), endStation(endStation), OnOffTime(OnoffTime), priority(priority)
 	{
 	}
 };
