@@ -1,3 +1,5 @@
+#include "Stack.h"
+#include "LinkedQueue.h"
 #include <iostream>
 using namespace std;
 
@@ -7,6 +9,10 @@ class Nodestation{
 public :
     Nodestation<T>* next;
     Nodestation<T>* back;
+    //waition pass
+    //busses mantain 
+    //buss stop 
+
     int Snumber;
     /*
     must add a variable for the waitiing passangers of type <queue> 
@@ -18,8 +24,7 @@ public :
 
     Nodestation(){
         next = nullptr;
-        back = nullptr;
-        
+        back = nullptr; 
     }
 
 
@@ -31,9 +36,15 @@ class StationsDLL{
 
 public:
     Nodestation<T>* Fstation;
+    Stacks<T>* garage;
+
     StationsDLL() : Fstation(nullptr){}
     bool nostation(){
         return (Fstation==nullptr);
+    }
+
+    void garagebus(T bus){
+        garage->push(bus);
     }
 
     void addstation(){
