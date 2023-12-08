@@ -1,6 +1,7 @@
 #include "Events.h"
 
 class LeaveEvents : public Events {
+public:
 	LeaveEvents() : Events() {
 		ID = 0, STRT = 0;
 		Hours = 0, Minutes = 0;
@@ -13,5 +14,9 @@ class LeaveEvents : public Events {
 
 	void execute() override {
 		cout << "Leave Event" << endl;
+	} 
+
+	int getid () override {
+		return ID;
 	}
 };

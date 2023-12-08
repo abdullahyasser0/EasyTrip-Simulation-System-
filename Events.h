@@ -1,3 +1,5 @@
+#ifndef EVENTS_H
+#define EVENTS_H
 #include <iostream>
 using namespace std;
 class Events {
@@ -7,5 +9,6 @@ protected:
 
 public:
     virtual void execute() = 0;
-
+    virtual int getid() = 0;
 };
+#endif

@@ -7,10 +7,12 @@ class LinkedList
 {
 private:
 	Node<T> *Head;
+	int count;
 public:
 
 	LinkedList()
 	{
+		count = 0;
 		Head = nullptr;
 	}
 
@@ -26,7 +28,7 @@ public:
 
 		while(p)
 		{
-			cout << "[ " << p->getItem() << " ]";
+			cout << "[ " << p->getItem()->getid() << " ]";
 			cout << "--->";
 			p = p->getNext();
 		}
@@ -39,6 +41,27 @@ public:
 		R->setNext(Head);
 		Head = R;
 	}
+
+	void Insert(const T &data){
+
+		if(Head == nullptr){
+			InsertBeg(data);
+			return;
+		}
+		else{
+			Node<T> *p = Head;
+			while(p->getNext()){
+				p = p->getNext();
+				}
+			Node<T> *R = new Node<T>(data);
+			p->setNext(R);
+			count++;
+			return;
+
+		}
+		
+	}
+
 	void DeleteAll()
 	{
 		Node<T> *P = Head;

@@ -19,4 +19,7 @@ public:
 	void execute() override {
 		cout << "Arrival Event" << endl;
 	}
+	int getid ()override{
+		return ID;
+	}
 };
