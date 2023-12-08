@@ -27,11 +27,11 @@ public :
 
 
 template <typename T>
-class StationsLL{
+class StationsDLL{
 
 public:
     Nodestation<T>* Fstation;
-    StationsLL() : Fstation(nullptr){}
+    StationsDLL() : Fstation(nullptr){}
     bool nostation(){
         return (Fstation==nullptr);
     }
@@ -73,7 +73,7 @@ public:
 
 int main (){
 
-    StationsLL<int> S1;
+    StationsDLL<int> S1;
     S1.addstation();
     S1.addstation();
     S1.addstation();
