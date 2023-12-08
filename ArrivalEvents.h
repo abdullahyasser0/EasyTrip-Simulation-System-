@@ -10,10 +10,14 @@ public:
 
 	ArrivalEvents(string ptype, string priority, int id,int strt,int end,int hours,int mins) : Events() {
 		PassengerType = ptype;
-		Priority = priority;
 		ID = id, STRT = strt, END = end;
 		Hours = hours;
-		Minutes = mins;
+		Minutes = mins;		
+		if(!priority.empty()){
+		Priority = priority;
+		}else{
+			Priority = "Normal";
+		}
 	}
 
 	void execute() override {

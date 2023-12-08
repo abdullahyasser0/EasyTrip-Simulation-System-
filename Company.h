@@ -20,6 +20,8 @@ public:
 
             input >> numStations >> minsStations >> numWbuses >> numMbuses >> capacityWBus >> capacityMBus 
             >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum;
+            int hours, minutes;
+            char colon;
 
             cout << "events: " << EventsNum << endl;
 
@@ -28,11 +30,15 @@ public:
             input >> eventType;
 
             if (eventType == 'A') {
-                string PType,time;
+                string PType,time,priority;
                 int id, STRT, END, hours, mins;
                 input >> PType >> time >> id >> STRT >> END;
+                getline(input, priority);
 
-                ArrivalEvents* arrivalEvent = new ArrivalEvents(PType, "no", id, STRT, END, 0, 0);
+                istringstream iss(time);
+                iss >> hours >> colon >> minutes;
+
+                ArrivalEvents* arrivalEvent = new ArrivalEvents(PType, priority, id, STRT, END, hours, minutes);
                 eventsList.Insert(arrivalEvent);
             } else if (eventType == 'L') {    
                 string PType,time;
@@ -40,6 +46,9 @@ public:
 
                 input >> time >> id >> STRT;
 
+                istringstream iss(time);
+                iss >> hours >> colon >> minutes;
+                
                 LeaveEvents* leaveEvent = new LeaveEvents(id, STRT, hours, mins);
                 eventsList.Insert(leaveEvent);
             }
