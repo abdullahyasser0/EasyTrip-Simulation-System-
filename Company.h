@@ -11,15 +11,10 @@ private:
 
 public:
     Company() {
-        ifstream inputFile("input.txt");
+        ifstream input("input.txt");
 
-        if (inputFile.is_open()) {
-            inputFile >> numStations >> minsStations >> numWbuses >> numMbuses >> capacityWBus >> capacityMBus >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum;
-            std::cout << "events: " << EventsNum << std::endl;
-            inputFile.close();
+            input >> numStations >> minsStations >> numWbuses >> numMbuses >> capacityWBus >> capacityMBus >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum;
+            cout << "events: " << EventsNum << endl;
+            input.close();
         }
-        else {
-            std::cerr << "Error opening input file." << std::endl;
-        }
-    }
 };

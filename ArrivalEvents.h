@@ -1,5 +1,4 @@
 #include "Events.h"
-//Hey im chanighing and uploading from vscode
 class ArrivalEvents : public Events {
 public:
 	ArrivalEvents() : Events() {
