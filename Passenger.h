@@ -7,25 +7,19 @@ class Passenger
 {
 private:
     int ID;
-    string arrivalTime;
     int startStation, endStation;
-    int getOn, getOff;
-    string priority,type;
+    int OnOffTime, Hours,Minutes;
+    string Priority,type;
 
 public:
-    Passenger(int id, string& arrivalTime, int startStation, int endStation, int getOn, int getOff, string& priority)
-        : ID(id), arrivalTime(arrivalTime), startStation(startStation), endStation(endStation), getOn(getOn), getOff(getOff), priority(priority)
+    Passenger(int id,int hours, int mins, int startStation, int endStation, int OnoffTime, string& priority)
+        : ID(id), Hours(hours),Minutes(mins), startStation(startStation), endStation(endStation),OnOffTime(OnoffTime), Priority(priority)
     {
     }
 
     int getID() const
     {
         return ID;
-    }
-
-    string& getArrivalTime()
-    {
-        return arrivalTime;
     }
 
     int getStartStation()
@@ -38,59 +32,14 @@ public:
         return endStation;
     }
 
-    int getGetOn()
-    {
-        return getOn;
-    }
-
-    int getGetOff()
-    {
-        return getOff;
-    }
-
     string& getPriority()
     {
-        return priority;
+        return Priority;
     }
 	
 	string& getType()
     {
         return type;
-    }
-
-    void setID(int id)
-    {
-        ID = id;
-    }
-
-    void setArrivalTime(const string& time)
-    {
-        arrivalTime = time;
-    }
-
-    void setStartStation(int start)
-    {
-        startStation = start;
-    }
-
-    void setEndStation(int end)
-    {
-        endStation = end;
-    }
-
-    void setGetOn(int on)
-    {
-        getOn = on;
-    }
-
-    void setGetOff(int off)
-    {
-        getOff = off;
-    }
-
-    void setPriority(string& prio)
-    {
-        priority = prio;
     }
 };
 #endif
