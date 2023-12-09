@@ -102,33 +102,34 @@ public:
         while (temp->next!=nullptr)
         {
             if(temp->Snumber!=stationnumber) temp=temp->next;
+            else return temp;
         }
-        return temp;
+        return nullptr;
 
     }
 
     //add functions to add passangers to WP and Np ele homa ala el raseef el mafrod yakhdo arguments of type passanger
-    void AddPassanger(Passenger* Passenger)
+    void AddPassanger(Passenger* pass)
     {
-        string type = Passenger->type;
-        int stationnumber = Passenger->startStation;
+        string type = pass->getType;
+        int stationnumber = pass->startStation;
         
         if(type=="NP")
             {
-                ReturnStationPointer(stationnumber)->NP.Insert(Passenger);
+                ReturnStationPointer(stationnumber)->NP.Insert(pass);
             }
         else if(type=="WP")
         {
-            ReturnStationPointer(stationnumber)->WP.Insert(Passenger);
+            ReturnStationPointer(stationnumber)->WP.Insert(pass);
         }
 
     }
 
-    void addSpecialPassanger(Passenger* passanger){
+    void addSpecialPassanger(Passenger* pass){
         
-        int stationnumber = Passenger->startStation;
-        int priority=passanger->priority
-        ReturnStationPointer(stationnumber)->SPQueue.enqueue(passanger,priority);
+        int stationnumber = pass->getStartStation;
+        int priority=pass->getPriority;
+        ReturnStationPointer(stationnumber)->SPQueue.enqueue(pass,priority);
         
     }
 
