@@ -94,9 +94,11 @@ public:
 
     Nodestation<T> *ReturnStationPointer(int stationnumber){
         Nodestation<T>* temp=Fstation;
-        while (temp->next!=nullptr)
+        while (temp!=nullptr)
         {
-            if(temp->Snumber!=stationnumber) temp=temp->next;
+            if(temp->Snumber==stationnumber) return temp;
+
+            else  temp=temp->next;
         }
         return temp;
 
@@ -123,7 +125,7 @@ public:
     void addSpecialPassanger(T* passanger , int priority, int stationnumber){
 
         ReturnStationPointer(stationnumber)->SPQueue.enqueue(passanger, priority);
-        
+
     }
 
 
