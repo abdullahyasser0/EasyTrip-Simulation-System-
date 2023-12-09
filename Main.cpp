@@ -4,7 +4,7 @@ using namespace std;
 
 
 int main() {
-Company project;
-project.printEvent();
+Company BusProject;
+BusProject.printEvent();
     return 0;
 }
