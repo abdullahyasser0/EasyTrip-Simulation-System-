@@ -1,6 +1,4 @@
 
-#ifndef _NODE
-#define _NODE
 template <typename T>
 class NodePriority
 {
@@ -19,7 +17,7 @@ public:
 	int getPriority() const;
 	NodePriority<T>* getNext() const;
 }; // end Node
-#endif
+
 
 template < typename T>
 NodePriority<T>::NodePriority()
