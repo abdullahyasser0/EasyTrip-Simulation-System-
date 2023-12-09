@@ -91,22 +91,33 @@ public:
 
     }
 
-    //add functions to add passangers to WP and Np ele homa ala el raseef el mafrod yakhdo arguments of type passanger
-    void AddPassanger(T* Passenger, string type, int stationnumber)
-    {
+
+    Nodestation<T> *ReturnStationPointer(int stationnumber){
         Nodestation<T>* temp=Fstation;
         while (temp->next!=nullptr)
         {
             if(temp->Snumber!=stationnumber) temp=temp->next;
         }
+        return temp;
+
+    }
+
+    //add functions to add passangers to WP and Np ele homa ala el raseef el mafrod yakhdo arguments of type passanger
+    void AddPassanger(T* Passenger, string type, int stationnumber)
+    {
+        // Nodestation<T>* temp=Fstation;
+        // while (temp->next!=nullptr)
+        // {
+        //     if(temp->Snumber!=stationnumber) temp=temp->next;
+        // }
         
         switch (type){
             case "NP":
-            temp->NP.Insert(Passenger);
+            ReturnStationPointer(stationnumber)->NP.Insert(Passenger);
             break;
 
             case "ًWP":
-            temp->WP.Insert(Passenger);
+            ReturnStationPointer(stationnumber)->WP.Insert(Passenger);
             break;
 
         }
@@ -114,13 +125,15 @@ public:
     }
 
     void addSpecialPassanger(T* passanger , int priority, int stationnumber){
-        Nodestation<T>* temp=Fstation;
-        while (temp->next!=nullptr)
-        {
-            if(temp->Snumber!=stationnumber) temp=temp->next;
-        }
-        temp->SPQueue.enqueue(passanger, priority);
+        // Nodestation<T>* temp=Fstation;
+        // while (temp->next!=nullptr)
+        // {
+        //     if(temp->Snumber!=stationnumber) temp=temp->next;
+        // }
+        ReturnStationPointer(stationnumber)->SPQueue.enqueue(passanger, priority);
     }
+
+
 
 
     void display(){
