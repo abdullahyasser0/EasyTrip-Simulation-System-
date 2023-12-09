@@ -4,14 +4,14 @@
 #include <iostream>
 using namespace std;
 
-template <typename T>
+template <typename N>
 class Nodestation{
 
 public :
-    Nodestation<T>* next;
-    Nodestation<T>* back;
-    LinkedQueue<T>* watingpass; //waiting passangers pirority queue, Another one for normal passangers
-    Queue<T>* busstop; //buss stop
+    Nodestation<N>* next;
+    Nodestation<N>* back;
+    LinkedQueue<N>* watingpass; //waiting passangers pirority queue, Another one for normal passangers
+    Queue* busstop; //buss stop
     
     //busses mantain "bayoumi says is should be on station 0 "
     
@@ -33,7 +33,7 @@ public :
         watingpass = nullptr; 
         busstop = nullptr; 
 
-        Snumber , watingpass = NULL;
+        Snumber  = 0;
 
     }
 
@@ -102,6 +102,7 @@ public:
     //try to make a funtion to return current station 
 
 };
+
 
 
 

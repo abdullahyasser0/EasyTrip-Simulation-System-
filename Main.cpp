@@ -4,8 +4,8 @@ using namespace std;
 
 
 int main() {
-    Company project;
-    project.printEvent();
+    // Company project;
+    // project.printEvent();
     
     StationsDLL<int> S1;
     
