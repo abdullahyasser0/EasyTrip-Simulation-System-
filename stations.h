@@ -91,6 +91,26 @@ public:
 
     }
 
+    //add functions to add passangers to WP and Np ele homa ala el raseef el mafrod yakhdo arguments of type passanger
+    void AddPassanger(T* Passenger, string type)
+    {
+        switch (type){
+            case "NP":
+            NP.Insert(Passenger);
+            break;
+
+            case "ًWP":
+            WP.Insert(Passenger);
+            break;
+
+        }
+
+    }
+
+    void addSpecialPassanger(T* passanger , int priority){
+        SPQueue.enqueue(passanger, priority);
+    }
+
     void display(){
         if(!nostation()){
         Nodestation<T>* temp=Fstation;
