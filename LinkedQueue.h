@@ -10,8 +10,8 @@ template <typename T>
 class LinkedQueue :public QueueADT<T>
 {
 private:
-	Node<T>* backPtr;
-	Node<T>* frontPtr;
+	NodePriority<T>* backPtr;
+	NodePriority<T>* frontPtr;
 public:
 	LinkedQueue();
 	bool isEmpty() const;
@@ -40,14 +40,14 @@ bool LinkedQueue<T>::isEmpty() const
 template <typename T>
 bool LinkedQueue<T>::enqueue(const T& newEntry, int priority)
 {
-	Node<T>* newNodePtr = new Node<T>(newEntry, priority);
+	NodePriority<T>* newNodePtr = new NodePriority<T>(newEntry, priority);
 	if (isEmpty()) {
 		frontPtr = newNodePtr;
 		backPtr = newNodePtr;
 	}
 	else {
-		Node<T>* prevPtr = nullptr;
-		Node<T>* currentPtr = frontPtr;
+		NodePriority<T>* prevPtr = nullptr;
+		NodePriority<T>* currentPtr = frontPtr;
 		while (currentPtr != nullptr && priority <= currentPtr->getPriority())
 		{
 			prevPtr = currentPtr;
@@ -78,7 +78,7 @@ bool LinkedQueue<T>::dequeue(T& frntEntry)
 	if (isEmpty())
 		return false;
 
-	Node<T>* nodeToDeletePtr = frontPtr;
+	NodePriority<T>* nodeToDeletePtr = frontPtr;
 	frntEntry = frontPtr->getItem();
 	frontPtr = frontPtr->getNext();
 

@@ -2,33 +2,33 @@
 #ifndef _NODE
 #define _NODE
 template <typename T>
-class Node
+class NodePriority
 {
 private:
 	T item; // A data item
 	int priority;
-	Node<T>* next; // Pointer to next node
+	NodePriority<T>* next; // Pointer to next node
 public:
-	Node();
-	Node(const T& r_Item, int PriorityValue);
-	Node(const T& r_Item, int PriorityValue, Node<T>* nextNodePtr);
+	NodePriority();
+	NodePriority(const T& r_Item, int PriorityValue);
+	NodePriority(const T& r_Item, int PriorityValue, NodePriority<T>* nextNodePtr);
 	void setItem(const T& r_Item);
-	void setNext(Node<T>* nextNodePtr);
+	void setNext(NodePriority<T>* nextNodePtr);
 	void setPriority(int priorityValue);
 	T getItem() const;
 	int getPriority() const;
-	Node<T>* getNext() const;
+	NodePriority<T>* getNext() const;
 }; // end Node
 #endif
 
 template < typename T>
-Node<T>::Node()
+NodePriority<T>::NodePriority()
 {
 	next = nullptr;
 }
 
 template < typename T>
-Node<T>::Node(const T& r_Item, int PriorityValue)
+NodePriority<T>::NodePriority(const T& r_Item, int PriorityValue)
 {
 	item = r_Item;
 	priority = PriorityValue;
@@ -36,44 +36,44 @@ Node<T>::Node(const T& r_Item, int PriorityValue)
 }
 
 template < typename T>
-Node<T>::Node(const T& r_Item, int PriorityValue, Node<T>* nextNodePtr)
+NodePriority<T>::NodePriority(const T& r_Item, int PriorityValue, NodePriority<T>* nextNodePtr)
 {
 	item = r_Item;
 	priority = PriorityValue;
 	next = nextNodePtr;
 }
 template < typename T>
-void Node<T>::setItem(const T& r_Item)
+void NodePriority<T>::setItem(const T& r_Item)
 {
 	item = r_Item;
 }
 
 template <typename T>
-void Node<T>::setPriority(int priorityValue)
+void NodePriority<T>::setPriority(int priorityValue)
 {
 	priority = priorityValue;
 }
 
 template < typename T>
-void Node<T>::setNext(Node<T>* nextNodePtr)
+void NodePriority<T>::setNext(NodePriority<T>* nextNodePtr)
 {
 	next = nextNodePtr;
 }
 
 template < typename T>
-T Node<T>::getItem() const
+T NodePriority<T>::getItem() const
 {
 	return item;
 }
 
 template <typename T>
-int Node<T>::getPriority() const
+int NodePriority<T>::getPriority() const
 {
 	return priority;
 }
 
 template < typename T>
-Node<T>* Node<T>::getNext() const
+NodePriority<T>* NodePriority<T>::getNext() const
 {
 	return next;
 }
