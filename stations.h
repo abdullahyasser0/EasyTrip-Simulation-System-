@@ -90,7 +90,11 @@ public:
 
 
     }
-
+    void addStationsByNumber(int numberOfStations){
+        for (int i=0 ;i<numberOfStations ; i++){
+            addstation();
+        }
+    }
 
     Nodestation<T> *ReturnStationPointer(int stationnumber){
         Nodestation<T>* temp=Fstation;
