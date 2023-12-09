@@ -105,11 +105,7 @@ public:
     //add functions to add passangers to WP and Np ele homa ala el raseef el mafrod yakhdo arguments of type passanger
     void AddPassanger(T* Passenger, string type, int stationnumber)
     {
-        // Nodestation<T>* temp=Fstation;
-        // while (temp->next!=nullptr)
-        // {
-        //     if(temp->Snumber!=stationnumber) temp=temp->next;
-        // }
+
         
         switch (type){
             case "NP":
@@ -125,12 +121,9 @@ public:
     }
 
     void addSpecialPassanger(T* passanger , int priority, int stationnumber){
-        // Nodestation<T>* temp=Fstation;
-        // while (temp->next!=nullptr)
-        // {
-        //     if(temp->Snumber!=stationnumber) temp=temp->next;
-        // }
+
         ReturnStationPointer(stationnumber)->SPQueue.enqueue(passanger, priority);
+        
     }
 
 
