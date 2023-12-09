@@ -4,6 +4,7 @@ using namespace std;
 class Buses
 {
 private:
+//hothifa is nigga
 		string busType;
 		int busCapacity;
 		int maintenanceTime;
