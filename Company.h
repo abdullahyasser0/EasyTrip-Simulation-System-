@@ -40,6 +40,8 @@ public:
                     NumPriority=2;
                 }else if(priority=="pregnant"){
                     NumPriority=1;
+                }else{
+                    NumPriority=0;
                 }
 
                 istringstream iss(time);
@@ -59,6 +61,13 @@ public:
                 LeaveEvents* leaveEvent = new LeaveEvents(id, STRT, hours, mins);
                 eventsList.Insert(leaveEvent);
             }
+        }
+
+        Node<Events*>* current = eventsList.getHead();
+        while (current != nullptr) {
+            Events* currentEvent = current->getItem();
+            currentEvent->execute();
+            current = current->getNext();
         }
 
         input.close();

@@ -17,6 +17,11 @@ public:
 		count = 0;
 		Head = nullptr;
 	}
+	
+	    Node<T>* getHead() const
+    {
+        return Head;
+    }
 
 	~LinkedList()
 	{
@@ -43,6 +48,7 @@ public:
 		R->setNext(Head);
 		Head = R;
 	}
+
 
 	void Insert(const T &data){
 
