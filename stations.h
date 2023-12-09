@@ -2,6 +2,7 @@
 #include "LinkedQueue.h"
 #include "NoramlQueue.h"
 #include "LinkedList.h"
+#include "Passenger.h"
 #include <iostream>
 using namespace std;
 
@@ -107,26 +108,27 @@ public:
     }
 
     //add functions to add passangers to WP and Np ele homa ala el raseef el mafrod yakhdo arguments of type passanger
-    void AddPassanger(T* Passenger, string type, int stationnumber)
+    void AddPassanger(Passenger* Passenger)
     {
-
+        string type = Passenger->type;
+        int stationnumber = Passenger->startStation;
         
-        switch (type){
-            case "NP":
-            ReturnStationPointer(stationnumber)->NP.Insert(Passenger);
-            break;
-
-            case "ًWP":
+        if(type=="NP")
+            {
+                ReturnStationPointer(stationnumber)->NP.Insert(Passenger);
+            }
+        else if(type=="WP")
+        {
             ReturnStationPointer(stationnumber)->WP.Insert(Passenger);
-            break;
-
         }
 
     }
 
-    void addSpecialPassanger(T* passanger , int priority, int stationnumber){
-
-        ReturnStationPointer(stationnumber)->SPQueue.enqueue(passanger, priority);
+    void addSpecialPassanger(Passenger* passanger){
+        
+        int stationnumber = Passenger->startStation;
+        int priority=passanger->priority
+        ReturnStationPointer(stationnumber)->SPQueue.enqueue(passanger,priority);
         
     }
 
