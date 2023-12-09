@@ -1,11 +1,11 @@
-#include "Company.h"
+//#include "Company.h"
 using namespace std;
 #include "stations.h"
 
 
 int main() {
-Company BusProject;
-BusProject.printEvent();
+// Company BusProject;
+// BusProject.printEvent();
 
 StationsDLL<int> S1;
 
