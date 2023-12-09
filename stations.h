@@ -1,6 +1,7 @@
 #include "Stack.h"
 #include "LinkedQueue.h"
 #include "NoramlQueue.h"
+#include "LinkedList.h"
 #include <iostream>
 using namespace std;
 
@@ -10,7 +11,9 @@ class Nodestation{
 public :
     Nodestation<N>* next;
     Nodestation<N>* back;
-    LinkedQueue<N>* watingpass; //waiting passangers pirority queue, Another one for normal passangers
+    LinkedQueue<N>* SPQueue; //waiting passangers pirority queue, Another one for normal passangers
+    LinkedList<N>* WP;
+    LinkedList<N>* NP;
     Queue* busstop; //buss stop
     
     //busses mantain "bayoumi says is should be on station 0 "
@@ -30,7 +33,7 @@ public :
         next = nullptr;
         back = nullptr; 
 
-        watingpass = nullptr; 
+        SPQueue = nullptr; 
         busstop = nullptr; 
 
         Snumber  = 0;
