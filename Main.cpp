@@ -5,6 +5,6 @@ using namespace std;
 
 int main() {
 Company BusProject;
-BusProject.printEvent();
+// BusProject.printEvent();
 return 0;
 }

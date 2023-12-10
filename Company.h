@@ -25,7 +25,6 @@ public:
             int hours, minutes;
             char colon;
 
-            cout << "events: " << EventsNum << endl;
             S.addStationsByNumber(numStations);
             for (int i = 0; i < EventsNum; i++) {
             char eventType;
@@ -68,10 +67,12 @@ public:
         Node<Events*>* current = eventsList.getHead();
         while (current != nullptr) {
             Events* currentEvent = current->getItem();
-            cout<<currentEvent->getid();
             if(currentEvent->execute()->getType()=="NP"||currentEvent->execute()->getType()=="WP"){
                 S.addPassenger( currentEvent->execute());
             }
+            // else if(currentEvent->execute()->getType()=="SP"){
+
+            // }
             current = current->getNext();
         }
         S.PrintAllStations();

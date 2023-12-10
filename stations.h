@@ -41,6 +41,7 @@ public :
     }
 
     void PrintAll(){
+        cout<<"Station Number: "<<Snumber<<endl;
         cout<<endl<<"NP list: ";
         NP.PrintList();
         cout<<endl<<"WP list: ";
@@ -98,10 +99,8 @@ public:
 
     }
     void addStationsByNumber(int numberOfStations){
-        for (int i=0 ;i<numberOfStations ; i++){
+        for (int i=0 ;i<numberOfStations+1 ; i++){
             addstation();
-                    cout<<"the station was succesfully made."<<endl;
-
         }
     }
 
@@ -153,15 +152,10 @@ public:
 
         if (passengerType == "NP") {
             stationPtr->NP.Insert(passenger);
-            cout << "Passenger added to NP list at Station " << startStation << endl;
         } else if (passengerType == "WP") {
             stationPtr->WP.Insert(passenger);
-            cout << "Passenger added to WP list at Station " << startStation << endl;
-        } else {
-            cerr << "Error: Invalid passenger type." << endl;
         }
     }
-
     //try to make a funtion to return current station 
 
 };
