@@ -1,9 +1,7 @@
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include "ArrivalEvents.h"
 #include "LeaveEvents.h"
-#include "LinkedList.h"
 using namespace std;
 
 class Company {
@@ -23,26 +21,15 @@ public:
             int hours, minutes;
             char colon;
 
-            cout << "events: " << EventsNum << endl;
-
             for (int i = 0; i < EventsNum; i++) {
             char eventType;
             input >> eventType;
 
             if (eventType == 'A') {
                 string PType,time,priority;
-                int id, STRT, END, hours, mins, NumPriority;
+                int id, STRT, END;
                 input >> PType >> time >> id >> STRT >> END;
                 getline(input, priority);
-                if(priority=="Aged"){
-                    NumPriority=3;
-                }else if(priority=="POD"){
-                    NumPriority=2;
-                }else if(priority=="pregnant"){
-                    NumPriority=1;
-                }else{
-                    NumPriority=0;
-                }
 
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
@@ -51,30 +38,33 @@ public:
                 eventsList.Insert(arrivalEvent);
             } else if (eventType == 'L') {    
                 string PType,time;
-                int id, STRT, hours, mins;
+                int id, STRT;
 
                 input >> time >> id >> STRT;
 
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
 
-                LeaveEvents* leaveEvent = new LeaveEvents(id, STRT, hours, mins);
+                LeaveEvents* leaveEvent = new LeaveEvents(id, STRT, hours, minutes);
                 eventsList.Insert(leaveEvent);
             }
         }
 
-        Node<Events*>* current = eventsList.getHead();
+        StationsDLL<Passenger*> S;
+        S.check();
+        S.addStationsByNumber(numStations);
+
+        Node<Events*>* current = eventsList.head;
         while (current != nullptr) {
-            Events* currentEvent = current->getItem();
-            currentEvent->execute();
-            current = current->getNext();
+            Events* currentEvent = current->data;
+            currentEvent->execute(S);
+            current = current->next;
         }
+
+        S.PrintAllStations();
 
         input.close();
-        }
 
-        void printEvent(){
-            eventsList.PrintList();
         }
 
         LinkedList<Events*>& getEventsList() {
