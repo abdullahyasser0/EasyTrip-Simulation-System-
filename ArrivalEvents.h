@@ -1,7 +1,5 @@
 #include "Events.h"
 #include "Passenger.h"
-
-
 class ArrivalEvents : public Events {
 private:
 		Passenger* passenger;
@@ -29,12 +27,10 @@ public:
 		OnOffTime=OnoffTime;
 	}
 
-	void execute(StationsDLL<Passenger*>& s) override {
-		passenger = new Passenger(PassengerType,ID, Hours,Minutes, STRT, END, OnOffTime, Priority);
-		if(PassengerType=="NP" || PassengerType=="WP"){
-			s.AddPassanger(passenger);
-		}else if(PassengerType=="SP"){
-			s.addSpecialPassanger(passenger);
-		}
+	void execute() override {
+		passenger = new Passenger(ID, Hours,Minutes, STRT, END, OnOffTime, Priority);
+	}
+	int getid ()override{
+		return ID;
 	}
 };

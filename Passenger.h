@@ -8,20 +8,16 @@ using namespace std;
 class Passenger
 {
 private:
-    int ID,startStation, endStation;
+    int ID;
+    int startStation, endStation;
     int OnOffTime, Hours,Minutes;
     string Priority,type;
 
 public:
-    // Passenger(string passengerType,int id,int hours, int mins, int startStation, int endStation, int OnoffTime, string& priority)
-    //     : type(passengerType),ID(id), Hours(hours),Minutes(mins), startStation(startStation), endStation(endStation),OnOffTime(OnoffTime), Priority(priority)
-    // {
-    // }
-
-    Passenger(string passengerType, int id, int hours, int mins, int startStation, int endStation, int OnoffTime, string& priority)
-    : type(passengerType), ID(id), startStation(startStation), endStation(endStation), OnOffTime(OnoffTime), Hours(hours), Minutes(mins), Priority(priority)
-{
-}
+    Passenger(int id,int hours, int mins, int startStation, int endStation, int OnoffTime, string& priority)
+        : ID(id), Hours(hours),Minutes(mins), startStation(startStation), endStation(endStation),OnOffTime(OnoffTime), Priority(priority)
+    {
+    }
 
     int getID() const
     {
@@ -38,17 +34,10 @@ public:
         return endStation;
     }
 
-    int getPriority()
+    string& getPriority()
     {
-        if(Priority=="Aged"){
-            return 3;
-        }else if(Priority=="POD"){
-            return 2;
-        }else if(Priority=="pregnant"){
-            return 1;
-        }else{
-            return 0;
-        }
+        
+        return Priority;
     }
 	
 	string& getType()

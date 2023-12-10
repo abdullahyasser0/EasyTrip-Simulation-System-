@@ -12,8 +12,11 @@ public:
 		Hours = hours, Minutes = mins;
 	}
 
-	void execute(StationsDLL<Passenger*>& s) override {
-		cout<<"lol leave event:" ;
-		s.nostation();
+	void execute() override {
+		cout << "Leave Event" << endl;
 	} 
+
+	int getid () override {
+		return ID;
+	}
 };

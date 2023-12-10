@@ -41,14 +41,6 @@ public :
 
     }
 
-    void PrintAll(){
-        cout<<endl<<"WP list: ";
-        WP->display();
-        cout<<endl<<"NP List: ";
-        NP->display();
-        cout<<endl<<"SPQueue: ";
-        SPQueue->printQueue();
-    }
 
 };
 
@@ -119,25 +111,25 @@ public:
     //add functions to add passangers to WP and Np ele homa ala el raseef el mafrod yakhdo arguments of type passanger
     void AddPassanger(Passenger* pass)
     {
-        string type = pass->getType();
-        int stationnumber = pass->getStartStation();
+        string type = pass->getType;
+        int stationnumber = pass->startStation;
         
         if(type=="NP")
-        {
-            ReturnStationPointer(stationnumber)->NP->Insert(pass);
-        }
+            {
+                ReturnStationPointer(stationnumber)->NP.Insert(pass);
+            }
         else if(type=="WP")
         {
-            ReturnStationPointer(stationnumber)->WP->Insert(pass);
+            ReturnStationPointer(stationnumber)->WP.Insert(pass);
         }
 
     }
 
     void addSpecialPassanger(Passenger* pass){
         
-        int stationnumber = pass->getStartStation();
-        int priority=pass->getPriority();
-        ReturnStationPointer(stationnumber)->SPQueue->enqueue(pass,priority);
+        int stationnumber = pass->getStartStation;
+        int priority=pass->getPriority;
+        ReturnStationPointer(stationnumber)->SPQueue.enqueue(pass,priority);
         
     }
 
@@ -155,18 +147,10 @@ public:
         }
     }
 
-    void PrintAllStations() {
-        Nodestation<T>* temp = Fstation;
-        while (temp != nullptr) {
-            temp->PrintAll();
-            temp = temp->next;
-        }
-    }
-
-    void check(){
-        cout<<"the station was succesfully made.";
-    }
-
     //try to make a funtion to return current station 
 
 };
+
+
+
+

@@ -18,7 +18,6 @@ public:
 	bool enqueue(const T& newEntry, int priority);
 	bool dequeue(T& frntEntry);
 	bool peek(T& frntEntry)  const;
-	void printQueue() const; 
 	~LinkedQueue();
 };
 
@@ -115,21 +114,6 @@ LinkedQueue<T>::~LinkedQueue()
 
 	cout << "\n Is LinkedQueue Empty now?? ==> " << boolalpha << isEmpty();
 	cout << "\nEnding LinkedQueue destructor..." << endl;
-}
-
-template <typename T>
-void LinkedQueue<T>::printQueue() const
-{
-    cout << "Queue Nodes: ";
-    NodePriority<T>* currentPtr = frontPtr;
-
-    while (currentPtr != nullptr)
-    {
-        cout << "(" << currentPtr->getItem() << ", Priority: " << currentPtr->getPriority() << ") ";
-        currentPtr = currentPtr->getNext();
-    }
-
-    cout << endl;
 }
 
 #endif

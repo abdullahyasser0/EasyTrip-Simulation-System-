@@ -1,9 +1,6 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 #include <iostream>
-#include "stations.h"
-
-
 using namespace std;
 class Events {
 protected:
@@ -11,6 +8,7 @@ protected:
     int ID, STRT, END, Hours, Minutes,OnOffTime;
 
 public:
-    virtual void execute(StationsDLL<Passenger*>& stations) = 0;
+    virtual void execute() = 0;
+    virtual int getid() = 0;
 };
 #endif
