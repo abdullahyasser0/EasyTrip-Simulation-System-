@@ -40,7 +40,6 @@ public:
 
     int getPriority()
     {
-<<<<<<< HEAD
         if(Priority=="Aged"){
             return 3;
         }else if(Priority=="POD"){
@@ -50,10 +49,6 @@ public:
         }else{
             return 0;
         }
-=======
-        
-        return Priority;
->>>>>>> 55ee6b2ccf117bc3279b6806d23f61080d5ebae5
     }
 	
 	string& getType()
