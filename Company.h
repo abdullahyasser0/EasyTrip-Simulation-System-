@@ -4,6 +4,7 @@
 #include "ArrivalEvents.h"
 #include "LeaveEvents.h"
 #include "LinkedList.h"
+#include "stations.h"
 using namespace std;
 
 class Company {
@@ -13,6 +14,7 @@ private:
     int CheckupTrips, checkupDWBus, checkupDMBus;
     int MaxW, OnOffTime, EventsNum;
     LinkedList<Events*> eventsList;
+    StationsDLL<Passenger*> S;
 
 public:
     Company() {
@@ -24,14 +26,14 @@ public:
             char colon;
 
             cout << "events: " << EventsNum << endl;
-
+            S.addStationsByNumber(numStations);
             for (int i = 0; i < EventsNum; i++) {
             char eventType;
             input >> eventType;
 
             if (eventType == 'A') {
                 string PType,time,priority;
-                int id, STRT, END, hours, mins, NumPriority;
+                int id, STRT, END, NumPriority;
                 input >> PType >> time >> id >> STRT >> END;
                 getline(input, priority);
                 if(priority=="Aged"){
@@ -51,14 +53,14 @@ public:
                 eventsList.Insert(arrivalEvent);
             } else if (eventType == 'L') {    
                 string PType,time;
-                int id, STRT, hours, mins;
+                int id, STRT;
 
                 input >> time >> id >> STRT;
-
+ 
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
 
-                LeaveEvents* leaveEvent = new LeaveEvents(id, STRT, hours, mins);
+                LeaveEvents* leaveEvent = new LeaveEvents(id, STRT, hours, minutes);
                 eventsList.Insert(leaveEvent);
             }
         }
@@ -66,9 +68,13 @@ public:
         Node<Events*>* current = eventsList.getHead();
         while (current != nullptr) {
             Events* currentEvent = current->getItem();
-            currentEvent->execute();
+            cout<<currentEvent->getid();
+            if(currentEvent->execute()->getType()=="NP"||currentEvent->execute()->getType()=="WP"){
+                S.addPassenger( currentEvent->execute());
+            }
             current = current->getNext();
         }
+        S.PrintAllStations();
 
         input.close();
         }

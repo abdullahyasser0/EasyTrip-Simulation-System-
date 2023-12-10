@@ -35,7 +35,7 @@ public:
 
 		while(p)
 		{
-			cout << "[ " << p->getItem()->getid() << " ]";
+			cout << "[ " << p->getItem() << " ]";
 			cout << "--->";
 			p = p->getNext();
 		}

@@ -1,5 +1,4 @@
 #include "Events.h"
-#include "Passenger.h"
 class ArrivalEvents : public Events {
 private:
 		Passenger* passenger;
@@ -27,9 +26,11 @@ public:
 		OnOffTime=OnoffTime;
 	}
 
-	void execute() override {
-		passenger = new Passenger(ID, Hours,Minutes, STRT, END, OnOffTime, Priority);
-	}
+	Passenger* execute() override {
+		passenger = new Passenger(PassengerType,ID, Hours,Minutes, STRT, END, OnOffTime, Priority);
+		return passenger;
+		}
+		
 	int getid ()override{
 		return ID;
 	}

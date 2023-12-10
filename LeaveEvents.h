@@ -1,6 +1,8 @@
 #include "Events.h"
 
 class LeaveEvents : public Events {
+private:
+	Passenger* passenger;
 public:
 	LeaveEvents() : Events() {
 		ID = 0, STRT = 0;
@@ -12,8 +14,9 @@ public:
 		Hours = hours, Minutes = mins;
 	}
 
-	void execute() override {
-		cout << "Leave Event" << endl;
+	Passenger* execute() override {
+		passenger = new Passenger(ID,STRT,Hours,Minutes);
+		return passenger;
 	} 
 
 	int getid () override {

@@ -1,6 +1,7 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 #include <iostream>
+#include "Passenger.h"
 using namespace std;
 class Events {
 protected:
@@ -8,7 +9,7 @@ protected:
     int ID, STRT, END, Hours, Minutes,OnOffTime;
 
 public:
-    virtual void execute() = 0;
+    virtual Passenger* execute() = 0;
     virtual int getid() = 0;
 };
 #endif

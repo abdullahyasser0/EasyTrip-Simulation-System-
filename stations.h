@@ -1,7 +1,7 @@
 #include "Stack.h"
 #include "LinkedQueue.h"
 #include "NoramlQueue.h"
-#include "LinkedList.h"
+#include "LinkedListp.h"
 #include "Passenger.h"
 #include <iostream>
 using namespace std;
@@ -12,15 +12,15 @@ class Nodestation{
 public :
     Nodestation<N>* next;
     Nodestation<N>* back;
-    LinkedQueue<N>* SPQueue; //waiting passangers pirority queue, Another one for normal passangers
-    LinkedList<N>* WP;
-    LinkedList<N>* NP;
     Queue* busstop; //buss stop
     
     //busses mantain "bayoumi says is should be on station 0 "
     
     int Snumber;
 
+    
+    LinkedListp<Passenger> NP; // Node Passenger
+    LinkedListp<Passenger> WP;
     /*
     must add a variable for the waitiing passangers of type <queue> 
     this is the link between me and the passengers class
@@ -34,13 +34,19 @@ public :
         next = nullptr;
         back = nullptr; 
 
-        SPQueue = nullptr; 
         busstop = nullptr; 
 
         Snumber  = 0;
 
     }
 
+    void PrintAll(){
+        cout<<endl<<"NP list: ";
+        NP.PrintList();
+        cout<<endl<<"WP list: ";
+        WP.PrintList();
+
+    }
 
 };
 
@@ -94,6 +100,8 @@ public:
     void addStationsByNumber(int numberOfStations){
         for (int i=0 ;i<numberOfStations ; i++){
             addstation();
+                    cout<<"the station was succesfully made."<<endl;
+
         }
     }
 
@@ -108,34 +116,6 @@ public:
 
     }
 
-    //add functions to add passangers to WP and Np ele homa ala el raseef el mafrod yakhdo arguments of type passanger
-    void AddPassanger(Passenger* pass)
-    {
-        string type = pass->getType;
-        int stationnumber = pass->startStation;
-        
-        if(type=="NP")
-            {
-                ReturnStationPointer(stationnumber)->NP.Insert(pass);
-            }
-        else if(type=="WP")
-        {
-            ReturnStationPointer(stationnumber)->WP.Insert(pass);
-        }
-
-    }
-
-    void addSpecialPassanger(Passenger* pass){
-        
-        int stationnumber = pass->getStartStation;
-        int priority=pass->getPriority;
-        ReturnStationPointer(stationnumber)->SPQueue.enqueue(pass,priority);
-        
-    }
-
-
-
-
     void display(){
         if(!nostation()){
         Nodestation<T>* temp=Fstation;
@@ -147,10 +127,41 @@ public:
         }
     }
 
+    void PrintAllStations() {
+        Nodestation<T>* temp = Fstation;
+        while (temp != nullptr) {
+            temp->PrintAll();
+            temp = temp->next;
+        }
+    }
+
+    void addPassenger(Passenger* passenger) {
+        if (Fstation == nullptr) {
+            cerr << "Error: No stations available to add passengers." << endl;
+            return;
+        }
+
+        int startStation = passenger->getStartStation();
+        Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
+
+        if (stationPtr == nullptr) {
+            cerr << "Error: Invalid start station for passenger." << endl;
+            return;
+        }
+
+        string passengerType = passenger->getType();
+
+        if (passengerType == "NP") {
+            stationPtr->NP.Insert(passenger);
+            cout << "Passenger added to NP list at Station " << startStation << endl;
+        } else if (passengerType == "WP") {
+            stationPtr->WP.Insert(passenger);
+            cout << "Passenger added to WP list at Station " << startStation << endl;
+        } else {
+            cerr << "Error: Invalid passenger type." << endl;
+        }
+    }
+
     //try to make a funtion to return current station 
 
 };
-
-
-
-

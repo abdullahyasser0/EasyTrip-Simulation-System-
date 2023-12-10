@@ -13,6 +13,9 @@ public:
 
 	virtual bool peek(T& FrontEntry) const = 0;
 
+	void printQueue() const;
+
 	virtual ~QueueADT() { }
+
 };
 #endif
