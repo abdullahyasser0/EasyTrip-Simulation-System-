@@ -27,8 +27,8 @@ public:
 
             S.addStationsByNumber(numStations);
             for (int i = 0; i < EventsNum; i++) {
-            char eventType;
-            input >> eventType;
+                char eventType;
+                input >> eventType;
 
             if (eventType == 'A') {
                 string PType,time,priority;
@@ -63,7 +63,6 @@ public:
                 LeaveEvents* leaveEvent = new LeaveEvents(id, STRT, hours, minutes);
                 eventsList.Insert(leaveEvent);
             }
-        }
 
         Node<Events*>* current = eventsList.getHead();
         while (current != nullptr) {
@@ -73,6 +72,7 @@ public:
 
             current = current->getNext();
         }
+        
         S.PrintAllStations();
 
         input.close();

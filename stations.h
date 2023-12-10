@@ -12,7 +12,7 @@ public :
     Nodestation<N>* next;
     Nodestation<N>* back;
     Queue* busstop; //buss stop
-    
+     
     //busses mantain "bayoumi says is should be on station 0 "
     
     int Snumber;
@@ -159,6 +159,14 @@ public:
         }
 
     }
+
+    // void addSpecialPassanger(Passenger* passenger){
+        
+    //     int startStation = passenger->getStartStation();
+    //     int priority=passenger->getPriority();
+    //     ReturnStationPointer(stationnumber)->SPQueue.enqueue(passenger,priority);
+        
+    // }
     //try to make a funtion to return current station 
 
 };
