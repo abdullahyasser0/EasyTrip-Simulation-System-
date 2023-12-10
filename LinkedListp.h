@@ -25,7 +25,6 @@ public:
 
     void PrintList() const
     {
-        cout << "\nPrinting list contents:\n\n";
         Nodep<T>* p = Head;
 
         while (p)

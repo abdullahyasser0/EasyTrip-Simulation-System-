@@ -13,8 +13,8 @@ private:
     string Priority,type;
 
 public:
-    Passenger(string passengerType, int id, int hours, int mins, int startStation, int endStation, int OnoffTime, string priority)
-    : type(passengerType), ID(id), startStation(startStation), endStation(endStation), OnOffTime(OnoffTime), Hours(hours), Minutes(mins), Priority(priority)
+    Passenger(string passengerType, int id, int hours, int mins, int startstation, int endStation, int OnoffTime, string priority)
+    : type(passengerType), ID(id), startStation(startstation), endStation(endStation), OnOffTime(OnoffTime), Hours(hours), Minutes(mins), Priority(priority)
 {
 }
 

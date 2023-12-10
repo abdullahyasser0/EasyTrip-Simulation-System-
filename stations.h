@@ -106,7 +106,7 @@ public:
 
     Nodestation<T> *ReturnStationPointer(int stationnumber){
         Nodestation<T>* temp=Fstation;
-        while (temp->next!=nullptr)
+        while (temp!=nullptr)
         {
             if(temp->Snumber!=stationnumber) temp=temp->next;
             else return temp;
@@ -136,15 +136,15 @@ public:
 
     void addPassenger(Passenger* passenger) {
         if (Fstation == nullptr) {
-            cerr << "Error: No stations available to add passengers." << endl;
             return;
         }
 
         int startStation = passenger->getStartStation();
+        cout<<endl<<"Start station is : "<<startStation;
         Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
 
         if (stationPtr == nullptr) {
-            cerr << "Error: Invalid start station for passenger." << endl;
+            cerr << "Error: Invalid start station for passenger."<< startStation << endl;
             return;
         }
 
