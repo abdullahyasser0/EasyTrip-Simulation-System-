@@ -27,54 +27,60 @@ public:
 
             S.addStationsByNumber(numStations);
             for (int i = 0; i < EventsNum; i++) {
-            char eventType;
-            input >> eventType;
+                char eventType;
+                input >> eventType;
 
-            if (eventType == 'A') {
-                string PType,time,priority;
-                int id, STRT, END, NumPriority;
-                input >> PType >> time >> id >> STRT >> END;
-                getline(input, priority);
-                if(priority=="Aged"){
-                    NumPriority=3;
-                }else if(priority=="POD"){
-                    NumPriority=2;
-                }else if(priority=="pregnant"){
-                    NumPriority=1;
-                }else{
-                    NumPriority=0;
+                if (eventType == 'A') {
+                    string PType,time,priority;
+                    int id, STRT, END, NumPriority;
+                    input >> PType >> time >> id >> STRT >> END;
+                    getline(input, priority);
+                    if(priority=="Aged"){
+                        NumPriority=3;
+                    }else if(priority=="POD"){
+                        NumPriority=2;
+                    }else if(priority=="pregnant"){
+                        NumPriority=1;
+                    }else{
+                        NumPriority=0;
+                    }
+
+                    istringstream iss(time);
+                    iss >> hours >> colon >> minutes;
+
+                    ArrivalEvents* arrivalEvent = new ArrivalEvents(PType, priority, id, STRT, END, hours, minutes,OnOffTime);
+                    eventsList.Insert(arrivalEvent);
+                } 
+                
+                else if (eventType == 'L') {    
+                    string PType,time;
+                    int id, STRT;
+
+                    input >> time >> id >> STRT;
+
+                    istringstream iss(time);
+                    iss >> hours >> colon >> minutes;
+
+                    LeaveEvents* leaveEvent = new LeaveEvents(id, STRT, hours, minutes);
+                    eventsList.Insert(leaveEvent);
                 }
-
-                istringstream iss(time);
-                iss >> hours >> colon >> minutes;
-
-                ArrivalEvents* arrivalEvent = new ArrivalEvents(PType, priority, id, STRT, END, hours, minutes,OnOffTime);
-                eventsList.Insert(arrivalEvent);
-            } else if (eventType == 'L') {    
-                string PType,time;
-                int id, STRT;
-
-                input >> time >> id >> STRT;
- 
-                istringstream iss(time);
-                iss >> hours >> colon >> minutes;
-
-                LeaveEvents* leaveEvent = new LeaveEvents(id, STRT, hours, minutes);
-                eventsList.Insert(leaveEvent);
             }
-        }
 
         Node<Events*>* current = eventsList.getHead();
         while (current != nullptr) {
             Events* currentEvent = current->getItem();
-            if(currentEvent->execute()->getType()=="NP"||currentEvent->execute()->getType()=="WP"){
+            if(currentEvent->execute()->getType()=="NP"||currentEvent->execute()->getType()=="WP")
+            {
                 S.addPassenger( currentEvent->execute());
             }
-            // else if(currentEvent->execute()->getType()=="SP"){
 
-            // }
+            else if(currentEvent->execute()->getType()=="SP")
+            {
+                S.addSpecialPassanger(currentEvent->execute());
+            }
             current = current->getNext();
         }
+        
         S.PrintAllStations();
 
         input.close();
