@@ -36,8 +36,15 @@ public:
 
     string& getPriority()
     {
-        
-        return Priority;
+        if(Priority=="Aged"){
+            return 3;
+        }else if(Priority=="POD"){
+            return 2;
+        }else if(Priority=="pregnant"){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 	
 	string& getType()

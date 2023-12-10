@@ -2,7 +2,6 @@
 using namespace std;
 #include "stations.h"
 
-//last time working 
 
 int main() {
 Company BusProject;
