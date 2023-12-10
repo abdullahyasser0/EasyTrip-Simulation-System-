@@ -35,15 +35,16 @@ public:
                 int id, STRT, END, NumPriority;
                 input >> PType >> time >> id >> STRT >> END;
                 getline(input, priority);
-                if(priority=="Aged"){
-                    NumPriority=3;
-                }else if(priority=="POD"){
-                    NumPriority=2;
-                }else if(priority=="pregnant"){
-                    NumPriority=1;
-                }else{
-                    NumPriority=0;
-                }
+
+                // if(priority=="Aged"){
+                //     NumPriority=3;
+                // }else if(priority=="POD"){
+                //     NumPriority=2;
+                // }else if(priority=="pregnant"){
+                //     NumPriority=1;
+                // }else{
+                //     NumPriority=0;
+                // }
 
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
@@ -67,12 +68,9 @@ public:
         Node<Events*>* current = eventsList.getHead();
         while (current != nullptr) {
             Events* currentEvent = current->getItem();
-            if(currentEvent->execute()->getType()=="NP"||currentEvent->execute()->getType()=="WP"){
-                S.addPassenger( currentEvent->execute());
-            }
-            // else if(currentEvent->execute()->getType()=="SP"){
+            
+            S.addPassenger( currentEvent->execute());
 
-            // }
             current = current->getNext();
         }
         S.PrintAllStations();

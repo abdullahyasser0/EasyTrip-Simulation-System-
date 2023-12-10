@@ -1,8 +1,7 @@
 #include "Stack.h"
-#include "LinkedQueue.h"
 #include "NoramlQueue.h"
 #include "LinkedListp.h"
-#include "Passenger.h"
+#include "PriorityQueue.h"
 #include <iostream>
 using namespace std;
 
@@ -19,8 +18,9 @@ public :
     int Snumber;
 
     
-    LinkedListp<Passenger> NP; // Node Passenger
+    LinkedListp<Passenger> NP;
     LinkedListp<Passenger> WP;
+    PriorityQueue SP; 
     /*
     must add a variable for the waitiing passangers of type <queue> 
     this is the link between me and the passengers class
@@ -46,7 +46,8 @@ public :
         NP.PrintList();
         cout<<endl<<"WP list: ";
         WP.PrintList();
-
+        cout<<endl<<"SP Queue: ";
+        SP.printQueue();
     }
 
 };
@@ -153,7 +154,10 @@ public:
             stationPtr->NP.Insert(passenger);
         } else if (passengerType == "WP") {
             stationPtr->WP.Insert(passenger);
+        }else if (passengerType == "SP") {
+            stationPtr->SP.enqueue(passenger);
         }
+
     }
     //try to make a funtion to return current station 
 
