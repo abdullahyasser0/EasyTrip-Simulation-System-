@@ -140,7 +140,6 @@ public:
         }
 
         int startStation = passenger->getStartStation();
-        cout<<endl<<"Start station is : "<<startStation;
         Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
 
         if (stationPtr == nullptr) {
