@@ -40,7 +40,6 @@ public:
 
     int getPriority()
     {
-        
         return Priority;
     }
 	
