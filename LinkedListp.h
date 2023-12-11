@@ -1,4 +1,4 @@
-
+#pragma once
 #include "Nodep.h"
 #include <iostream>
 using namespace std;
@@ -71,8 +71,14 @@ public:
             Head = P;
         }
     }
-        ~LinkedListp()
-    {
-        DeleteAll();
-    }
+
+Passenger* DeleteFirst()
+	{
+		Nodep<T> *P = Head;
+        Nodep<T> *temp = Head;
+		P = Head->getNext();
+		delete Head;
+		Head = P;
+        return temp;
+	}
 };

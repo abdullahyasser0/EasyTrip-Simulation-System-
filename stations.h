@@ -2,6 +2,7 @@
 #include "NoramlQueue.h"
 #include "LinkedListp.h"
 #include "PriorityQueue.h"
+#include "Buses.h"
 #include <iostream>
 using namespace std;
 
@@ -115,7 +116,6 @@ public:
             else return temp;
         }
         return nullptr;
-
     }
 
     void display(){
@@ -161,6 +161,12 @@ public:
 
     }
 
+
+
+    void addNPassenger(Bus* bus){
+        Nodestation<T>* station = ReturnStationPointer(bus->currentStation);
+        bus->insideBus.Insert(station->NP.DeleteFirst());
+    }
     // void addSpecialPassanger(Passenger* passenger){
         
     //     int startStation = passenger->getStartStation();

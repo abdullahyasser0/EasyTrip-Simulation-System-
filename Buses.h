@@ -1,27 +1,51 @@
 #pragma once
 #include<iostream>
+#include "LinKedListp.h"
+#include "Passenger.h"
 using namespace std;
-class Buses
-{
-private:
-//hothifa is nigga
-		string busType;
-		int busCapacity;
-		int maintenanceTime;
-	public:
-		Buses(string& type, int capacity, int maintenance)
-			: busType(type), busCapacity(capacity), maintenanceTime(maintenance)
-		{
+
+
+class Bus {
+    public:
+		string BusType;
+        int capacity;
+        int maintenance;
+        int currentStation;
+		LinkedListp<Passenger> insideBus;
+
+
+        Bus(){
+			BusType = "NULL";
+			capacity = 0;
+			maintenance = 0;
+			currentStation = 0;
+        }
+
+		Bus (string type, int cap , int maint){
+			BusType = type;
+			capacity = cap;
+			maintenance = maint;
+			currentStation = 0;
 		}
-		string getBusType() {
-			return busType;
+
+     	void print_bus_info() {
+    		cout << "Bus type : " << BusType << endl;
+    		cout << "Bus capacity : " << capacity << endl;
+    		cout << "Bus maintenance : " << maintenance << endl;
+			cout << "Bus current Station : " << currentStation << endl;
+			}
+		
+		Bus creatNBus(){
+			Bus bus("Normal",13, 0);
+			return bus;
 		}
-		int getBusCapacity() {
-			return busCapacity;
+
+        Bus creatWBus(){
+			Bus bus("Wheel",13, 0);
+			return bus;
 		}
-	int getMaintenanceTime()
-	{
-		return maintenanceTime;
-	}
+
+
 };
-//yalllaahhhhhwy
+
+
