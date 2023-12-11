@@ -3,7 +3,6 @@
 #include "NoramlQueue.h"
 #include "LinkedListp.h"
 #include "PriorityQueue.h"
-#include "Buses.h"
 #include <iostream>
 using namespace std;
 
@@ -23,6 +22,9 @@ public :
     LinkedListp<Passenger> NP;
     LinkedListp<Passenger> WP;
     PriorityQueue SP; 
+
+    Stack Ngarage;
+    Stack Wgarage;
     /*
     must add a variable for the waitiing passangers of type <queue> 
     this is the link between me and the passengers class
@@ -42,14 +44,17 @@ public :
 
     }
 
-    void PrintAll(){
+    void PrintAllstation(){
         cout<<"Station Number: "<<Snumber<<endl;
-        cout<<endl<<"NP list: ";
+        cout<<"NP list: ";
         NP.PrintList();
-        cout<<endl<<"WP list: ";
+        cout<<"WP list: ";
         WP.PrintList();
-        cout<<endl<<"SP Queue: ";
+        cout<<"SP Queue: ";
         SP.printQueue();
+        cout << "Garage: " << endl;
+        cout <<"    Normal Buses: "<<Ngarage.countBuses()<<endl;
+        cout <<"    Wheel Buses: " <<Wgarage.countBuses()<< endl;
         cout<<"-------------------------------------------------"<<endl;
     }
 
@@ -61,16 +66,12 @@ class StationsDLL{
 
 public:
     Nodestation<T>* Fstation;
-    Stacks<T>* garage; //the one containing all the busses in the begining and the end
-    Stacks<T>* Wgarage; //the one containing all the busses in the begining and the end
-
 
     StationsDLL()
     { 
         Fstation = nullptr;
-        garage = nullptr;
-        Wgarage = nullptr;
     }
+    
 
     bool nostation()
     {
@@ -142,7 +143,7 @@ public:
         Nodestation<T>* temp = Fstation;
         while (temp != nullptr) 
         {
-            temp->PrintAll();
+            temp->PrintAllstation();
             temp = temp->next;
         }
     }
@@ -173,21 +174,23 @@ public:
 
     }
 
-    void storeNBus(Bus<T>* bus)
+    void storeNBus(Bus* bus)
     {
-        garage->push(bus);
+            Fstation->Ngarage.push(bus);
+
     }
 
-    void storeWBus(Bus<T>* bus)
+    void storeWBus(Bus* bus)
     {
-        Wgarage->push(bus);
+            Fstation->Wgarage.push(bus);
+
     }
 
-    void addNPassToBus(Bus<T>* bus)
-    {
-        Nodestation<T>* station = ReturnStationPointer(bus->currentStation);
-        bus->insideBus.Insert(station->NP.DeleteFirst());
-    }
+    // void addNPassToBus(Bus* bus)
+    // {
+    //     Nodestation<T>* station = ReturnStationPointer(bus->currentStation);
+    //     bus->insideBus.Insert(station->NP.DeleteFirst());
+    // }
 
     void RemovePassenger(Passenger* passenger){
         if (Fstation == nullptr) {

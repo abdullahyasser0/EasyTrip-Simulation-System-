@@ -16,6 +16,7 @@ private:
     int MaxW, OnOffTime, EventsNum;
     LinkedList<Events*> eventsList;
     StationsDLL<Passenger*> S;
+    Bus buses;
     int hours, minutes;
     char colon,eventType;
 
@@ -26,8 +27,8 @@ public:
         EventList();
         for(int h=0;h<24;h++){
             for(int m=0;m<60;m++){
-                while(eventsList.getHead()!=nullptr&&h==eventsList.getHead()->getItem()->getHours()&&m==eventsList.getHead()->getItem()->getMinutes()){
-                    
+                while(eventsList.getHead()!=nullptr&&h==eventsList.getHead()->getItem()->getHours()&&m==eventsList.getHead()->getItem()->getMinutes())
+                {    
                     if(eventsList.getHead()->getItem()->getetype()=='A')
                     {
                         Node<Events*>* current = eventsList.getHead();
@@ -54,13 +55,18 @@ public:
         ifstream input("input.txt");
         input >> numStations >> minsStations >> numWbuses >> numNbuses >> capacityWBus >> capacityNBus
               >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum ;
-
+        
         S.addStationsByNumber(numStations);
-        for(int i=0;i<numNbuses;i++){
-            
+        for (int i = 0; i < numNbuses; i++) {
+            Bus* bus=buses.createNBus(capacityNBus);
+            bus->setType("Normal");
+            S.storeNBus(bus);
         }
-        for(int i=0;i<numWbuses;i++){
-            
+
+        for (int i = 0; i < numWbuses; i++) {
+            Bus* bus=buses.createWBus(capacityWBus);
+            bus->setType("Wheel");
+            S.storeWBus(bus);
         }
         input.close();
     }

@@ -1,45 +1,71 @@
-using namespace std;
 #include <iostream>
+#include "Buses.h"
+using namespace std;
 
-template<typename T>
+class NodeStack {
+public:
+    Bus* data;
+    NodeStack* next;
 
-class Stacks{
-    private:
-    T* items;
-    int top;
-    const int size;
-    
-    public:
-    Stacks(int Maxsize): size(Maxsize)
-    {
-        items = new T[size];
-        top = -1; //new empty stack have its top =-1 as its the index of the top elemnt 
+    NodeStack(Bus* newData){
+        data=newData;
+        next=nullptr;
     }
-    bool isempty() const
-    {
-        return top==-1;
+}; 
+
+class Stack {
+private:
+    NodeStack* top;
+
+public:
+    Stack() : top(nullptr) {}
+
+~Stack() {
+    while (!isempty()) {
+        NodeStack* temp = top;
+        top = top->next;
+        delete temp;
+    }
+}
+
+    bool isempty() const {
+        return top == nullptr;
     }
 
-    bool push(T newItem){
-        if (top==size-1) return false ; // top is index such that if the size is 3 we can have indeces od 0,1,2 so if top =2 ,size-1:(3-1) the stack is full.  
+    void push(Bus* newItem) {
+        NodeStack* newNode = new NodeStack(newItem);
+        newNode->next = top;
+        top = newNode;
+    }
 
-        top++;
-        items[top]=newItem;
+    bool pop(Bus*& TopEntry) {
+        if (isempty()) {
+            return false;
+        }
+
+        NodeStack* temp = top;
+        TopEntry = temp->data;
+        top = temp->next;
+        delete temp;
+
         return true;
     }
 
-    bool pop(T TopEntry){
-        if(isempty()) return false;
-
-        TopEntry = items[top];  
-        top--;
-        return true;
+    void printStack() const {
+        NodeStack* current = top;
+        while (current != nullptr) {
+            cout << current->data->getType() << endl;
+            current = current->next;
+        }
     }
 
-    bool peak(T TopEntry){
-        if(isempty()) return false;
-
-        TopEntry = items[top];
-        return true;
+    int countBuses() const {
+        int count = 0;
+        NodeStack* current = top;
+        while (current != nullptr) {
+            count++;
+            current = current->next;
+        }
+        return count;
     }
 };

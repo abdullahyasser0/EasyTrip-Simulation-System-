@@ -2,11 +2,9 @@
 #include<iostream>
 #include "LinKedListp.h"
 #include "Passenger.h"
-#include "stations.h"
 using namespace std;
 
 
-template<typename T>
 class Bus {
     public:
 		string BusType;
@@ -30,6 +28,14 @@ class Bus {
 			currentStation = 0;
 		}
 
+		void setType(string type){
+			BusType=type;
+		}
+
+		string getType(){
+			return BusType;
+		}
+
      	void print_bus_info() {
     		cout << "Bus type : " << BusType << endl;
     		cout << "Bus capacity : " << capacity << endl;
@@ -37,13 +43,13 @@ class Bus {
 			cout << "Bus current Station : " << currentStation << endl;
 			}
 		
-		Bus creatNBus(int capacity){
-			Bus bus("Normal",capacity, 0);
+		Bus* createNBus(int capacity){
+			Bus* bus = new Bus("Normal",capacity, 0);
 			return bus;
 		}
 
-        Bus creatWBus(int capacity){
-			Bus bus("Wheel",capacity, 0);
+        Bus* createWBus(int capacity){
+			Bus* bus= new Bus("Wheel",capacity, 0);
 			return bus;
 		}
 
