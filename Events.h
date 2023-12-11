@@ -13,7 +13,7 @@ public:
     virtual int getid() = 0;
     virtual int getHours() = 0;
     virtual int getMinutes() = 0;
-    // virtual char getetype() = 0;
+    virtual char getetype() = 0;
 
 
 };

@@ -49,8 +49,7 @@ public :
         WP.PrintList();
         cout<<endl<<"SP Queue: ";
         SP.printQueue();
-        // if(!SP.isEmpty()){
-        // cout<<SP.dequeue()->getID();}
+        cout<<"-------------------------------------------------"<<endl;
     }
 
 };
@@ -166,6 +165,19 @@ public:
     void addNPassenger(Bus* bus){
         Nodestation<T>* station = ReturnStationPointer(bus->currentStation);
         bus->insideBus.Insert(station->NP.DeleteFirst());
+    }
+
+    void RemovePassenger(Passenger* passenger){
+        if (Fstation == nullptr) {
+            return;
+        }
+        int startStation = passenger->getStartStation();
+        Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
+        if (stationPtr == nullptr) {
+            cerr << "Error: Invalid start station for passenger."<< startStation << endl;
+            return;
+        }
+        stationPtr->NP.RemovePassenger(passenger);
     }
     // void addSpecialPassanger(Passenger* passenger){
         

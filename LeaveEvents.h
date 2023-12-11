@@ -9,9 +9,10 @@ public:
 		Hours = 0, Minutes = 0;
 	}
 
-	LeaveEvents(int id,int strt,int hours,int mins) : Events() {
+	LeaveEvents(char etype,int id,int strt,int hours,int mins) : Events() {
 		ID = id, STRT = strt;
 		Hours = hours, Minutes = mins;
+		EventType=etype;
 	}
 
 	Passenger* execute() override {
@@ -29,5 +30,9 @@ public:
 	
 	int getMinutes()override{
 		return Minutes;
+	}
+
+	char getetype()override{
+		return EventType;
 	}
 };

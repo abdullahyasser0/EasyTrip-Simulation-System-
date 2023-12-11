@@ -1,6 +1,7 @@
 #pragma once
 #include "Nodep.h"
 #include <iostream>
+#include "Passenger.h"
 using namespace std;
 
 template <typename T>
@@ -11,7 +12,7 @@ private:
     int count;
 
 public:
-    LinkedListp() : count(0), Head(nullptr) {}
+    LinkedListp() : Head(nullptr), count(0) {}
 
 
 
@@ -81,4 +82,28 @@ Passenger* DeleteFirst()
 		Head = P;
         return temp;
 	}
+
+    void RemovePassenger(Passenger* passenger)
+    {
+        Nodep<T>* current = Head;
+        Nodep<T>* previous = nullptr;
+        while (current != nullptr)
+        {
+            if (current->getItem()->getID() == passenger->getID())
+            {
+                if (previous == nullptr)
+                {
+                    Head = current->getNext();
+                }
+                else
+                {
+                    previous->setNext(current->getNext());
+                }
+
+                delete current;
+                return;
+            }
+        }
+    }
+
 };

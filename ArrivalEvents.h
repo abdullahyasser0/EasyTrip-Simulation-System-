@@ -12,7 +12,7 @@ public:
 
 	}
 
-	ArrivalEvents(string ptype, string priority, int id,int strt,int end,int hours,int mins,int OnoffTime) : Events() {
+	ArrivalEvents(char etype,string ptype, string priority, int id,int strt,int end,int hours,int mins,int OnoffTime) : Events() {
 		PassengerType = ptype;
 		ID = id, STRT = strt, END = end;
 		Hours = hours;
@@ -24,6 +24,8 @@ public:
 		}
 		passenger = nullptr;
 		OnOffTime=OnoffTime;
+		EventType=etype;
+
 	}
 
 	Passenger* execute() override {
@@ -40,5 +42,9 @@ public:
 		
 	int getid ()override{
 		return ID;
+	}
+
+	char getetype()override{
+		return EventType;
 	}
 };
