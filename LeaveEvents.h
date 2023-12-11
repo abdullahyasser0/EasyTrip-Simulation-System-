@@ -22,4 +22,12 @@ public:
 	int getid () override {
 		return ID;
 	}
+	
+		int getHours()override{
+		return Hours;
+	}
+	
+	int getMinutes()override{
+		return Minutes;
+	}
 };

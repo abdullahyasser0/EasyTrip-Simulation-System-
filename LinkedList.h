@@ -80,5 +80,12 @@ public:
 			Head = P;
 		}
 	}
+		void DeleteFirst()
+	{
+		Node<T> *P = Head;
+		P = Head->getNext();
+		delete Head;
+		Head = P;
+	}
 };
 #endif 

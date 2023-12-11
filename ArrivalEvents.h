@@ -30,6 +30,13 @@ public:
 		passenger = new Passenger(PassengerType,ID, Hours,Minutes, STRT, END, OnOffTime, Priority);
 		return passenger;
 		}
+	
+	int getHours()override{
+		return Hours;
+	}
+	int getMinutes()override{
+		return Minutes;
+	}
 		
 	int getid ()override{
 		return ID;

@@ -13,10 +13,7 @@ private:
 public:
     LinkedListp() : count(0), Head(nullptr) {}
 
-    ~LinkedListp()
-    {
-        DeleteAll();
-    }
+
 
     Nodep<T>* getHead() const
     {
@@ -73,5 +70,9 @@ public:
             delete Head;
             Head = P;
         }
+    }
+        ~LinkedListp()
+    {
+        DeleteAll();
     }
 };
