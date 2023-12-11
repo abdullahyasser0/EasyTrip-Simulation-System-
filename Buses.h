@@ -43,12 +43,6 @@ class Bus {
 			return bus;
 		}
 
-		
-
-		void connectCurrentStation(Nodestation<Passenger>* station) {
-
-            currentStation = station;
-        }
 
         void create_bus();
    
