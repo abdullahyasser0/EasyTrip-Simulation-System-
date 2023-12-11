@@ -2,9 +2,11 @@
 #include<iostream>
 #include "LinKedListp.h"
 #include "Passenger.h"
+#include "stations.h"
 using namespace std;
 
 
+template<typename T>
 class Bus {
     public:
 		string BusType;
@@ -35,16 +37,39 @@ class Bus {
 			cout << "Bus current Station : " << currentStation << endl;
 			}
 		
-		Bus creatNBus(){
-			Bus bus("Normal",13, 0);
+		Bus creatNBus(int capacity){
+			Bus bus("Normal",capacity, 0);
 			return bus;
 		}
 
-        Bus creatWBus(){
-			Bus bus("Wheel",13, 0);
+        Bus creatWBus(int capacity){
+			Bus bus("Wheel",capacity, 0);
 			return bus;
 		}
 
+	
+
+		
+		// void loopStation(){
+		// 	int direction=0;
+
+		// 	while(/*the program is working*/){
+		// 		Nodestation<T>* station = ReturnStationPointer(currentStation);
+		// 		if(station->next==nullptr){
+		// 			if(direction==0){direction=1;}
+		// 			else if (direction==1){direction==0;}
+		// 		}
+		// 		while(direction==0 && station->next!=nullptr){
+		// 			currentStation++;
+		// 		}
+		// 		while(direction==1 && station->next!=nullptr){
+		// 			currentStation--;
+		// 		}
+				
+				
+		// 	}
+
+		// }
 
 };
 

@@ -1,3 +1,4 @@
+#pragma once
 #include "Stack.h"
 #include "NoramlQueue.h"
 #include "LinkedListp.h"
@@ -62,30 +63,35 @@ class StationsDLL{
 public:
     Nodestation<T>* Fstation;
     Stacks<T>* garage; //the one containing all the busses in the begining and the end
+    Stacks<T>* Wgarage; //the one containing all the busses in the begining and the end
 
-    StationsDLL(){ 
+
+    StationsDLL()
+    { 
         Fstation = nullptr;
         garage = nullptr;
+        Wgarage = nullptr;
     }
 
-    bool nostation(){
+    bool nostation()
+    {
         return (Fstation==nullptr);
     }
 
-    void garagebus(T* bus){
-        garage->push(bus);
-    }
+    // void garagebus(T* bus)
+    // {
+    //     garage->push(bus);
+    // }
 
     void addstation(){
         Nodestation<T>* newstation= new Nodestation<T>;
 
-        if(nostation()){
-
+        if(nostation())
+        {
             newstation->Snumber=0;
             Fstation=newstation;
 
         }    
-
         else{
 
             Nodestation<T>* temp=Fstation;
@@ -102,13 +108,15 @@ public:
 
 
     }
-    void addStationsByNumber(int numberOfStations){
+    void addStationsByNumber(int numberOfStations)
+    {
         for (int i=0 ;i<numberOfStations+1 ; i++){
             addstation();
         }
     }
 
-    Nodestation<T> *ReturnStationPointer(int stationnumber){
+    Nodestation<T> *ReturnStationPointer(int stationnumber)
+    {
         Nodestation<T>* temp=Fstation;
         while (temp!=nullptr)
         {
@@ -118,7 +126,8 @@ public:
         return nullptr;
     }
 
-    void display(){
+    void display()
+    {
         if(!nostation()){
         Nodestation<T>* temp=Fstation;
         while (temp!=nullptr)
@@ -129,15 +138,18 @@ public:
         }
     }
 
-    void PrintAllStations() {
+    void PrintAllStations() 
+    {
         Nodestation<T>* temp = Fstation;
-        while (temp != nullptr) {
+        while (temp != nullptr) 
+        {
             temp->PrintAll();
             temp = temp->next;
         }
     }
 
-    void addPassenger(Passenger* passenger) {
+    void addPassenger(Passenger* passenger)
+        {
         if (Fstation == nullptr) {
             return;
         }
@@ -145,7 +157,8 @@ public:
         int startStation = passenger->getStartStation();
         Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
 
-        if (stationPtr == nullptr) {
+        if (stationPtr == nullptr) 
+        {
             cerr << "Error: Invalid start station for passenger."<< startStation << endl;
             return;
         }
@@ -161,9 +174,18 @@ public:
 
     }
 
+    void storeNBus(Bus<T>* bus)
+    {
+        garage->push(bus);
+    }
 
+    void storeWBus(Bus<T>* bus)
+    {
+        Wgarage->push(bus);
+    }
 
-    void addNPassenger(Bus* bus){
+    void addNPassToBus(Bus<T>* bus)
+    {
         Nodestation<T>* station = ReturnStationPointer(bus->currentStation);
         bus->insideBus.Insert(station->NP.DeleteFirst());
     }
