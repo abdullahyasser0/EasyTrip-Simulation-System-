@@ -35,6 +35,7 @@ public:
                 int id, STRT, END, NumPriority;
                 input >> PType >> time >> id >> STRT >> END;
                 getline(input, priority);
+                // cout<<"Priority is:"<<priority;
 
                 // if(priority=="Aged"){
                 //     NumPriority=3;
@@ -68,7 +69,6 @@ public:
         Node<Events*>* current = eventsList.getHead();
         while (current != nullptr) {
             Events* currentEvent = current->getItem();
-            
             S.addPassenger( currentEvent->execute());
 
             current = current->getNext();

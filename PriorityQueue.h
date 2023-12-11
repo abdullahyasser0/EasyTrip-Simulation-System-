@@ -6,6 +6,9 @@ public:
     PriorityNode* next;
     PriorityNode* prev;
 
+    Passenger* getitem(){
+        return  passenger;
+    }    
     PriorityNode(Passenger* p) : passenger(p), next(nullptr), prev(nullptr) {}
 };
 
@@ -24,33 +27,31 @@ public:
         }
     }
 
-    void enqueue(Passenger* passenger) {
-        PriorityNode* newNode = new PriorityNode(passenger);
+bool enqueue(Passenger* newPassenger) {
+    PriorityNode* newNode = new PriorityNode(newPassenger);
+    if (isEmpty() || newPassenger->getPriority() > front->passenger->getPriority()) {
+        newNode->next = front;
+        front = newNode;
+    } else {
+        PriorityNode* prev = nullptr;
+        PriorityNode* current = front;
 
-        if (isEmpty()) {
-            front = back = newNode;
+        while (current != nullptr && newPassenger->getPriority() <= current->passenger->getPriority()) {
+            prev = current;
+            current = current->next;
+        }
+
+        if (prev == nullptr) {
+            newNode->next = front;
+            front = newNode;
         } else {
-            PriorityNode* current = front;
-            while (current != nullptr && passenger->getPriority() <= current->passenger->getPriority()) {
-                current = current->next;
-            }
-
-            if (current == front) {
-                newNode->next = front;
-                front->prev = newNode;
-                front = newNode;
-            } else if (current == nullptr) {
-                back->next = newNode;
-                newNode->prev = back;
-                back = newNode;
-            } else {
-                newNode->next = current;
-                newNode->prev = current->prev;
-                current->prev->next = newNode;
-                current->prev = newNode;
-            }
+            prev->next = newNode;
+            newNode->next = current;
         }
     }
+
+    return true;
+}
 
     Passenger* dequeue() {
         if (isEmpty()) {

@@ -48,6 +48,8 @@ public :
         WP.PrintList();
         cout<<endl<<"SP Queue: ";
         SP.printQueue();
+        // if(!SP.isEmpty()){
+        // cout<<SP.dequeue()->getID();}
     }
 
 };
@@ -149,7 +151,6 @@ public:
         }
 
         string passengerType = passenger->getType();
-
         if (passengerType == "NP") {
             stationPtr->NP.Insert(passenger);
         } else if (passengerType == "WP") {

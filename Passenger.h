@@ -40,15 +40,14 @@ public:
 
     int getPriority()
     {
-        if(Priority=="Aged"){
+        if(Priority==" AGED"){
             return 3;
-        }else if(Priority=="POD"){
+        }else if(Priority==" POD"){
             return 2;
-        }else if(Priority=="pregnant"){
+        }else if(Priority==" pregnant"){
             return 1;
-        }else{
-            return 0;
         }
+        return 0;
     }
 	
 	string& getType()
