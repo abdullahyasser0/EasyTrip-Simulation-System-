@@ -15,49 +15,61 @@ private:
     int MaxW, OnOffTime, EventsNum;
     LinkedList<Events*> eventsList;
     StationsDLL<Passenger*> S;
+    int hours, minutes;
+    char colon,eventType;
+
 
 public:
     Company() {
+        ReadInput();
+        EventList();
+        for(int hours=0;hours<24;hours++){
+            for(int minutes=0;minutes<60;minutes++){
+                while(hours==eventsList.getHead()->getItem()->getHours()&&minutes==eventsList.getHead()->getItem()->getMinutes()){
+                    Node<Events*>* current = eventsList.getHead();
+                    Events* currentEvent = current->getItem();
+                    cout<<"Passenger with ID: "<< currentEvent->getid()<<" reached the station at : "<<hours<<":"<<minutes<<endl;
+                    S.addPassenger(currentEvent->execute());
+                    eventsList.DeleteFirst();
+                }
+
+            }
+        }
+    }
+
+    void ReadInput() {
         ifstream input("input.txt");
+        input >> numStations >> minsStations >> numWbuses >> numMbuses >> capacityWBus >> capacityMBus
+              >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum ;
 
-            input >> numStations >> minsStations >> numWbuses >> numMbuses >> capacityWBus >> capacityMBus 
-            >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum;
-            int hours, minutes;
-            char colon;
+        S.addStationsByNumber(numStations);
+        input.close();
+    }
 
-            S.addStationsByNumber(numStations);
-            for (int i = 0; i < EventsNum; i++) {
-            char eventType;
+    void EventList() {
+        ifstream input("input.txt");
+        string PType, time, priority;
+        int id, STRT, END;
+
+        for(int i=0; i < 12;i++){
+            int temp;
+            input >> temp;
+        }
+
+        for (int i = 0; i < EventsNum; i++) {
             input >> eventType;
-
             if (eventType == 'A') {
-                string PType,time,priority;
-                int id, STRT, END, NumPriority;
                 input >> PType >> time >> id >> STRT >> END;
                 getline(input, priority);
-                // cout<<"Priority is:"<<priority;
-
-                // if(priority=="Aged"){
-                //     NumPriority=3;
-                // }else if(priority=="POD"){
-                //     NumPriority=2;
-                // }else if(priority=="pregnant"){
-                //     NumPriority=1;
-                // }else{
-                //     NumPriority=0;
-                // }
-
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
 
-                ArrivalEvents* arrivalEvent = new ArrivalEvents(PType, priority, id, STRT, END, hours, minutes,OnOffTime);
-                eventsList.Insert(arrivalEvent);
-            } else if (eventType == 'L') {    
-                string PType,time;
-                int id, STRT;
+                ArrivalEvents* arrivalEvent = new ArrivalEvents(PType, priority, id, STRT, END, hours, minutes, OnOffTime);
 
+                eventsList.Insert(arrivalEvent);
+            } else if (eventType == 'L') {
                 input >> time >> id >> STRT;
- 
+
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
 
@@ -66,26 +78,20 @@ public:
             }
         }
 
+        input.close();
+    }
+
+    void ExecuteEvents() {
         Node<Events*>* current = eventsList.getHead();
         while (current != nullptr) {
             Events* currentEvent = current->getItem();
-            S.addPassenger( currentEvent->execute());
-
+            S.addPassenger(currentEvent->execute());
             current = current->getNext();
         }
         S.PrintAllStations();
-
-        input.close();
-        }
-
-        void printEvent(){
-            eventsList.PrintList();
-        }
-
-        LinkedList<Events*>& getEventsList() {
-        return eventsList;
     }
-        ~Company() {
+
+    ~Company() {
         eventsList.DeleteAll();
     }
 };
