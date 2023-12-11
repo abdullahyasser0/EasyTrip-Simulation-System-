@@ -1,8 +1,8 @@
 #pragma once
 #include<iostream>
+#include "LinKedListp.h"
+#include "Passenger.h"
 using namespace std;
-#include "stations.h"
-
 
 
 class Bus {
@@ -11,6 +11,8 @@ class Bus {
         int capacity;
         int maintenance;
         int currentStation;
+		LinkedListp<Passenger> insideBus;
+
 
         Bus(){
 			BusType = "NULL";
@@ -42,11 +44,6 @@ class Bus {
 			Bus bus("Wheel",13, 0);
 			return bus;
 		}
-
-
-        void create_bus();
-   
-    private:
 
 
 };

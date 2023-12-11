@@ -1,4 +1,4 @@
-
+#pragma once
 #include "Nodep.h"
 #include <iostream>
 using namespace std;
@@ -74,4 +74,14 @@ public:
             Head = P;
         }
     }
+
+Passenger* DeleteFirst()
+	{
+		Nodep<T> *P = Head;
+        Nodep<T> *temp = Head;
+		P = Head->getNext();
+		delete Head;
+		Head = P;
+        return temp;
+	}
 };
