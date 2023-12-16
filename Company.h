@@ -7,7 +7,6 @@
 #include "LinkedList.h"
 #include "stations.h"
 using namespace std;
-//lol2
 class Company {
 private:
     int numStations, minsStations;
