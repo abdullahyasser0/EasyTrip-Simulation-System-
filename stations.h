@@ -1,216 +1,216 @@
-#pragma once
-#include "Stack.h"
-#include "NoramlQueue.h"
-#include "LinkedListp.h"
-#include "PriorityQueue.h"
-#include <iostream>
-using namespace std;
+// #pragma once
+// #include "Stack.h"
+// #include "NoramlQueue.h"
+// #include "LinkedListp.h"
+// #include "PriorityQueue.h"
+// #include <iostream>
+// using namespace std;
 
-template <typename N>
-class Nodestation{
+// template <typename N>
+// class Nodestation{
 
-public :
-    Nodestation<N>* next;
-    Nodestation<N>* back;
-    // Queue* busstop; //buss stop
+// public :
+//     Nodestation<N>* next;
+//     Nodestation<N>* back;
+//     // Queue* busstop; //buss stop
      
-    //busses mantain "bayoumi says is should be on station 0 "
+//     //busses mantain "bayoumi says is should be on station 0 "
     
-    int Snumber;
+//     int Snumber;
 
     
-    LinkedListp<Passenger> NP;
-    Queue<Passenger> WP;
-    PriorityQueue SP; 
+//     LinkedListp<Passenger> NP;
+//     Queue<Passenger> WP;
+//     PriorityQueue SP; 
 
-    Stack Ngarage;
-    Stack Wgarage;
-    /*
-    must add a variable for the waitiing passangers of type <queue> 
-    this is the link between me and the passengers class
+//     Stack Ngarage;
+//     Stack Wgarage;
+//     /*
+//     must add a variable for the waitiing passangers of type <queue> 
+//     this is the link between me and the passengers class
 
-    how the buses and me will operate ?
-    the buses will maintain <queue> , garage in station 0 <stack>, stop into the bus stops <queue> 
-    */
+//     how the buses and me will operate ?
+//     the buses will maintain <queue> , garage in station 0 <stack>, stop into the bus stops <queue> 
+//     */
 
-    Nodestation(){
+//     Nodestation(){
 
-        next = nullptr;
-        back = nullptr; 
+//         next = nullptr;
+//         back = nullptr; 
 
-        // busstop = nullptr; 
+//         // busstop = nullptr; 
 
-        Snumber  = 0;
+//         Snumber  = 0;
 
-    }
+//     }
 
-    void PrintAllstation(){
-        cout<<"Station Number: "<<Snumber<<endl;
-        cout<<"NP list: ";
-        NP.PrintList();
-        cout<<"WP list: ";
-        WP.printQueue();
-        cout<<"SP Queue: ";
-        SP.printQueue();
-        cout << "Garage: " << endl;
-        cout <<"    Normal Buses: "<<Ngarage.countBuses()<<endl;
-        cout <<"    Wheel Buses: " <<Wgarage.countBuses()<< endl;
-        cout<<"-------------------------------------------------"<<endl;
-    }
+//     void PrintAllstation(){
+//         cout<<"Station Number: "<<Snumber<<endl;
+//         cout<<"NP list: ";
+//         NP.PrintList();
+//         cout<<"WP list: ";
+//         WP.printQueue();
+//         cout<<"SP Queue: ";
+//         SP.printQueue();
+//         cout << "Garage: " << endl;
+//         cout <<"    Normal Buses: "<<Ngarage.countBuses()<<endl;
+//         cout <<"    Wheel Buses: " <<Wgarage.countBuses()<< endl;
+//         cout<<"-------------------------------------------------"<<endl;
+//     }
 
-};
+// };
 
 
-template <typename T>
-class StationsDLL{
+// template <typename T>
+// class StationsDLL{
 
-public:
-    Nodestation<T>* Fstation;
+// public:
+//     Nodestation<T>* Fstation;
 
-    StationsDLL()
-    { 
-        Fstation = nullptr;
-    }
+//     StationsDLL()
+//     { 
+//         Fstation = nullptr;
+//     }
     
 
-    bool nostation()
-    {
-        return (Fstation==nullptr);
-    }
+//     bool nostation()
+//     {
+//         return (Fstation==nullptr);
+//     }
 
-    // void garagebus(T* bus)
-    // {
-    //     garage->push(bus);
-    // }
+//     // void garagebus(T* bus)
+//     // {
+//     //     garage->push(bus);
+//     // }
 
-    void addstation(){
-        Nodestation<T>* newstation= new Nodestation<T>;
+//     void addstation(){
+//         Nodestation<T>* newstation= new Nodestation<T>;
 
-        if(nostation())
-        {
-            newstation->Snumber=0;
-            Fstation=newstation;
+//         if(nostation())
+//         {
+//             newstation->Snumber=0;
+//             Fstation=newstation;
 
-        }    
-        else{
+//         }    
+//         else{
 
-            Nodestation<T>* temp=Fstation;
+//             Nodestation<T>* temp=Fstation;
 
-            while (temp->next !=nullptr)
-            {
-                temp=temp->next;
-            }
+//             while (temp->next !=nullptr)
+//             {
+//                 temp=temp->next;
+//             }
 
-            newstation->Snumber=temp->Snumber+1;
-            temp->next=newstation;
-            newstation->back=temp;
-        }
+//             newstation->Snumber=temp->Snumber+1;
+//             temp->next=newstation;
+//             newstation->back=temp;
+//         }
 
 
-    }
-    void addStationsByNumber(int numberOfStations)
-    {
-        for (int i=0 ;i<numberOfStations+1 ; i++){
-            addstation();
-        }
-    }
+//     }
+//     void addStationsByNumber(int numberOfStations)
+//     {
+//         for (int i=0 ;i<numberOfStations+1 ; i++){
+//             addstation();
+//         }
+//     }
 
-    Nodestation<T> *ReturnStationPointer(int stationnumber)
-    {
-        Nodestation<T>* temp=Fstation;
-        while (temp!=nullptr)
-        {
-            if(temp->Snumber!=stationnumber) temp=temp->next;
-            else return temp;
-        }
-        return nullptr;
-    }
+//     Nodestation<T> *ReturnStationPointer(int stationnumber)
+//     {
+//         Nodestation<T>* temp=Fstation;
+//         while (temp!=nullptr)
+//         {
+//             if(temp->Snumber!=stationnumber) temp=temp->next;
+//             else return temp;
+//         }
+//         return nullptr;
+//     }
 
-    void display()
-    {
-        if(!nostation()){
-        Nodestation<T>* temp=Fstation;
-        while (temp!=nullptr)
-        {
-            cout<<temp->Snumber<<endl;
-            temp=temp->next;
-        }
-        }
-    }
+//     void display()
+//     {
+//         if(!nostation()){
+//         Nodestation<T>* temp=Fstation;
+//         while (temp!=nullptr)
+//         {
+//             cout<<temp->Snumber<<endl;
+//             temp=temp->next;
+//         }
+//         }
+//     }
 
-    void PrintAllStations() 
-    {
-        Nodestation<T>* temp = Fstation;
-        while (temp != nullptr) 
-        {
-            temp->PrintAllstation();
-            temp = temp->next;
-        }
-    }
+//     void PrintAllStations() 
+//     {
+//         Nodestation<T>* temp = Fstation;
+//         while (temp != nullptr) 
+//         {
+//             temp->PrintAllstation();
+//             temp = temp->next;
+//         }
+//     }
 
-    void addPassenger(Passenger* passenger)
-        {
-        if (Fstation == nullptr) {
-            return;
-        }
+//     void addPassenger(Passenger* passenger)
+//         {
+//         if (Fstation == nullptr) {
+//             return;
+//         }
 
-        int startStation = passenger->getStartStation();
-        Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
+//         int startStation = passenger->getStartStation();
+//         Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
 
-        if (stationPtr == nullptr) 
-        {
-            cerr << "Error: Invalid start station for passenger."<< startStation << endl;
-            return;
-        }
+//         if (stationPtr == nullptr) 
+//         {
+//             cerr << "Error: Invalid start station for passenger."<< startStation << endl;
+//             return;
+//         }
 
-        string passengerType = passenger->getType();
-        if (passengerType == "NP") {
-            stationPtr->NP.Insert(passenger);
-        } else if (passengerType == "WP") {
-            stationPtr->WP.enqueue(passenger);
-        }else if (passengerType == "SP") {
-            stationPtr->SP.enqueue(passenger);
-        }
+//         string passengerType = passenger->getType();
+//         if (passengerType == "NP") {
+//             stationPtr->NP.Insert(passenger);
+//         } else if (passengerType == "WP") {
+//             stationPtr->WP.enqueue(passenger);
+//         }else if (passengerType == "SP") {
+//             stationPtr->SP.enqueue(passenger);
+//         }
 
-    }
+//     }
 
-    void storeNBus(Bus* bus)
-    {
-            Fstation->Ngarage.push(bus);
+//     void storeNBus(Bus* bus)
+//     {
+//             Fstation->Ngarage.push(bus);
 
-    }
+//     }
 
-    void storeWBus(Bus* bus)
-    {
-            Fstation->Wgarage.push(bus);
+//     void storeWBus(Bus* bus)
+//     {
+//             Fstation->Wgarage.push(bus);
 
-    }
+//     }
 
-    // void addNPassToBus(Bus* bus)
-    // {
-    //     Nodestation<T>* station = ReturnStationPointer(bus->currentStation);
-    //     bus->insideBus.Insert(station->NP.DeleteFirst());
-    // }
+//     // void addNPassToBus(Bus* bus)
+//     // {
+//     //     Nodestation<T>* station = ReturnStationPointer(bus->currentStation);
+//     //     bus->insideBus.Insert(station->NP.DeleteFirst());
+//     // }
 
-    void RemovePassenger(Passenger* passenger){
-        if (Fstation == nullptr) {
-            return;
-        }
-        int startStation = passenger->getStartStation();
-        Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
-        if (stationPtr == nullptr) {
-            cerr << "Error: Invalid start station for passenger."<< startStation << endl;
-            return;
-        }
-        stationPtr->NP.RemovePassenger(passenger);
-    }
-    // void addSpecialPassanger(Passenger* passenger){
+//     void RemovePassenger(Passenger* passenger){
+//         if (Fstation == nullptr) {
+//             return;
+//         }
+//         int startStation = passenger->getStartStation();
+//         Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
+//         if (stationPtr == nullptr) {
+//             cerr << "Error: Invalid start station for passenger."<< startStation << endl;
+//             return;
+//         }
+//         stationPtr->NP.RemovePassenger(passenger);
+//     }
+//     // void addSpecialPassanger(Passenger* passenger){
         
-    //     int startStation = passenger->getStartStation();
-    //     int priority=passenger->getPriority();
-    //     ReturnStationPointer(stationnumber)->SPQueue.enqueue(passenger,priority);
+//     //     int startStation = passenger->getStartStation();
+//     //     int priority=passenger->getPriority();
+//     //     ReturnStationPointer(stationnumber)->SPQueue.enqueue(passenger,priority);
         
-    // }
-    //try to make a funtion to return current station 
+//     // }
+//     //try to make a funtion to return current station 
 
-};
+// };
