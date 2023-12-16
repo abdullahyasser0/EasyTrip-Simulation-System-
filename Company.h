@@ -8,6 +8,7 @@
 #include "stations.h"
 using namespace std;
 //lol
+//lol2
 class Company {
 private:
     int numStations, minsStations;
