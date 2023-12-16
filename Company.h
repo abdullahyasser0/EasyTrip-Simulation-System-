@@ -14,7 +14,7 @@ private:
     int numWbuses, numNbuses, capacityWBus, capacityNBus;
     int CheckupTrips, checkupDWBus, checkupDMBus;
     int MaxW, OnOffTime, EventsNum;
-    LinkedList<Events*> eventsList;
+    Queue<Events> eventsQueue;
     StationsDLL<Passenger*> S;
     Bus buses;
     int hours, minutes;
@@ -27,22 +27,18 @@ public:
         EventList();
         for(int h=0;h<24;h++){
             for(int m=0;m<60;m++){
-                while(eventsList.getHead()!=nullptr&&h==eventsList.getHead()->getItem()->getHours()&&m==eventsList.getHead()->getItem()->getMinutes())
+                while(!eventsQueue.isEmpty()&&h==eventsQueue.getfront()->data->getHours()&&m==eventsQueue.getfront()->data->getMinutes())
                 {    
-                    if(eventsList.getHead()->getItem()->getetype()=='A')
+                    Events* currentEvent = eventsQueue.dequeue();
+
+                    if(currentEvent->getetype()=='A')
                     {
-                        Node<Events*>* current = eventsList.getHead();
-                        Events* currentEvent = current->getItem();
-                        cout<<"Passenger with ID: "<< currentEvent->getid()<<" reached the station at : "<<h<<":"<<m<<endl;
+                        cout << "Passenger with ID: " << currentEvent->getid() << " reached the station at : " << h << ":" << m << endl;
                         S.addPassenger(currentEvent->execute());
-                        eventsList.DeleteFirst();
-                    }else if(eventsList.getHead()->getItem()->getetype()=='L')
+                    }else if(currentEvent->getetype()=='L')
                     {
-                        Node<Events*>* current = eventsList.getHead();
-                        Events* currentEvent = current->getItem();
-                        cout<<"Passenger with ID: "<< currentEvent->getid()<<" left the station at : "<<h<<":"<<m<<endl;
+                        cout << "Passenger with ID: " << currentEvent->getid() << " left the station at : " << h << ":" << m << endl;
                         S.RemovePassenger(currentEvent->execute());
-                        eventsList.DeleteFirst();
                     }
                 }
             }
@@ -57,6 +53,7 @@ public:
               >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum ;
         
         S.addStationsByNumber(numStations);
+
         for (int i = 0; i < numNbuses; i++) {
             Bus* bus=buses.createNBus(capacityNBus);
             bus->setType("Normal");
@@ -88,35 +85,19 @@ public:
                 getline(input, priority);
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
-
                 ArrivalEvents* arrivalEvent = new ArrivalEvents(eventType,PType, priority, id, STRT, END, hours, minutes, OnOffTime);
 
-                eventsList.Insert(arrivalEvent);
+                eventsQueue.enqueue(arrivalEvent);
             } else if (eventType == 'L') {
                 input >> time >> id >> STRT;
 
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
-
                 LeaveEvents* leaveEvent = new LeaveEvents(eventType,id, STRT, hours, minutes);
-                eventsList.Insert(leaveEvent);
+                eventsQueue.enqueue(leaveEvent);
             }
         }
 
         input.close();
-    }
-
-    void ExecuteEvents() {
-        Node<Events*>* current = eventsList.getHead();
-        while (current != nullptr) {
-            Events* currentEvent = current->getItem();
-            S.addPassenger(currentEvent->execute());
-            current = current->getNext();
-        }
-        S.PrintAllStations();
-    }
-
-    ~Company() {
-        eventsList.DeleteAll();
     }
 };

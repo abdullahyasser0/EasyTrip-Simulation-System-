@@ -1,61 +1,85 @@
 #include<iostream>
-
 using namespace std;
 
-class QueueNode{
-    public:
-    QueueNode* next;
-    int data;
-    QueueNode(){data=0; next=NULL;}
+template <class T>
+class NormalNode {
+public:
+    T* data;
+    NormalNode* next;
 
+    NormalNode(T* d) : data(d), next(nullptr) {}
 };
 
-class Queue{
-    public:
-    QueueNode* front;
-    QueueNode* rear;
-    Queue(){
-        front=rear=NULL;
-    }
-    
-    bool isEmpty() {
-    return (front == NULL);
-}
+template <class T>
+class Queue {
+private:
+    NormalNode<T>* front;
+    NormalNode<T>* back;
 
+public:
+    Queue() : front(nullptr), back(nullptr) {}
 
-    void EnQueue(int x){
-        QueueNode* newnode=new QueueNode();
-        newnode->data=x;
-        if(isEmpty()){
-            front=rear=newnode;
-        }
-        else{
-            rear->next=newnode;
-            rear=newnode;
+    ~Queue() {
+        while (!isEmpty()) {
+            dequeue();
         }
     }
 
-    void displayQ(){
-        QueueNode* temp=front;
-        while (temp!=NULL)
-        {
-            cout<<temp->data<<endl;
-            temp=temp->next;
+    NormalNode<T>* getfront(){
+        return front;
+    }
+
+    NormalNode<T>* getback(){
+        return back;
+    }
+
+    bool enqueue(T* newData) {
+        NormalNode<T>* newNode = new NormalNode<T>(newData);
+        if (isEmpty()) {
+            front = back = newNode;
+        } else {
+            back->next = newNode;
+            back = newNode;
         }
+        return true;
     }
 
-    void deQueue(){
-        QueueNode* del=front;
-        front=front->next;
-        delete del;
-    }
-
-    int ViewFront(){
+        T* peek() const {
+        if (isEmpty()) {
+            return nullptr;
+        }
         return front->data;
     }
-    
-    int ViewRear(){
-        return rear->data;
+
+    T* dequeue() {
+        if (isEmpty()) {
+            return nullptr;
+        }
+
+        NormalNode<T>* dequeuedNode = front;
+        front = front->next;
+        if (front == nullptr) {
+            back = nullptr;
+        }
+
+        T* frontData = dequeuedNode->data;
+        delete dequeuedNode;
+
+        return frontData;
+    }
+
+    bool isEmpty() const {
+        return front == nullptr;
+    }
+
+    void printQueue() const {
+        NormalNode<T>* current = front;
+        while (current != nullptr) {
+            cout << "[ " << current->data->getID() << " ]";
+            cout << "--->";
+
+            current = current->next;
+        }
+        cout << "*\n";
     }
 };
-

@@ -12,7 +12,7 @@ class Nodestation{
 public :
     Nodestation<N>* next;
     Nodestation<N>* back;
-    Queue* busstop; //buss stop
+    // Queue* busstop; //buss stop
      
     //busses mantain "bayoumi says is should be on station 0 "
     
@@ -20,7 +20,7 @@ public :
 
     
     LinkedListp<Passenger> NP;
-    LinkedListp<Passenger> WP;
+    Queue<Passenger> WP;
     PriorityQueue SP; 
 
     Stack Ngarage;
@@ -38,7 +38,7 @@ public :
         next = nullptr;
         back = nullptr; 
 
-        busstop = nullptr; 
+        // busstop = nullptr; 
 
         Snumber  = 0;
 
@@ -49,7 +49,7 @@ public :
         cout<<"NP list: ";
         NP.PrintList();
         cout<<"WP list: ";
-        WP.PrintList();
+        WP.printQueue();
         cout<<"SP Queue: ";
         SP.printQueue();
         cout << "Garage: " << endl;
@@ -167,7 +167,7 @@ public:
         if (passengerType == "NP") {
             stationPtr->NP.Insert(passenger);
         } else if (passengerType == "WP") {
-            stationPtr->WP.Insert(passenger);
+            stationPtr->WP.enqueue(passenger);
         }else if (passengerType == "SP") {
             stationPtr->SP.enqueue(passenger);
         }
