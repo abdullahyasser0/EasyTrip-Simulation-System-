@@ -64,8 +64,8 @@ public :
         cout<<"Backword SP Queue: ";
         BSP.printQueue();
         cout << "Garage: " << endl;
-        cout <<"    Normal Buses: "<<Ngarage->counter <<endl; 
-        cout <<"    Wheel Buses: " <<Wgarage->counter << endl;
+        cout <<"    Normal Buses: "<<Ngarage.count() <<endl; 
+        cout <<"    Wheel Buses: " <<Wgarage.count() << endl;
         cout<<"-------------------------------------------------"<<endl;
     }
 

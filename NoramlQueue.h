@@ -6,8 +6,8 @@ class NormalNode {
 public:
     T* data;
     NormalNode* next;
-    int counter;
-    NormalNode(T* d) : data(d), next(nullptr) {}
+    int Qsize;
+    NormalNode(T* d) : data(d), next(nullptr), Qsize(0) {}
 };
 
 template <class T>
@@ -17,7 +17,7 @@ private:
     NormalNode<T>* back;
 
 public:
-    Queue() : front(nullptr), back(nullptr). counter(0) {}
+    Queue() : front(nullptr), back(nullptr) {}
 
     ~Queue() {
         while (!isEmpty()) {
@@ -41,7 +41,7 @@ public:
             back->next = newNode;
             back = newNode;
         }
-        counter++;
+        Qsize++;
         return true;
     }
 
@@ -65,7 +65,7 @@ public:
 
         T* frontData = dequeuedNode->data;
         delete dequeuedNode;
-        counter--;
+        Qsize--;
         return frontData;
     }
 
@@ -85,11 +85,6 @@ public:
     }
 
     int count(){
-        int count =0;
-        while (!isEmpty())
-        {
-            
-        }
-        
+        return Qsize;
     }
 };
