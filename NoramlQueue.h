@@ -6,8 +6,7 @@ class NormalNode {
 public:
     T* data;
     NormalNode* next;
-    int Qsize;
-    NormalNode(T* d) : data(d), next(nullptr), Qsize(0) {}
+    NormalNode(T* d) : data(d), next(nullptr) {}
 };
 
 template <class T>
@@ -15,9 +14,9 @@ class Queue {
 private:
     NormalNode<T>* front;
     NormalNode<T>* back;
-
+    int Qsize;
 public:
-    Queue() : front(nullptr), back(nullptr) {}
+    Queue() : front(nullptr), back(nullptr),Qsize(0) {}
 
     ~Queue() {
         while (!isEmpty()) {

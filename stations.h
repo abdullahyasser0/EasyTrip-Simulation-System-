@@ -159,8 +159,7 @@ public:
         }
     }
 
-    void addPassenger(Passenger* passenger)
-        {
+    void addPassenger(Passenger* passenger){
         if (Fstation == nullptr) {
             return;
         }
@@ -173,19 +172,18 @@ public:
             cerr << "Error: Invalid start station for passenger."<< startStation << endl;
             return;
         }
-        //im ading a variable called passdirection >> 0 : forword , 1 : backword
         string passengerType = passenger->getType();
-        int passDrection = passenger->getDirection();
+        int passDrection = passDirection(passenger);
        
         if (passengerType == "NP") {
-            if(passDrection=0) stationPtr->NP.Insert(passenger);
+            if(passDrection==0) stationPtr->NP.Insert(passenger);
             else stationPtr->BNP.Insert(passenger);
         } else if (passengerType == "WP") {
-            if(passDrection=0) stationPtr->WP.Insert(passenger);
-            else stationPtr->BWP.Insert(passenger);
+            if(passDrection==0) stationPtr->WP.enqueue(passenger);
+            else stationPtr->BWP.enqueue(passenger);
         }else if (passengerType == "SP") {
-            if(passDrection=0) stationPtr->SP.Insert(passenger);
-            else stationPtr->BSP.Insert(passenger);        
+            if(passDrection==0) stationPtr->SP.enqueue(passenger);
+            else stationPtr->BSP.enqueue(passenger);        
             }
 
     }
@@ -207,13 +205,19 @@ public:
     //     Nodestation<T>* station = ReturnStationPointer(bus->currentStation);
     //     bus->insideBus.Insert(station->NP.DeleteFirst());
     // }
-
+    int passDirection(Passenger* passenger){
+        int start = passenger->getStartStation();
+        int end = passenger->getEndStation();
+        if ((end-start)>0) return 0;
+        else return 1;
+    }
+    
     void RemovePassenger(Passenger* passenger){
         if (Fstation == nullptr) {
             return;
         }
+        int passDrection = passDirection(passenger);
         int startStation = passenger->getStartStation();
-        int passDrection = passenger->getDirection();
         Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
         if (stationPtr == nullptr) {
             cerr << "Error: Invalid start station for passenger."<< startStation << endl;
