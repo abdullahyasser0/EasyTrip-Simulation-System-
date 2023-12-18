@@ -89,11 +89,6 @@ public:
         return (Fstation==nullptr);
     }
 
-    // void garagebus(T* bus)
-    // {
-    //     garage->push(bus);
-    // }
-
     void addstation(){
         Nodestation<T>* newstation= new Nodestation<T>;
 
@@ -200,11 +195,7 @@ public:
 
     }
 
-    // void addNPassToBus(Bus* bus)
-    // {
-    //     Nodestation<T>* station = ReturnStationPointer(bus->currentStation);
-    //     bus->insideBus.Insert(station->NP.DeleteFirst());
-    // }
+
     int passDirection(Passenger* passenger){
         int start = passenger->getStartStation();
         int end = passenger->getEndStation();
@@ -226,13 +217,5 @@ public:
         if(passDrection==0) stationPtr->NP.RemovePassenger(passenger);
         else stationPtr->BNP.RemovePassenger(passenger);
     }
-    // void addSpecialPassanger(Passenger* passenger){
-        
-    //     int startStation = passenger->getStartStation();
-    //     int priority=passenger->getPriority();
-    //     ReturnStationPointer(stationnumber)->SPQueue.enqueue(passenger,priority);
-        
-    // }
-    //try to make a funtion to return current station 
 
 };
