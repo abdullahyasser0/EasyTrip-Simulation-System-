@@ -20,8 +20,13 @@ public :
 
     
     LinkedListp<Passenger> NP;
+    LinkedListp<Passenger> BNP;
+
     Queue<Passenger> WP;
-    PriorityQueue SP; 
+    Queue<Passenger> BWP;
+    
+    PriorityQueue SP;
+    PriorityQueue BSP;
 
     Stack Ngarage;
     Stack Wgarage;
@@ -46,12 +51,18 @@ public :
 
     void PrintAllstation(){
         cout<<"Station Number: "<<Snumber<<endl;
-        cout<<"NP list: ";
+        cout<<"Forward NP list: ";
         NP.PrintList();
-        cout<<"WP list: ";
+        cout<<"Backword NP list: ";
+        BNP.PrintList();
+        cout<<"Forward WP list: ";
         WP.printQueue();
-        cout<<"SP Queue: ";
+        cout<<"Backword WP list: ";
+        BWP.printQueue();
+        cout<<"Forward SP Queue: ";
         SP.printQueue();
+        cout<<"Backword SP Queue: ";
+        BSP.printQueue();
         cout << "Garage: " << endl;
         cout <<"    Normal Buses: "<<Ngarage.countBuses()<<endl;
         cout <<"    Wheel Buses: " <<Wgarage.countBuses()<< endl;
@@ -162,15 +173,19 @@ public:
             cerr << "Error: Invalid start station for passenger."<< startStation << endl;
             return;
         }
-
+        //im ading a variable called passdirection >> 0 : forword , 1 : backword
         string passengerType = passenger->getType();
+        int passDrection = passenger->getDirection();
         if (passengerType == "NP") {
-            stationPtr->NP.Insert(passenger);
+            if(passDrection=0) stationPtr->NP.Insert(passenger);
+            else stationPtr->BNP.Insert(passenger);
         } else if (passengerType == "WP") {
-            stationPtr->WP.enqueue(passenger);
+            if(passDrection=0) stationPtr->WP.Insert(passenger);
+            else stationPtr->BWP.Insert(passenger);
         }else if (passengerType == "SP") {
-            stationPtr->SP.enqueue(passenger);
-        }
+            if(passDrection=0) stationPtr->SP.Insert(passenger);
+            else stationPtr->BSP.Insert(passenger);        
+            }
 
     }
 
@@ -197,12 +212,14 @@ public:
             return;
         }
         int startStation = passenger->getStartStation();
+        int passDrection = passenger->getDirection();
         Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
         if (stationPtr == nullptr) {
             cerr << "Error: Invalid start station for passenger."<< startStation << endl;
             return;
         }
-        stationPtr->NP.RemovePassenger(passenger);
+        if(passDrection==0) stationPtr->NP.RemovePassenger(passenger);
+        else stationPtr->BNP.RemovePassenger(passenger);
     }
     // void addSpecialPassanger(Passenger* passenger){
         
