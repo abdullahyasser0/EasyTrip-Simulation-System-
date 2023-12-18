@@ -28,8 +28,8 @@ public :
     PriorityQueue SP;
     PriorityQueue BSP;
 
-    Stack Ngarage;
-    Stack Wgarage;
+    Queue<Bus> Ngarage;
+    Queue<Bus> Wgarage;
     /*
     must add a variable for the waitiing passangers of type <queue> 
     this is the link between me and the passengers class
@@ -64,8 +64,8 @@ public :
         cout<<"Backword SP Queue: ";
         BSP.printQueue();
         cout << "Garage: " << endl;
-        cout <<"    Normal Buses: "<<Ngarage.countBuses()<<endl;
-        cout <<"    Wheel Buses: " <<Wgarage.countBuses()<< endl;
+        cout <<"    Normal Buses: "<<Ngarage->counter <<endl; 
+        cout <<"    Wheel Buses: " <<Wgarage->counter << endl;
         cout<<"-------------------------------------------------"<<endl;
     }
 
@@ -176,6 +176,7 @@ public:
         //im ading a variable called passdirection >> 0 : forword , 1 : backword
         string passengerType = passenger->getType();
         int passDrection = passenger->getDirection();
+       
         if (passengerType == "NP") {
             if(passDrection=0) stationPtr->NP.Insert(passenger);
             else stationPtr->BNP.Insert(passenger);
@@ -191,13 +192,13 @@ public:
 
     void storeNBus(Bus* bus)
     {
-            Fstation->Ngarage.push(bus);
+        Fstation->Ngarage.enqueue(bus);
 
     }
 
     void storeWBus(Bus* bus)
     {
-            Fstation->Wgarage.push(bus);
+            Fstation->Wgarage.enqueue(bus);
 
     }
 

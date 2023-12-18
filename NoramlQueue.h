@@ -6,7 +6,7 @@ class NormalNode {
 public:
     T* data;
     NormalNode* next;
-
+    int counter;
     NormalNode(T* d) : data(d), next(nullptr) {}
 };
 
@@ -17,7 +17,7 @@ private:
     NormalNode<T>* back;
 
 public:
-    Queue() : front(nullptr), back(nullptr) {}
+    Queue() : front(nullptr), back(nullptr). counter(0) {}
 
     ~Queue() {
         while (!isEmpty()) {
@@ -41,6 +41,7 @@ public:
             back->next = newNode;
             back = newNode;
         }
+        counter++;
         return true;
     }
 
@@ -64,7 +65,7 @@ public:
 
         T* frontData = dequeuedNode->data;
         delete dequeuedNode;
-
+        counter--;
         return frontData;
     }
 
@@ -81,5 +82,14 @@ public:
             current = current->next;
         }
         cout << "*\n";
+    }
+
+    int count(){
+        int count =0;
+        while (!isEmpty())
+        {
+            
+        }
+        
     }
 };
