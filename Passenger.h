@@ -1,5 +1,5 @@
-#ifndef PASSENGER
-#define PASSENGER
+#pragma once
+
 #include<iostream>
 using namespace std;
 
@@ -55,4 +55,3 @@ Passenger(string passengerType, int id, int hours, int mins, int startstation, i
         return type;
     }
 };
-#endif

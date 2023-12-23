@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include "Company.h"  
 #include "stations.h"

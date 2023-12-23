@@ -1,8 +1,8 @@
 #pragma once
-#include "Stack.h"
-#include "NoramlQueue.h"
-#include "LinkedListp.h"
-#include "PriorityQueue.h"
+#include "dataStructures/Stack.h"
+#include "dataStructures/NoramlQueue.h"
+#include "dataStructures/LinkedListp.h"
+#include "dataStructures/PriorityQueue.h"
 #include <iostream>
 using namespace std;
 

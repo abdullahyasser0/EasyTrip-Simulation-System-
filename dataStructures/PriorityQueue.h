@@ -1,4 +1,5 @@
-#include "Passenger.h"
+#pragma once
+#include "../Passenger.h"
 
 class PriorityNode {
 public:

@@ -1,10 +1,12 @@
+#pragma once
+
 #include <cstddef>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include "ArrivalEvents.h"
 #include "LeaveEvents.h"
-#include "LinkedList.h"
+//#include "dataStructures/LinkedList.h"
 #include "stations.h"
 using namespace std;
 class Company {
