@@ -77,10 +77,12 @@ class StationsDLL{
 
 public:
     Nodestation<T>* Fstation;
+    int currentStation;
 
     StationsDLL()
     { 
         Fstation = nullptr;
+        currentStation = 0;
     }
     
 
@@ -216,6 +218,14 @@ public:
         }
         if(passDrection==0) stationPtr->NP.RemovePassenger(passenger);
         else stationPtr->BNP.RemovePassenger(passenger);
+    }
+    // added functions to use it in my ui class 
+    int getCurrentStation() {
+        return currentStation;
+    }
+
+    void moveToNextStation() {
+        currentStation++;
     }
 
 };

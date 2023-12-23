@@ -42,9 +42,50 @@ public:
                 }
             }
         }
+
+
                             S.PrintAllStations();
 
     }
+
+    void PrintWaitingPassengers(){
+        Nodestation<Passenger*>* currentStation = S.Fstation;
+        while(currentStation!=nullptr){
+            cout << "Waiting passengers at Station #" << currentStation->Snumber << ":" << endl;
+            cout << "   NP (Forward): ";
+            currentStation->NP.PrintList();
+            cout << "   NP (Backward): ";
+            currentStation->BNP.PrintList();
+
+            cout << "   WP (Forward): ";
+            currentStation->WP.printQueue();
+        
+            cout << "   WP (Backward): ";
+            currentStation->BWP.printQueue();
+
+            cout << "   SP (Forward): ";
+            currentStation->SP.printQueue();
+        
+            cout << "   SP (Backward): ";
+            currentStation->BSP.printQueue();
+
+            cout << "-------------------------------------------------" << endl;
+
+            currentStation = currentStation->next;
+        }
+    }
+
+
+
+    // to return the current hours 
+    int getCurrentHour(){
+        return hours;
+    }
+    int getCurrentMinute()
+    {
+        return minutes;
+    }
+
 
     void ReadInput() {
         ifstream input("input.txt");
