@@ -16,7 +16,7 @@ private:
     int CheckupTrips, checkupDWBus, checkupDMBus;
     int MaxW, OnOffTime, EventsNum;
     Queue<Events> eventsQueue;
-    StationsDLL<Passenger*> S;
+    Stations<Passenger*> S;
     Bus buses;
     int hours, minutes;
     char colon,eventType;
@@ -46,34 +46,31 @@ public:
         }
 
 
-                            S.PrintAllStations();
+                            S.PrintAllStations(numStations);//must be changed to number of stations
 
     }
 
     void PrintWaitingPassengers(){
-        Nodestation<Passenger*>* currentStation = S.Fstation;
-        while(currentStation!=nullptr){
-            cout << "Waiting passengers at Station #" << currentStation->Snumber << ":" << endl;
+        for(int i =0;i<3;i++){
+            cout << "Waiting passengers at Station #" << S.list[i].Snumber << ":" << endl;
             cout << "   NP (Forward): ";
-            currentStation->NP.PrintList();
+            S.list[i].NP.PrintList();
             cout << "   NP (Backward): ";
-            currentStation->BNP.PrintList();
+            S.list[i].BNP.PrintList();
 
             cout << "   WP (Forward): ";
-            currentStation->WP.printQueue();
+            S.list[i].WP.printQueue();
         
             cout << "   WP (Backward): ";
-            currentStation->BWP.printQueue();
+            S.list[i].BWP.printQueue();
 
             cout << "   SP (Forward): ";
-            currentStation->SP.printQueue();
+            S.list[i].SP.printQueue();
         
             cout << "   SP (Backward): ";
-            currentStation->BSP.printQueue();
+            S.list[i].BSP.printQueue();
 
             cout << "-------------------------------------------------" << endl;
-
-            currentStation = currentStation->next;
         }
     }
 
@@ -95,7 +92,6 @@ public:
               >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum ;
         
         S.addStationsByNumber(numStations);
-
         for (int i = 0; i < numNbuses; i++) {
             Bus* bus=buses.createNBus(capacityNBus);
             bus->setType("Normal");
