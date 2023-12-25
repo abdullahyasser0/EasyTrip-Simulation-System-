@@ -25,7 +25,7 @@ public :
     Nodestation(){
         Snumber  = 0;
     }
-
+//noontest
     void PrintStationInfo(){ 
         cout<<"Station Number: "<<Snumber<<endl;
         cout<<"Forward NP list: ";
