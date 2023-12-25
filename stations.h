@@ -26,7 +26,7 @@ public :
         Snumber  = 0;
     }
 
-    void PrintStationInfo(){ // will be confiegered 
+    void PrintStationInfo(){ 
         cout<<"Station Number: "<<Snumber<<endl;
         cout<<"Forward NP list: ";
         NP.PrintList();
@@ -132,10 +132,6 @@ public:
 
         int passDrection = passDirection(passenger);
         int startStation = passenger->getStartStation();
-        // if (list[startStation] < 0) {
-        //     cerr << "Error: Invalid start station for passenger."<< startStation << endl;
-        //     return;
-        // }
         if(passDrection==0) list[startStation].NP.RemovePassenger(passenger);
         else list[startStation].BNP.RemovePassenger(passenger);
     }
