@@ -1,9 +1,10 @@
 #pragma once
-#include "dataStructures/Stack.h"
 #include "dataStructures/NoramlQueue.h"
 #include "dataStructures/LinkedListp.h"
 #include "dataStructures/PriorityQueue.h"
 #include <iostream>
+#include "Buses.h"
+#include "Passenger.h"
 using namespace std;
 template <typename N>
 class Nodestation{
@@ -16,8 +17,8 @@ public :
     Queue<Passenger> WP;
     Queue<Passenger> BWP;
     
-    PriorityQueue SP;
-    PriorityQueue BSP;
+    PriorityQueue<Passenger> SP;
+    PriorityQueue<Passenger> BSP;
 
     Queue<Bus> Ngarage;
     Queue<Bus> Wgarage;

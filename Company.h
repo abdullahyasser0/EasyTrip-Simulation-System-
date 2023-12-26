@@ -35,23 +35,23 @@ public:
                     if(currentEvent->getetype()=='A')
                     {
                         cout << "Passenger with ID: " << currentEvent->getid() << " reached the station at : " << h << ":" << m << endl;
-                        S.addPassenger(currentEvent->execute());
+                        currentEvent->execute(S);
                     }else if(currentEvent->getetype()=='L')
                     {
                         cout << "Passenger with ID: " << currentEvent->getid() << " left the station at : " << h << ":" << m << endl;
-                        S.RemovePassenger(currentEvent->execute());
+                        currentEvent->execute(S);
                     }
                 }
             }
         }
 
 
-                            S.PrintAllStations(numStations);//must be changed to number of stations
+                            S.PrintAllStations(numStations+1);
 
     }
 
     void PrintWaitingPassengers(){
-        for(int i =0;i<3;i++){
+        for(int i =0;i<numStations+1;i++){
             cout << "Waiting passengers at Station #" << S.list[i].Snumber << ":" << endl;
             cout << "   NP (Forward): ";
             S.list[i].NP.PrintList();

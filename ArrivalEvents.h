@@ -30,9 +30,9 @@ public:
 
 	}
 
-	Passenger* execute() override {
+	void execute(Stations<Passenger*> S) override {
 		passenger = new Passenger(PassengerType,ID, Hours,Minutes, STRT, END, OnOffTime, Priority);
-		return passenger;
+		S.addPassenger(passenger);
 		}
 	
 	int getHours()override{

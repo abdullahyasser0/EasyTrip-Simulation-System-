@@ -1,23 +1,52 @@
 #pragma once
-#include "../Passenger.h"
+#include <iostream>
+using namespace std;
 
+template <typename T>
 class PriorityNode {
-public:
-    Passenger* passenger;
+private:
+    T* item;
     PriorityNode* next;
     PriorityNode* prev;
+    int priority;
 
-    Passenger* getitem(){
-        return  passenger;
-    }    
-    PriorityNode(Passenger* p) : passenger(p), next(nullptr), prev(nullptr) {}
+public:
+    T* getItem() const {
+        return item;
+    }
+
+    PriorityNode* getNext() const {
+        return next;
+    }
+
+    PriorityNode* getPrev() const {
+        return prev;
+    }
+
+    int getPriority() const {
+        return priority;
+    }
+
+    void setNext(PriorityNode* n) {
+        next = n;
+    }
+
+    void setPrev(PriorityNode* p) {
+        prev = p;
+    }
+
+    void setPriority(int prio) {
+        priority = prio;
+    }
+
+    PriorityNode(T* p) : item(p), next(nullptr), prev(nullptr) {}
 };
 
-
+template <typename T>
 class PriorityQueue {
 private:
-    PriorityNode* front;
-    PriorityNode* back;
+    PriorityNode<T>* front;
+    PriorityNode<T>* back;
 
 public:
     PriorityQueue() : front(nullptr), back(nullptr) {}
@@ -28,46 +57,46 @@ public:
         }
     }
 
-bool enqueue(Passenger* newPassenger) {
-    PriorityNode* newNode = new PriorityNode(newPassenger);
-    if (isEmpty() || newPassenger->getPriority() > front->passenger->getPriority()) {
-        newNode->next = front;
-        front = newNode;
-    } else {
-        PriorityNode* prev = nullptr;
-        PriorityNode* current = front;
-
-        while (current != nullptr && newPassenger->getPriority() <= current->passenger->getPriority()) {
-            prev = current;
-            current = current->next;
-        }
-
-        if (prev == nullptr) {
-            newNode->next = front;
+    bool enqueue(T* newPassenger) {
+        PriorityNode<T>* newNode = new PriorityNode<T>(newPassenger);
+        if (isEmpty() || newPassenger->getPriority() > front->getItem()->getPriority()) {
+            newNode->setNext(front);
             front = newNode;
         } else {
-            prev->next = newNode;
-            newNode->next = current;
+            PriorityNode<T>* prev = nullptr;
+            PriorityNode<T>* current = front;
+
+            while (current != nullptr && newPassenger->getPriority() <= current->getItem()->getPriority()) {
+                prev = current;
+                current = current->getNext();
+            }
+
+            if (prev == nullptr) {
+                newNode->setNext(front);
+                front = newNode;
+            } else {
+                prev->setNext(newNode);
+                newNode->setNext(current);
+            }
         }
+
+        return true;
     }
 
-    return true;
-}
-
-    Passenger* dequeue() {
+    T* dequeue() {
         if (isEmpty()) {
-            return nullptr; 
+            return nullptr;
         }
 
-        PriorityNode* dequeuedNode = front;
-        front = front->next;
+        PriorityNode<T>* dequeuedNode = front;
+        front = front->getNext();
         if (front != nullptr) {
-            front->prev = nullptr;
+            front->setPrev(nullptr);
         } else {
             back = nullptr;
         }
 
-        Passenger* frontPassenger = dequeuedNode->passenger;
+        T* frontPassenger = dequeuedNode->getItem();
         delete dequeuedNode;
 
         return frontPassenger;
@@ -78,12 +107,12 @@ bool enqueue(Passenger* newPassenger) {
     }
 
     void printQueue() const {
-        PriorityNode* current = front;
+        PriorityNode<T>* current = front;
         while (current != nullptr) {
-            cout << "[ " << current->passenger->getID() << " ]";
+            cout << "[ " << current->getItem()->getID() << " ]";
             cout << "--->";
 
-            current = current->next;
+            current = current->getNext();
         }
         cout << "*\n";
     }

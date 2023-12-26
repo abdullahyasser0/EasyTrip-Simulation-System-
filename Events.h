@@ -1,7 +1,7 @@
 #pragma once
-
 #include <iostream>
 #include "Passenger.h"
+#include "stations.h"
 using namespace std;
 class Events {
 protected:
@@ -9,7 +9,7 @@ protected:
     int ID, STRT, END, Hours, Minutes,OnOffTime;
     char EventType;
 public:
-    virtual Passenger* execute() = 0;
+    virtual void execute(Stations<Passenger*> S) = 0;
     virtual int getid() = 0;
     virtual int getHours() = 0;
     virtual int getMinutes() = 0;
