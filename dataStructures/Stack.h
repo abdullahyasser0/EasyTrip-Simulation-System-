@@ -1,5 +1,7 @@
+#pragma once
+
 #include <iostream>
-#include "Buses.h"
+#include "../Buses.h"
 using namespace std;
 
 class NodeStack {

@@ -1,10 +1,12 @@
 #include "Company.h"
+//#include "UI.h"
+
+
 using namespace std;
 
 int main() {
-    
-Company BusProject;
+    Company BusProject;
+    //UI ui;
 
-return 0;
-
+    return 0;
 }

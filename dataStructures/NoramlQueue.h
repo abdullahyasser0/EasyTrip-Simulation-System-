@@ -1,3 +1,5 @@
+#pragma once
+
 #include<iostream>
 using namespace std;
 
@@ -6,7 +8,6 @@ class NormalNode {
 public:
     T* data;
     NormalNode* next;
-
     NormalNode(T* d) : data(d), next(nullptr) {}
 };
 
@@ -15,9 +16,9 @@ class Queue {
 private:
     NormalNode<T>* front;
     NormalNode<T>* back;
-
+    int Qsize;
 public:
-    Queue() : front(nullptr), back(nullptr) {}
+    Queue() : front(nullptr), back(nullptr),Qsize(0) {}
 
     ~Queue() {
         while (!isEmpty()) {
@@ -41,6 +42,7 @@ public:
             back->next = newNode;
             back = newNode;
         }
+        Qsize++;
         return true;
     }
 
@@ -64,7 +66,7 @@ public:
 
         T* frontData = dequeuedNode->data;
         delete dequeuedNode;
-
+        Qsize--;
         return frontData;
     }
 
@@ -81,5 +83,9 @@ public:
             current = current->next;
         }
         cout << "*\n";
+    }
+
+    int count(){
+        return Qsize;
     }
 };

@@ -1,5 +1,5 @@
-#ifndef EVENTS_H
-#define EVENTS_H
+#pragma once
+
 #include <iostream>
 #include "Passenger.h"
 using namespace std;
@@ -17,4 +17,3 @@ public:
 
 
 };
-#endif

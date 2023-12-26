@@ -1,10 +1,12 @@
+#pragma once
+
 #include <cstddef>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include "ArrivalEvents.h"
 #include "LeaveEvents.h"
-#include "LinkedList.h"
+//#include "dataStructures/LinkedList.h"
 #include "stations.h"
 using namespace std;
 class Company {
@@ -14,7 +16,7 @@ private:
     int CheckupTrips, checkupDWBus, checkupDMBus;
     int MaxW, OnOffTime, EventsNum;
     Queue<Events> eventsQueue;
-    StationsDLL<Passenger*> S;
+    Stations<Passenger*> S;
     Bus buses;
     int hours, minutes;
     char colon,eventType;
@@ -42,9 +44,47 @@ public:
                 }
             }
         }
-                            S.PrintAllStations();
+
+
+                            S.PrintAllStations(numStations);//must be changed to number of stations
 
     }
+
+    void PrintWaitingPassengers(){
+        for(int i =0;i<3;i++){
+            cout << "Waiting passengers at Station #" << S.list[i].Snumber << ":" << endl;
+            cout << "   NP (Forward): ";
+            S.list[i].NP.PrintList();
+            cout << "   NP (Backward): ";
+            S.list[i].BNP.PrintList();
+
+            cout << "   WP (Forward): ";
+            S.list[i].WP.printQueue();
+        
+            cout << "   WP (Backward): ";
+            S.list[i].BWP.printQueue();
+
+            cout << "   SP (Forward): ";
+            S.list[i].SP.printQueue();
+        
+            cout << "   SP (Backward): ";
+            S.list[i].BSP.printQueue();
+
+            cout << "-------------------------------------------------" << endl;
+        }
+    }
+
+
+
+    // to return the current hours 
+    int getCurrentHour(){
+        return hours;
+    }
+    int getCurrentMinute()
+    {
+        return minutes;
+    }
+
 
     void ReadInput() {
         ifstream input("input.txt");
@@ -52,7 +92,6 @@ public:
               >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum ;
         
         S.addStationsByNumber(numStations);
-
         for (int i = 0; i < numNbuses; i++) {
             Bus* bus=buses.createNBus(capacityNBus);
             bus->setType("Normal");

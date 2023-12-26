@@ -1,216 +1,144 @@
 #pragma once
-#include "Stack.h"
-#include "NoramlQueue.h"
-#include "LinkedListp.h"
-#include "PriorityQueue.h"
+#include "dataStructures/Stack.h"
+#include "dataStructures/NoramlQueue.h"
+#include "dataStructures/LinkedListp.h"
+#include "dataStructures/PriorityQueue.h"
 #include <iostream>
 using namespace std;
-
 template <typename N>
 class Nodestation{
-
+//test
 public :
-    Nodestation<N>* next;
-    Nodestation<N>* back;
-    // Queue* busstop; //buss stop
-     
-    //busses mantain "bayoumi says is should be on station 0 "
-    
-    int Snumber;
-
-    
+    int Snumber; 
     LinkedListp<Passenger> NP;
+    LinkedListp<Passenger> BNP;
+
     Queue<Passenger> WP;
-    PriorityQueue SP; 
+    Queue<Passenger> BWP;
+    
+    PriorityQueue SP;
+    PriorityQueue BSP;
 
-    Stack Ngarage;
-    Stack Wgarage;
-    /*
-    must add a variable for the waitiing passangers of type <queue> 
-    this is the link between me and the passengers class
-
-    how the buses and me will operate ?
-    the buses will maintain <queue> , garage in station 0 <stack>, stop into the bus stops <queue> 
-    */
-
+    Queue<Bus> Ngarage;
+    Queue<Bus> Wgarage;
+    
     Nodestation(){
-
-        next = nullptr;
-        back = nullptr; 
-
-        // busstop = nullptr; 
-
         Snumber  = 0;
-
     }
-
-    void PrintAllstation(){
+//noontest
+    void PrintStationInfo(){ 
         cout<<"Station Number: "<<Snumber<<endl;
-        cout<<"NP list: ";
+        cout<<"Forward NP list: ";
         NP.PrintList();
-        cout<<"WP list: ";
+        cout<<"Backword NP list: ";
+        BNP.PrintList();
+        cout<<"Forward WP list: ";
         WP.printQueue();
-        cout<<"SP Queue: ";
+        cout<<"Backword WP list: ";
+        BWP.printQueue();
+        cout<<"Forward SP Queue: ";
         SP.printQueue();
+        cout<<"Backword SP Queue: ";
+        BSP.printQueue();
         cout << "Garage: " << endl;
-        cout <<"    Normal Buses: "<<Ngarage.countBuses()<<endl;
-        cout <<"    Wheel Buses: " <<Wgarage.countBuses()<< endl;
+        cout <<"    Normal Buses: "<<Ngarage.count() <<endl; 
+        cout <<"    Wheel Buses: " <<Wgarage.count() << endl;
         cout<<"-------------------------------------------------"<<endl;
     }
 
 };
 
-
 template <typename T>
-class StationsDLL{
+class Stations{
 
 public:
-    Nodestation<T>* Fstation;
-
-    StationsDLL()
-    { 
-        Fstation = nullptr;
-    }
+    int size;
+    Nodestation<T>* list;
     
-
-    bool nostation()
-    {
-        return (Fstation==nullptr);
+    Stations() {
+        size=0;
+        list=nullptr;
+    }
+    Stations(int size){
+        list = new Nodestation<T>[size+1];
     }
 
-    // void garagebus(T* bus)
-    // {
-    //     garage->push(bus);
-    // }
-
-    void addstation(){
-        Nodestation<T>* newstation= new Nodestation<T>;
-
-        if(nostation())
-        {
-            newstation->Snumber=0;
-            Fstation=newstation;
-
-        }    
-        else{
-
-            Nodestation<T>* temp=Fstation;
-
-            while (temp->next !=nullptr)
-            {
-                temp=temp->next;
-            }
-
-            newstation->Snumber=temp->Snumber+1;
-            temp->next=newstation;
-            newstation->back=temp;
-        }
-
-
-    }
     void addStationsByNumber(int numberOfStations)
     {
-        for (int i=0 ;i<numberOfStations+1 ; i++){
-            addstation();
+        Nodestation<T>* newArray=new Nodestation<T>[numberOfStations+1]{};
+        delete[] list;
+        list=newArray;
+        size=numberOfStations+1;
+        for (int i =0;i<=numberOfStations;i++){
+            list[i].Snumber=i;
         }
     }
 
-    Nodestation<T> *ReturnStationPointer(int stationnumber)
+ 
+    void display(int size){
+        for(int i=0;i<size;i++){
+            list[i].Snumber=i;
+            cout<<list[i].Snumber<<endl;
+        }
+    }
+
+    void PrintAllStations(int size) 
     {
-        Nodestation<T>* temp=Fstation;
-        while (temp!=nullptr)
+        for (int i=0;i<size;i++)
         {
-            if(temp->Snumber!=stationnumber) temp=temp->next;
-            else return temp;
-        }
-        return nullptr;
-    }
-
-    void display()
-    {
-        if(!nostation()){
-        Nodestation<T>* temp=Fstation;
-        while (temp!=nullptr)
-        {
-            cout<<temp->Snumber<<endl;
-            temp=temp->next;
-        }
+            list[i].PrintStationInfo();
         }
     }
 
-    void PrintAllStations() 
-    {
-        Nodestation<T>* temp = Fstation;
-        while (temp != nullptr) 
-        {
-            temp->PrintAllstation();
-            temp = temp->next;
-        }
-    }
-
-    void addPassenger(Passenger* passenger)
-        {
-        if (Fstation == nullptr) {
-            return;
-        }
-
+    void addPassenger(Passenger* passenger){
         int startStation = passenger->getStartStation();
-        Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
-
-        if (stationPtr == nullptr) 
-        {
-            cerr << "Error: Invalid start station for passenger."<< startStation << endl;
-            return;
-        }
-
         string passengerType = passenger->getType();
+        int passDrection = passDirection(passenger);
+       
         if (passengerType == "NP") {
-            stationPtr->NP.Insert(passenger);
+            if(passDrection==0) list[startStation].NP.Insert(passenger);
+            else list[startStation].BNP.Insert(passenger);
         } else if (passengerType == "WP") {
-            stationPtr->WP.enqueue(passenger);
+            if(passDrection==0) list[startStation].WP.enqueue(passenger);
+            else list[startStation].BWP.enqueue(passenger);
         }else if (passengerType == "SP") {
-            stationPtr->SP.enqueue(passenger);
-        }
+            if(passDrection==0) list[startStation].SP.enqueue(passenger);
+            else list[startStation].BSP.enqueue(passenger);        
+            }
 
     }
 
     void storeNBus(Bus* bus)
     {
-            Fstation->Ngarage.push(bus);
+        list[0].Ngarage.enqueue(bus);
 
     }
 
     void storeWBus(Bus* bus)
     {
-            Fstation->Wgarage.push(bus);
+            list[0].Wgarage.enqueue(bus);
 
     }
 
-    // void addNPassToBus(Bus* bus)
-    // {
-    //     Nodestation<T>* station = ReturnStationPointer(bus->currentStation);
-    //     bus->insideBus.Insert(station->NP.DeleteFirst());
-    // }
 
+    int passDirection(Passenger* passenger){
+        int start = passenger->getStartStation();
+        int end = passenger->getEndStation();
+        if ((end-start)>0) return 0;
+        else return 1;
+    }
+    
     void RemovePassenger(Passenger* passenger){
-        if (Fstation == nullptr) {
-            return;
-        }
+
+        int passDrection = passDirection(passenger);
         int startStation = passenger->getStartStation();
-        Nodestation<T>* stationPtr = ReturnStationPointer(startStation);
-        if (stationPtr == nullptr) {
-            cerr << "Error: Invalid start station for passenger."<< startStation << endl;
-            return;
-        }
-        stationPtr->NP.RemovePassenger(passenger);
+        if(passDrection==0) list[startStation].NP.RemovePassenger(passenger);
+        else list[startStation].BNP.RemovePassenger(passenger);
     }
-    // void addSpecialPassanger(Passenger* passenger){
-        
-    //     int startStation = passenger->getStartStation();
-    //     int priority=passenger->getPriority();
-    //     ReturnStationPointer(stationnumber)->SPQueue.enqueue(passenger,priority);
-        
+
+
+    // void moveToNextStation() {
+    //     currentStation++;
     // }
-    //try to make a funtion to return current station 
 
 };

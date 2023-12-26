@@ -1,7 +1,7 @@
 #pragma once
 #include "Nodep.h"
 #include <iostream>
-#include "Passenger.h"
+#include "../Passenger.h"
 using namespace std;
 
 template <typename T>
