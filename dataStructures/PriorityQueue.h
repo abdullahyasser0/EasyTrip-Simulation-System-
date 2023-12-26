@@ -59,14 +59,14 @@ public:
 
     bool enqueue(T* newPassenger) {
         PriorityNode<T>* newNode = new PriorityNode<T>(newPassenger);
-        if (isEmpty() || newPassenger->getPriority() > front->getItem()->getPriority()) {
+        if (isEmpty() || newPassenger->getPriority() < front->getItem()->getPriority()) { // it was >
             newNode->setNext(front);
             front = newNode;
         } else {
             PriorityNode<T>* prev = nullptr;
             PriorityNode<T>* current = front;
 
-            while (current != nullptr && newPassenger->getPriority() <= current->getItem()->getPriority()) {
+            while (current != nullptr && newPassenger->getPriority() >= current->getItem()->getPriority()) { // it was <=
                 prev = current;
                 current = current->getNext();
             }

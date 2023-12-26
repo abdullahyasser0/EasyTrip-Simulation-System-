@@ -2,6 +2,7 @@
 #include<iostream>
 #include "dataStructures/LinKedListp.h"
 #include "Passenger.h"
+#include "dataStructures/PriorityQueue.h"
 using namespace std;
 
 
@@ -12,6 +13,7 @@ class Bus {
         int maintenance;
         int currentStation;
 		LinkedListp<Passenger> insideBus;
+		PriorityQueue<Passenger> moving_passenger;
 
 
         Bus(){
@@ -53,7 +55,14 @@ class Bus {
 			return bus;
 		}
 
-	
+		void getPassOn(Passenger* p){
+			moving_passenger.enqueue(p);
+		}
+
+		Passenger* getPassOff() {
+			Passenger *p = moving_passenger.dequeue();
+			return p;
+		}
 
 		
 		// void loopStation(){
