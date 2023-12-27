@@ -52,23 +52,23 @@ public:
 
     void PrintWaitingPassengers(){
         for(int i =0;i<numStations+1;i++){
-            cout << "Waiting passengers at Station #" << S.list[i].Snumber << ":" << endl;
+            cout << "Waiting passengers at Station #" << S.list[i].getSnumber()<< ":" << endl;
             cout << "   NP (Forward): ";
-            S.list[i].NP.PrintList();
+            S.list[i].getNP()->PrintList();
             cout << "   NP (Backward): ";
-            S.list[i].BNP.PrintList();
+            S.list[i].getBNP()->PrintList();
 
             cout << "   WP (Forward): ";
-            S.list[i].WP.printQueue();
+            S.list[i].getWP()->printQueue();
         
             cout << "   WP (Backward): ";
-            S.list[i].BWP.printQueue();
+            S.list[i].getBWP()->printQueue();
 
             cout << "   SP (Forward): ";
-            S.list[i].SP.printQueue();
+            S.list[i].getSP()->printQueue();
         
             cout << "   SP (Backward): ";
-            S.list[i].BSP.printQueue();
+            S.list[i].getBSP()->printQueue();
 
             cout << "-------------------------------------------------" << endl;
         }
