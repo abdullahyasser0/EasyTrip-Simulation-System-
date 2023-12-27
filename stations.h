@@ -8,8 +8,8 @@
 using namespace std;
 template <typename N>
 class Nodestation{
-//test
-public :
+
+private:
     int Snumber; 
     LinkedListp<Passenger> NP;
     LinkedListp<Passenger> BNP;
@@ -22,11 +22,29 @@ public :
 
     Queue<Bus> Ngarage;
     Queue<Bus> Wgarage;
+
+public :
+    void setSnumber(int Number){Snumber=Number;}
+    int getSnumber(){return Snumber;}
     
+    LinkedListp<Passenger> *getNP(){return &NP;}
+    Queue<Passenger> *getWP(){return &WP;}
+
+    LinkedListp<Passenger> *getBNP(){return &BNP;}
+    Queue<Passenger> *getBWP(){return &BWP;}
+
+    PriorityQueue<Passenger> *getSP(){return &SP;}
+    PriorityQueue<Passenger> *getBSP(){return &BSP;}
+
+    Queue<Bus> *getNgarage(){return &Ngarage;}
+    Queue<Bus> *getWgarage(){return &Wgarage;}
+
+
+
     Nodestation(){
         Snumber  = 0;
     }
-//noontest
+
     void PrintStationInfo(){ 
         cout<<"Station Number: "<<Snumber<<endl;
         cout<<"Forward NP list: ";
@@ -71,7 +89,7 @@ public:
         list=newArray;
         size=numberOfStations+1;
         for (int i =0;i<=numberOfStations;i++){
-            list[i].Snumber=i;
+            list[i].setSnumber(i);
         }
     }
 
@@ -97,27 +115,27 @@ public:
         int passDrection = passDirection(passenger);
        
         if (passengerType == "NP") {
-            if(passDrection==0) list[startStation].NP.Insert(passenger);
-            else list[startStation].BNP.Insert(passenger);
+            if(passDrection==0) list[startStation].getNP()->Insert(passenger);
+            else list[startStation].getBNP()->Insert(passenger);
         } else if (passengerType == "WP") {
-            if(passDrection==0) list[startStation].WP.enqueue(passenger);
-            else list[startStation].BWP.enqueue(passenger);
+            if(passDrection==0) list[startStation].getWP()->enqueue(passenger);
+            else list[startStation].getBWP()->enqueue(passenger);
         }else if (passengerType == "SP") {
-            if(passDrection==0) list[startStation].SP.enqueue(passenger);
-            else list[startStation].BSP.enqueue(passenger);        
+            if(passDrection==0) list[startStation].getSP()->enqueue(passenger);
+            else list[startStation].getBSP()->enqueue(passenger);        
             }
 
     }
 
     void storeNBus(Bus* bus)
     {
-        list[0].Ngarage.enqueue(bus);
+        list[0].getNgarage()->enqueue(bus);
 
     }
 
     void storeWBus(Bus* bus)
     {
-            list[0].Wgarage.enqueue(bus);
+            list[0].getWgarage()->enqueue(bus);
 
     }
 
@@ -129,17 +147,27 @@ public:
         else return 1;
     }
     
-    void RemovePassenger(Passenger* passenger){
-
+    void RemovePassenger(Passenger* passenger, int stationNumber){ // This function is used for the leave evvent
         int passDrection = passDirection(passenger);
-        int startStation = passenger->getStartStation();
-        if(passDrection==0) list[startStation].NP.RemovePassenger(passenger);
-        else list[startStation].BNP.RemovePassenger(passenger);
+        //int startStation = passenger->getStartStation();
+        if(passDrection==0) list[stationNumber].getNP()->RemovePassenger(passenger);
+        else list[stationNumber].getBNP()->RemovePassenger(passenger);
     }
 
     int getStationSize(){
         return size;
     }
+
+    // void printQueue() const {
+    //     PriorityNode<T>* current = front;
+    //     while (current != nullptr) {
+    //         cout << "[ " << current->getItem()->getID() << " ]";
+    //         cout << "--->";
+
+    //         current = current->getNext();
+    //     }
+    //     cout << "*\n";
+    // }
 
     // void moveToNextStation() {
     //     currentStation++;
