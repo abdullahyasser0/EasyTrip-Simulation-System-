@@ -86,9 +86,8 @@ private:
         cout.rdbuf(outputFile.rdbuf());
 
         // Run the simulation for a fixed duration (e.g., 10 stations)
-        for (int i = 0; i < s.getStationSize(); ++i) {
-            displayStationStatus();
-            s.moveToNextStation();
+        for (int i = 0; i <= s.getStationSize(); ++i) {
+            s.list[i].PrintStationInfo();
         }
 
         // Restore cout
@@ -98,11 +97,12 @@ private:
     }
 
     void displayStationStatus() {
+        int currentStation = 0;
         int currentHour = company.getCurrentHour();
         int currentMinute = company.getCurrentMinute();
 
         cout << "Current Time (Hour:Min) ==> " << currentHour << ":" << currentMinute << endl;
-        cout << "============== STATION #" << s.getCurrentStation() << " =================" << endl;
+        cout << "============== STATION #" << s.list << " =================" << endl;
 
         // Display waiting passengers, buses, in-checkup buses, finished passengers, etc.
         company.PrintWaitingPassengers();
