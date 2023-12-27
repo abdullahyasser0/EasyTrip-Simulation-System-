@@ -137,6 +137,9 @@ public:
         else list[startStation].BNP.RemovePassenger(passenger);
     }
 
+    int getStationSize(){
+        return size;
+    }
 
     // void moveToNextStation() {
     //     currentStation++;
