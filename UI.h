@@ -72,7 +72,7 @@ private:
     void runInteractiveMode() {
         char userInput;
         do {
-            displayStationStatus();
+            displayStationStatus(0);
             cout << "Press Enter to display the next station or 'q' to quit: ";
             userInput = cin.get();
             cin.ignore();  // Ignore the newline character
@@ -87,7 +87,7 @@ private:
 
         // Run the simulation for a fixed duration (e.g., 10 stations)
         for (int i = 0; i <= s.getStationSize(); ++i) {
-            s.list[i].PrintStationInfo();
+            displayStationStatus(i);
         }
 
         // Restore cout
@@ -96,21 +96,21 @@ private:
         cout << "Simulation ends. Output file created: output.txt" << endl;
     }
 
-    void displayStationStatus() {
-        int currentStation = 0;
+void displayStationStatus(int stationNumber) {
         int currentHour = company.getCurrentHour();
         int currentMinute = company.getCurrentMinute();
 
         cout << "Current Time (Hour:Min) ==> " << currentHour << ":" << currentMinute << endl;
-        cout << "============== STATION #" << s.list << " =================" << endl;
+        cout << "============== STATION #" << stationNumber << " =================" << endl;
 
-        // Display waiting passengers, buses, in-checkup buses, finished passengers, etc.
+    // Display waiting passengers, buses, in-checkup buses, finished passengers, etc.
         company.PrintWaitingPassengers();
         if (interactiveMode) {
             cout << "Press Enter to display the next station..." << endl;
             cin.ignore();
         }
-        
-        system("cls"); 
-    }
+    
+        system("cls");
+}
+
 };
