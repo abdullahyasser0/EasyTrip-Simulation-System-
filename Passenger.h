@@ -42,20 +42,17 @@ Passenger(string passengerType, int id, int hours, int mins, int startstation, i
     int getPriority()
     {   
 
-        // if(Priority==" AGED"){
-        //     return 3;
-        // }else if(Priority==" POD"){
-        //     return 2;
-        // }else if(Priority==" pregnant"){
-        //     return 1;
-        // }
+        if(Priority==" AGED"){
+            return 3;
+        }else if(Priority==" POD"){
+            return 2;
+        }else if(Priority==" pregnant"){
+            return 1;
+        }
         return per;
     }
 
     void setPriority(int p) {
-        if (p == 0) {
-            per = endStation;
-        } else {
             if(Priority==" AGED"){
                 per = 3;
             }else if(Priority==" POD"){
@@ -63,7 +60,6 @@ Passenger(string passengerType, int id, int hours, int mins, int startstation, i
             }else if(Priority==" pregnant"){
                 per = 1;
             }
-        }
     }
 	
 	string& getType()
