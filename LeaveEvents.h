@@ -19,7 +19,7 @@ public:
 
 	void execute(Stations<Passenger*> S) override {
 		passenger = new Passenger(ID,STRT,Hours,Minutes);
-		S.RemovePassenger(passenger);
+		S.RemovePassenger(passenger,passenger->getStartStation());
 	} 
 
 	int getid () override {
