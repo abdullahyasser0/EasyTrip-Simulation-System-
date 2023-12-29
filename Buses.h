@@ -85,7 +85,26 @@ class Bus {
 		// 	}
 
 		// }
+/*
 
+1-
+	using passanger last station. the priorityqueue of insidebus will depand on. 
+	a specific function will be made in
+	1->> another priopityqueue class. 
+	2->>in the buss class. 
+	top of the bus queue will be the lowest number >> forword direction.(forword eg: from station 1 > station 4 *this direction )
+	top of the bus queue will be the hightest number >> backword direction.(backword eg: from station 4 > station 1 *this direction )
+2-
+	insize bus max capcity.
+	enqueue till the max the max capcity or the time is up. ask bayoumi.
+	function next station >> currentstation+1; 
+	enqeueu valid untill time is less than or equal 24:00
+3-
+	buss will be moving from a station to another and backword direction
+
+stations are array "list[0],list[1],list[2]" list>>station
+
+*/
 };
 
 
