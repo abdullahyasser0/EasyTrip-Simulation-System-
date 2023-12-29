@@ -9,7 +9,7 @@ using namespace std;
 class Bus {
     public:
 		string BusType;
-        int capacity;
+        int maxcapacity;
         int maintenance;
         int currentStation;
 		LinkedListp<Passenger> insideBus;
@@ -18,14 +18,14 @@ class Bus {
 
         Bus(){
 			BusType = "NULL";
-			capacity = 0;
+			maxcapacity = 20;
 			maintenance = 0;
 			currentStation = 0;
         }
 
 		Bus (string type, int cap , int maint){
 			BusType = type;
-			capacity = cap;
+			maxcapacity = cap;
 			maintenance = maint;
 			currentStation = 0;
 		}
@@ -40,7 +40,7 @@ class Bus {
 
      	void print_bus_info() {
     		cout << "Bus type : " << BusType << endl;
-    		cout << "Bus capacity : " << capacity << endl;
+    		cout << "Bus capacity : " << maxcapacity << endl;
     		cout << "Bus maintenance : " << maintenance << endl;
 			cout << "Bus current Station : " << currentStation << endl;
 			}
@@ -56,14 +56,23 @@ class Bus {
 		}
 
 		void getPassOn(Passenger* p){
-			moving_passenger.enqueue(p);
+			moving_passenger.enqueueInsideBus(p);
 		}
+
+		// void getPassOn(Passenger* p) {
+        // if (moving_passenger.size() < maxcapacity && /*time*/ <= 24.00) {
+        //     moving_passenger.enqueueInsideBus(p);
+        // 	}
+    	// }
 
 		Passenger* getPassOff() {
 			Passenger *p = moving_passenger.dequeue();
 			return p;
 		}
 
+		void nextStation() {
+        currentStation += 1;
+    	}
 		
 		// void loopStation(){
 		// 	int direction=0;
@@ -85,26 +94,11 @@ class Bus {
 		// 	}
 
 		// }
-/*
 
-1-
-	using passanger last station. the priorityqueue of insidebus will depand on. 
-	a specific function will be made in
-	1->> another priopityqueue class. 
-	2->>in the buss class. 
-	top of the bus queue will be the lowest number >> forword direction.(forword eg: from station 1 > station 4 *this direction )
-	top of the bus queue will be the hightest number >> backword direction.(backword eg: from station 4 > station 1 *this direction )
-2-
-	insize bus max capcity.
-	enqueue till the max the max capcity or the time is up. ask bayoumi.
-	function next station >> currentstation+1; 
-	enqeueu valid untill time is less than or equal 24:00
-3-
-	buss will be moving from a station to another and backword direction
 
-stations are array "list[0],list[1],list[2]" list>>station
 
-*/
+
+
 };
 
 
