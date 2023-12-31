@@ -59,14 +59,14 @@ public:
 
     bool enqueue(T* newPassenger) {
         PriorityNode<T>* newNode = new PriorityNode<T>(newPassenger);
-        if (isEmpty() || newPassenger->getPriority() > front->getItem()->getPriority()) {
+        if (isEmpty() || newPassenger->getPriority() > front->getItem()->getPriority()) { 
             newNode->setNext(front);
             front = newNode;
         } else {
             PriorityNode<T>* prev = nullptr;
             PriorityNode<T>* current = front;
 
-            while (current != nullptr && newPassenger->getPriority() <= current->getItem()->getPriority()) {
+            while (current != nullptr && newPassenger->getPriority() <= current->getItem()->getPriority()) { 
                 prev = current;
                 current = current->getNext();
             }
@@ -116,4 +116,28 @@ public:
         }
         cout << "*\n";
     }
+  
+    void enqueueInsideBus(Passenger* newPassenger) {
+        PriorityNode<T>* newNode = new PriorityNode<T>(newPassenger);
+        if (isEmpty() || newPassenger->getEndStation() < front->getItem()->getEndStation()) { 
+            newNode->setNext(front);
+            front = newNode;
+        } else {
+            PriorityNode<T>* prev = nullptr;
+            PriorityNode<T>* current = front;
+
+            while (current != nullptr && newPassenger->getEndStation() >= current->getItem()->getEndStation()) { 
+                prev = current;
+                current = current->getNext();
+            }
+
+            if (prev == nullptr) {
+                newNode->setNext(front);
+                front = newNode;
+            } else {
+                prev->setNext(newNode);
+                newNode->setNext(current);
+            }
+        }
+    };
 };

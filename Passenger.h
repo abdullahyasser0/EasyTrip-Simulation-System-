@@ -11,8 +11,9 @@ private:
     int ID,startStation, endStation;
     int OnOffTime, Hours,Minutes;
     string Priority,type;
+    int per; // var added for the pri
 
-public:
+public: 
 Passenger(string passengerType, int id, int hours, int mins, int startstation, int endStation, int OnoffTime, string priority)
     : ID(id), startStation(startstation), endStation(endStation), OnOffTime(OnoffTime), Hours(hours), Minutes(mins), Priority(priority), type(passengerType)
 {
@@ -39,7 +40,8 @@ Passenger(string passengerType, int id, int hours, int mins, int startstation, i
     }
 
     int getPriority()
-    {
+    {   
+
         if(Priority==" AGED"){
             return 3;
         }else if(Priority==" POD"){
@@ -47,7 +49,17 @@ Passenger(string passengerType, int id, int hours, int mins, int startstation, i
         }else if(Priority==" pregnant"){
             return 1;
         }
-        return 0;
+        return per;
+    }
+
+    void setPriority(int p) {
+            if(Priority==" AGED"){
+                per = 3;
+            }else if(Priority==" POD"){
+                per = 2;
+            }else if(Priority==" pregnant"){
+                per = 1;
+            }
     }
 	
 	string& getType()
