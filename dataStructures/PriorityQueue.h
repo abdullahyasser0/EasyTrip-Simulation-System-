@@ -117,7 +117,7 @@ public:
         cout << "*\n";
     }
   
-    void enqueueInsideBus(Passenger* newPassenger) {
+    void enqueueInsideBus(T* newPassenger) {
         PriorityNode<T>* newNode = new PriorityNode<T>(newPassenger);
         if (isEmpty() || newPassenger->getEndStation() < front->getItem()->getEndStation()) { 
             newNode->setNext(front);
