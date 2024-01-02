@@ -4,7 +4,7 @@
 
 using namespace std;
 int main() {
-// //     // Company BusProject;
+    // Company BusProject;
 // //     //UI ui;
 
     Passenger p(string passengerType, int id, int hours, int mins, int startstation, int endStation, int OnoffTime, string priority);
@@ -22,6 +22,7 @@ int main() {
     b.getPassOn(p3);
     b.moving_passenger.printQueue();
     cout << endl;
+    b.getPassOff();
     b.getPassOff();
     // b.getPassOff();
     b.moving_passenger.printQueue();

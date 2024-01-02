@@ -67,7 +67,6 @@ template<typename T>
 void Stations<T>::storeWBus(Bus* bus)
 {
         list[0].getWgarage()->enqueue(bus);
-
 }
 
 template<typename T>
