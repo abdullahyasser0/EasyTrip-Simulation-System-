@@ -47,6 +47,7 @@ class PriorityQueue {
 private:
     PriorityNode<T>* front;
     PriorityNode<T>* back;
+    int count = 0;
 
 public:
     PriorityQueue() : front(nullptr), back(nullptr) {}
@@ -98,7 +99,7 @@ public:
 
         T* frontPassenger = dequeuedNode->getItem();
         delete dequeuedNode;
-
+        count--;
         return frontPassenger;
     }
 
@@ -139,5 +140,9 @@ public:
                 newNode->setNext(current);
             }
         }
-    };
+        count++;
+    }
+    int getCount(){
+        return count;
+    }
 };
