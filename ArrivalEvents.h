@@ -30,7 +30,7 @@ public:
 
 	}
 
-	void execute(Stations<Passenger*> S) override {
+	void execute(Stations<Nodestation*> S) override {
 		passenger = new Passenger(PassengerType,ID, Hours,Minutes, STRT, END, OnOffTime, Priority);
 		S.addPassenger(passenger);
 		}

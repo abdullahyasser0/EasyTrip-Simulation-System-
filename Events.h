@@ -9,7 +9,7 @@ protected:
     int ID, STRT, END, Hours, Minutes,OnOffTime;
     char EventType;
 public:
-    virtual void execute(Stations<Passenger*> S) = 0;
+    virtual void execute(Stations<Nodestation*> S) = 0;
     virtual int getid() = 0;
     virtual int getHours() = 0;
     virtual int getMinutes() = 0;

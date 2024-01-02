@@ -15,7 +15,7 @@ private:
     int CheckupTrips, checkupDWBus, checkupDMBus;
     int MaxW, OnOffTime, EventsNum;
     Queue<Events> eventsQueue;
-    Stations<Passenger*> S;
+    Stations<Nodestation*> S;
     Bus buses;
     int hours, minutes;
     char colon,eventType;
@@ -27,15 +27,16 @@ public:
         EventList();
         for(int h=0;h<24;h++){
             for(int m=0;m<60;m++){
-                while(!eventsQueue.isEmpty()&&h==eventsQueue.getfront()->data->getHours()&&m==eventsQueue.getfront()->data->getMinutes())
-                {    
+                while (!eventsQueue.isEmpty() && h == eventsQueue.getfront()->data->getHours() && m == eventsQueue.getfront()->data->getMinutes())
+                {
                     Events* currentEvent = eventsQueue.dequeue();
 
-                    if(currentEvent->getetype()=='A')
+                    if (currentEvent->getetype() == 'A')
                     {
                         cout << "Passenger with ID: " << currentEvent->getid() << " reached the station at : " << h << ":" << m << endl;
                         currentEvent->execute(S);
-                    }else if(currentEvent->getetype()=='L')
+                    }
+                    else if (currentEvent->getetype() == 'L')
                     {
                         cout << "Passenger with ID: " << currentEvent->getid() << " left the station at : " << h << ":" << m << endl;
                         currentEvent->execute(S);

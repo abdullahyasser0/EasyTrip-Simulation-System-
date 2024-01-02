@@ -17,7 +17,7 @@ public:
 		EventType=etype;
 	}
 
-	void execute(Stations<Passenger*> S) override {
+	void execute(Stations<Nodestation*> S) {
 		passenger = new Passenger(ID,STRT,Hours,Minutes);
 		S.RemovePassenger(passenger,passenger->getStartStation());
 	} 
