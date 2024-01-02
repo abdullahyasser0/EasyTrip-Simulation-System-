@@ -33,7 +33,9 @@ public:
     NormalNode<T>* getback(){
         return back;
     }
-
+    int getQSize(){
+        return Qsize;
+    }
     bool enqueue(T* newData) {
         NormalNode<T>* newNode = new NormalNode<T>(newData);
         if (isEmpty()) {

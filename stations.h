@@ -103,7 +103,9 @@ public:
     int passDirection(Passenger* passenger);
     void RemovePassenger(Passenger* passenger, int stationNumber);
     int getStationSize();
-
+    // void moveNBus();
+    // void moveWBus();
+    void dequeueStationZ(char C);
     // void printQueue(Queue* queue) const {
     //     PriorityNode<T>* current = front;
     //     while (current != nullptr) {
@@ -205,3 +207,29 @@ template<typename T>
 int Stations<T>::getStationSize(){
     return size;
 }
+
+
+template<typename T>
+void Stations<T>::dequeueStationZ(char C){
+    
+    if(C=='N'&&list[1].getNgarage()->getQSize()!=0){
+        list[1].getNgarage()->enqueue(list[0].getNgarage()->dequeue());
+    }
+    if(C=='W'&&list[1].getWgarage()->getQSize()!=0)list[1].getWgarage()->enqueue(list[0].getWgarage()->dequeue());
+}
+
+
+
+// template<typename T>
+// void Stations<T>::moveNBus(){
+
+//     int curr = bus->currentStation();
+//     list[curr++].getNgarage->enqueue(list[curr].getNgarage()->dequeue())
+    
+// }
+
+// template<typename T>
+// void Stations<T>::moveWBus(){
+//     int curr = bus->currentStation();
+//     list[curr++].getWgarage->enqueue(list[curr].getWgarage()->dequeue())
+// }

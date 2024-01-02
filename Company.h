@@ -25,8 +25,18 @@ public:
     Company() {
         ReadInput();
         EventList();
+        int countDeqBus=0;
+        char deqType= 'N';
         for(int h=0;h<24;h++){
             for(int m=0;m<60;m++){
+                countDeqBus++;
+                if(countDeqBus==15){
+                    countDeqBus=0;
+                    S.dequeueStationZ(deqType);
+                    if(deqType=='N')deqType='W';
+                    else deqType='N';
+                    cout<<"Busdequed : "<<deqType<<endl ;
+                }
                 while (!eventsQueue.isEmpty() && h == eventsQueue.getfront()->data->getHours() && m == eventsQueue.getfront()->data->getMinutes())
                 {
                     Events* currentEvent = eventsQueue.dequeue();
