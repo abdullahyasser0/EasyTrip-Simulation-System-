@@ -47,6 +47,7 @@ class PriorityQueue {
 private:
     PriorityNode<T>* front;
     PriorityNode<T>* back;
+    int count = 0;
 
 public:
     PriorityQueue() : front(nullptr), back(nullptr) {}
@@ -98,7 +99,7 @@ public:
 
         T* frontPassenger = dequeuedNode->getItem();
         delete dequeuedNode;
-
+        count--;
         return frontPassenger;
     }
 
@@ -117,7 +118,7 @@ public:
         cout << "*\n";
     }
   
-    void enqueueInsideBus(Passenger* newPassenger) {
+    void enqueueInsideBus(T* newPassenger) {
         PriorityNode<T>* newNode = new PriorityNode<T>(newPassenger);
         if (isEmpty() || newPassenger->getEndStation() < front->getItem()->getEndStation()) { 
             newNode->setNext(front);
@@ -139,5 +140,9 @@ public:
                 newNode->setNext(current);
             }
         }
-    };
+        count++;
+    }
+    int getCount(){
+        return count;
+    }
 };

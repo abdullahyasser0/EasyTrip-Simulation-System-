@@ -7,7 +7,7 @@ using namespace std;
 
 
 class Bus {
-    public:
+    private:
 		string BusType;
         int maxcapacity;
         int maintenance;
@@ -15,7 +15,7 @@ class Bus {
 		LinkedListp<Passenger> insideBus;
 		PriorityQueue<Passenger> moving_passenger;
 
-
+public:
         Bus(){
 			BusType = "NULL";
 			maxcapacity = 20;
@@ -95,10 +95,8 @@ class Bus {
 
 		// }
 
-
-
-
-
+	bool isFull(){
+	}
 };
 
 
