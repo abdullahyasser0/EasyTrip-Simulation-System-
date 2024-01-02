@@ -221,11 +221,12 @@ void Stations<T>::dequeueStationZ(char C){
 
 template<typename T>
 void Stations<T>::moveBus(){
-    for(int i = 1; i < size; i++){
-        if(list[i].Ngarage.isEmpty() || list[i].getNP()->count == 0){
+    for(int i = 1; i < size-1; i++){
+        if(!(list[i].getNgarage()->isEmpty())&& list[i].getNP()->getCount() == 0)
+        {
             list[i+1].getNgarage()->enqueue(list[i].getNgarage()->dequeue());
         }
-        if(list[i].Wgarage.isEmpty() || list[i].getWP()->isEmpty()){
+        if(!(list[i].getWgarage()->isEmpty()) && list[i].getWP()->isEmpty()){
             list[i+1].getWgarage()->enqueue(list[i].getWgarage()->dequeue());
         }
     }
