@@ -71,6 +71,7 @@ public:
             delete Head;
             Head = P;
         }
+        count = 0;
     }
 
 Passenger* DeleteFirst()
@@ -80,6 +81,7 @@ Passenger* DeleteFirst()
 		P = Head->getNext();
 		delete Head;
 		Head = P;
+        count--;
         return temp;
 	}
 

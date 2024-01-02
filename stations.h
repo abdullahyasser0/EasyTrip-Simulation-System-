@@ -103,6 +103,7 @@ public:
     int passDirection(Passenger* passenger);
     void RemovePassenger(Passenger* passenger, int stationNumber);
     int getStationSize();
+    void moveBus();
     // void moveNBus();
     // void moveWBus();
     void dequeueStationZ(char C);
@@ -212,10 +213,22 @@ int Stations<T>::getStationSize(){
 template<typename T>
 void Stations<T>::dequeueStationZ(char C){
     
-    if(C=='N'&&list[1].getNgarage()->getQSize()!=0){
+    if(C=='N'&&list[0].getNgarage()->getQSize()!=0){
         list[1].getNgarage()->enqueue(list[0].getNgarage()->dequeue());
     }
-    if(C=='W'&&list[1].getWgarage()->getQSize()!=0)list[1].getWgarage()->enqueue(list[0].getWgarage()->dequeue());
+    if(C=='W'&&list[0].getWgarage()->getQSize()!=0)list[1].getWgarage()->enqueue(list[0].getWgarage()->dequeue());
+}
+
+template<typename T>
+void Stations<T>::moveBus(){
+    for(int i = 1; i < size; i++){
+        if(list[i].Ngarage.isEmpty() || list[i].getNP()->count == 0){
+            list[i+1].getNgarage()->enqueue(list[i].getNgarage()->dequeue());
+        }
+        if(list[i].Wgarage.isEmpty() || list[i].getWP()->isEmpty()){
+            list[i+1].getWgarage()->enqueue(list[i].getWgarage()->dequeue());
+        }
+    }
 }
 
 
