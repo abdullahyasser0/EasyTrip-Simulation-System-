@@ -33,7 +33,9 @@ public:
         }
         cout << "*\n";
     }
-
+    int getCount(){
+        return count;
+    }
     void InsertBeg(T* data)
     {
         Nodep<T>* R = new Nodep<T>(data);
@@ -71,6 +73,7 @@ public:
             delete Head;
             Head = P;
         }
+        count = 0;
     }
 
 Passenger* DeleteFirst()

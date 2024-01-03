@@ -30,12 +30,12 @@ public:
         for(int h=0;h<24;h++){
             for(int m=0;m<60;m++){
                 countDeqBus++;
+                S.moveBus();
                 if(countDeqBus==15){
                     countDeqBus=0;
                     S.dequeueStationZ(deqType);
                     if(deqType=='N')deqType='W';
                     else deqType='N';
-                    cout<<"Busdequed : "<<deqType<<endl ;
                 }
                 while (!eventsQueue.isEmpty() && h == eventsQueue.getfront()->data->getHours() && m == eventsQueue.getfront()->data->getMinutes())
                 {
@@ -99,7 +99,7 @@ public:
     void ReadInput() {
         ifstream input("input.txt");
         input >> numStations >> minsStations >> numWbuses >> numNbuses >> capacityWBus >> capacityNBus
-              >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum ;
+            >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum ;
         
         S.addStationsByNumber(numStations);
         for (int i = 0; i < numNbuses; i++) {
