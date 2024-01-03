@@ -5,7 +5,7 @@
 using namespace std;
 int main() {
     Company BusProject;
-// //     //UI ui;
+// //     //UI ui; 
 
     // Passenger p(string passengerType, int id, int hours, int mins, int startstation, int endStation, int OnoffTime, string priority);
 
@@ -16,7 +16,7 @@ int main() {
     // p2->setPriority(0);
     // Passenger* p3 = new Passenger("SP", 3, 10, 32, 4, 6, 10, "AGED");
     // p3->setPriority(0);
-    // Bus b("WBus", 20, 10);
+    // Bus b("WBus", 20, 10); 
     // b.getPassOn(p1);
     // b.getPassOn(p2);
     // b.getPassOn(p3);

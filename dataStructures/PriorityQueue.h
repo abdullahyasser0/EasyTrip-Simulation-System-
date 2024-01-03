@@ -57,7 +57,12 @@ public:
             dequeue();
         }
     }
-
+    PriorityNode<T>* getFront(){
+        if(!isEmpty()){
+        return front;
+        }
+        else return nullptr;
+    }
     bool enqueue(T* newPassenger) {
         PriorityNode<T>* newNode = new PriorityNode<T>(newPassenger);
         if (isEmpty() || newPassenger->getPriority() > front->getItem()->getPriority()) { 
@@ -98,7 +103,7 @@ public:
         }
 
         T* frontPassenger = dequeuedNode->getItem();
-        delete dequeuedNode;
+        //delete dequeuedNode;
         count--;
         return frontPassenger;
     }

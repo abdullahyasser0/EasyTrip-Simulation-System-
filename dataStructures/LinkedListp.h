@@ -28,11 +28,27 @@ public:
         while (p)
         {
             cout << "[ " << p->getItem()->getID() << " ]";
+            
             cout << "--->";
             p = p->getNext();
         }
         cout << "*\n";
     }
+    
+    
+    Nodep<T> *returnHead(){
+        return Head;
+    }
+
+
+    void DeleteFirst()
+	{
+        Nodep<T> *temp = Head;
+		Head = Head->getNext();
+        count--;
+		delete temp;
+	}
+
     int getCount(){
         return count;
     }
@@ -42,7 +58,9 @@ public:
         R->setNext(Head);
         Head = R;
     }
-
+    bool isEmpty(){
+        return Head==nullptr;
+    }
     void Insert(T* data)
     {
         if (Head == nullptr)
@@ -76,16 +94,7 @@ public:
         count = 0;
     }
 
-Passenger* DeleteFirst()
-	{
-		Nodep<T> *P = Head;
-        Nodep<T> *temp = Head;
-		P = Head->getNext();
-		delete Head;
-		Head = P;
-        count--;
-        return temp;
-	}
+    
 
     void RemovePassenger(Passenger* passenger)
     {

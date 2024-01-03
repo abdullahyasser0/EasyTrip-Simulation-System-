@@ -16,6 +16,10 @@ class Bus {
 		PriorityQueue<Passenger> moving_passenger;
 
 public:
+		PriorityQueue<Passenger> getInBusPass(){
+			return moving_passenger;
+		}
+		
         Bus(){
 			BusType = "NULL";
 			maxcapacity = 20;
@@ -37,12 +41,16 @@ public:
 		string getType(){
 			return BusType;
 		}
-
+		int getCapacity(){
+			return maxcapacity;
+		}
      	void print_bus_info() {
     		cout << "Bus type : " << BusType << endl;
     		cout << "Bus capacity : " << maxcapacity << endl;
     		cout << "Bus maintenance : " << maintenance << endl;
 			cout << "Bus current Station : " << currentStation << endl;
+			cout<<"imprinting what inside mee "<<endl;
+			moving_passenger.printQueue();
 			}
 		
 		Bus* createNBus(int capacity){
@@ -54,9 +62,10 @@ public:
 			Bus* bus= new Bus("Wheel",capacity, 0);
 			return bus;
 		}
-
-		void getPassOn(Passenger* p){
+		template<typename T>
+		void getPassOn(T* p){
 			moving_passenger.enqueueInsideBus(p);
+			maxcapacity--;
 		}
 
 		// void getPassOn(Passenger* p) {
@@ -66,8 +75,13 @@ public:
     	// }
 
 		Passenger* getPassOff() {
+			if(!moving_passenger.isEmpty()){
 			Passenger *p = moving_passenger.dequeue();
 			return p;
+			}
+			else{
+				return nullptr;
+			}
 		}
 
 		void nextStation() {
@@ -95,9 +109,9 @@ public:
 
 		// }
 
-	bool isFull(){
+	// bool isFull(){
 		
-	}
+	// }
 };
 
 

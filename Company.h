@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdlib>  
 
 #include <iostream>
 #include <fstream>
@@ -30,13 +31,15 @@ public:
         for(int h=0;h<24;h++){
             for(int m=0;m<60;m++){
                 countDeqBus++;
-                S.moveBus();
-                if(countDeqBus==15){
-                    countDeqBus=0;
-                    S.dequeueStationZ(deqType);
-                    if(deqType=='N')deqType='W';
-                    else deqType='N';
-                }
+                //S.moveBus();
+                //S.busMoving();
+                // if(countDeqBus==15){
+                //     countDeqBus=0;
+                //     
+                //     if(deqType=='N')deqType='W';
+                //     else deqType='N';
+
+                // }
                 while (!eventsQueue.isEmpty() && h == eventsQueue.getfront()->data->getHours() && m == eventsQueue.getfront()->data->getMinutes())
                 {
                     Events* currentEvent = eventsQueue.dequeue();
@@ -50,13 +53,22 @@ public:
                     {
                         cout << "Passenger with ID: " << currentEvent->getid() << " left the station at : " << h << ":" << m << endl;
                         currentEvent->execute(S);
+                        
                     }
+
                 }
+
+                
             }
+
         }
-
-
-                            S.PrintAllStations(numStations+1);
+                S.PrintAllStations(numStations+1); 
+                cout<<"+++++++++++++++++++++++++++"<<endl;
+                S.busMoving();            
+                // S.PrintAllStations(numStations+1);
+                // cout<<"+++++++++++++++++++++++++++"<<endl;
+                // S.TestbusMoving(); 
+                S.PrintAllStations(numStations+1);
 
     }
 
