@@ -107,6 +107,8 @@ public:
     // void moveNBus();
     // void moveWBus();
     void dequeueStationZ(char C);
+    void busMoving();
+    void TestbusMoving();
     // void printQueue(Queue* queue) const {
     //     PriorityNode<T>* current = front;
     //     while (current != nullptr) {
@@ -221,7 +223,7 @@ void Stations<T>::dequeueStationZ(char C){
 
 template<typename T>
 void Stations<T>::moveBus(){
-    for(int i = 1; i < size-1; i++){
+    for(int i = 1; i <2; i++){
         if(!(list[i].getNgarage()->isEmpty())&& list[i].getNP()->getCount() == 0)
         {
             list[i+1].getNgarage()->enqueue(list[i].getNgarage()->dequeue());
@@ -231,6 +233,54 @@ void Stations<T>::moveBus(){
         }
     }
 }
+
+template<typename T>
+void Stations<T> :: busMoving(){
+    for(int i=0; i<2 ; i++){
+        Bus *temp= list[i].getNgarage()->dequeue();
+        temp->print_bus_info();
+        list[i+1].getNgarage()->enqueue(temp);
+        if(!(temp->getInBusPass().isEmpty())){
+            while (temp->getInBusPass().getFront()->getItem()->getEndStation()!=i+1)
+            {
+                temp->getPassOff();
+            }
+        }
+        while (temp->getCapacity()>0 && !(list[i+1].getNP()->isEmpty()))
+        {
+            temp->getPassOn(list[i+1].getNP()->returnHead()->getItem());
+            list[i+1].getNP()->DeleteFirst();  
+        }
+    }
+    
+}
+
+// template<typename T>
+// void Stations<T> :: TestbusMoving(){
+//     Bus *temp= list[1].getNgarage()->dequeue();
+//     temp->print_bus_info();
+//     list[1+1].getNgarage()->enqueue(temp);
+//     if(!(temp->getInBusPass().isEmpty())){
+        
+//         while (temp->getInBusPass().getFront()->getItem()->getEndStation()==2)
+//         {
+            
+//             temp->getPassOff();
+//         }
+//     }
+//     while (temp->getCapacity()>0 && !(list[1+1].getNP()->isEmpty()))
+//     {
+//         temp->getPassOn(list[2].getNP()->returnHead()->getItem());
+//         list[2].getNP()->DeleteFirst();
+        
+//         // cout<<list[1].getNP()->returnHead()->getItem()->getEndStation();
+//         // list[1].getNP()->DeleteFirst();
+        
+//     }
+    
+// }
+
+
 
 
 
