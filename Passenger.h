@@ -66,4 +66,15 @@ Passenger(string passengerType, int id, int hours, int mins, int startstation, i
     {
         return type;
     }
+    
+    void passPromote(int maxW, int currentTime) {
+        int waitingTime = currentTime - OnOffTime;
+
+        if (waitingTime > maxW) {
+            setPriority(3); 
+            cout << "Passenger with ID: " << getID() << " promoted" << endl;
+        } else {
+            cout << "Passenger with ID: " << getID() << " has decided to leave the station." << endl;
+        }
+    }
 };

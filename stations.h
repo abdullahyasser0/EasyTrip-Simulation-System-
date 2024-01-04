@@ -101,6 +101,7 @@ public:
     void storeNBus(Bus* bus);
     void storeWBus(Bus* bus);
     int passDirection(Passenger* passenger);
+    void passPromote(int maxWaitingTime); 
     void RemovePassenger(Passenger* passenger, int stationNumber);
     int getStationSize();
     void moveBus();
@@ -244,10 +245,6 @@ void Stations<T> :: busMoving(){
     }
     
 }
-
-
-
-
 // template<typename T>
 // void Stations<T>::moveNBus(){
 
