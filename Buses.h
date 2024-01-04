@@ -91,7 +91,7 @@ public:
 			}
 		}
 
-		void nextStation(int lastStation) {
+		void gnextStation(int lastStation) {
 			if(nextStation==lastStation){
 				direction=1;
 			}
