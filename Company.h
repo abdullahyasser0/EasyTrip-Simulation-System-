@@ -17,7 +17,7 @@ private:
     int MaxW, OnOffTime, EventsNum;
     Queue<Events> eventsQueue;
     Stations<Nodestation*> S;
-    Bus buses;
+    //Bus buses;
     int hours, minutes;
     char colon,eventType;
 
@@ -76,9 +76,9 @@ public:
         for(int i =0;i<numStations+1;i++){
             cout << "Waiting passengers at Station #" << S.list[i].getSnumber()<< ":" << endl;
             cout << "   NP (Forward): ";
-            S.list[i].getNP()->PrintList();
+            S.list[i].getNP()->printQueue();
             cout << "   NP (Backward): ";
-            S.list[i].getBNP()->PrintList();
+            S.list[i].getBNP()->printQueue();
 
             cout << "   WP (Forward): ";
             S.list[i].getWP()->printQueue();
@@ -115,14 +115,12 @@ public:
         
         S.addStationsByNumber(numStations);
         for (int i = 0; i < numNbuses; i++) {
-            Bus* bus=buses.createNBus(capacityNBus);
-            bus->setType("Normal");
+            Bus* bus=new Bus("Normal",capacityNBus,0,minsStations);
             S.storeNBus(bus);
         }
 
         for (int i = 0; i < numWbuses; i++) {
-            Bus* bus=buses.createWBus(capacityWBus);
-            bus->setType("Wheel");
+            Bus* bus=new Bus("Wheel",capacityNBus,0,minsStations);
             S.storeWBus(bus);
         }
         input.close();

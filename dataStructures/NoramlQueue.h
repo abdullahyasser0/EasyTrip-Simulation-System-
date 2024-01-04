@@ -75,6 +75,9 @@ public:
     bool isEmpty() const {
         return front == nullptr;
     }
+    NormalNode<T>* returnHead(){
+        return front;
+    }
 
     void printQueue() const {
         NormalNode<T>* current = front;

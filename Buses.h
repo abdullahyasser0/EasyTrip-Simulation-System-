@@ -11,8 +11,10 @@ class Bus {
 		string BusType;
         int maxcapacity;
         int maintenance;
-        int currentStation;
-		LinkedListp<Passenger> insideBus;
+        int nextStation;
+		int direction; //0>>forward  ,, 1>>backword 
+		int movingMins;// bus progress 
+		int STSmins; //station to station mints 
 		PriorityQueue<Passenger> moving_passenger;
 
 public:
@@ -24,16 +26,32 @@ public:
 			BusType = "NULL";
 			maxcapacity = 20;
 			maintenance = 0;
-			currentStation = 0;
+			nextStation = 0;
+			direction=0;
+			movingMins=0;
+			STSmins=0;
         }
 
-		Bus (string type, int cap , int maint){
+		Bus (string type, int cap , int maint, int STS){
 			BusType = type;
 			maxcapacity = cap;
 			maintenance = maint;
-			currentStation = 0;
-		}
+			nextStation = 0;
+			direction=0;
+			movingMins=0;
+			STSmins=STS;
 
+		}
+		void plusMoviMins(){
+			movingMins++;
+		}
+		bool arrived(){
+			if(movingMins==STSmins){
+				movingMins=0;
+				return true;
+			}
+			return false;
+		}
 		void setType(string type){
 			BusType=type;
 		}
@@ -48,31 +66,20 @@ public:
     		cout << "Bus type : " << BusType << endl;
     		cout << "Bus capacity : " << maxcapacity << endl;
     		cout << "Bus maintenance : " << maintenance << endl;
-			cout << "Bus current Station : " << currentStation << endl;
+			cout << "Bus current station : " << nextStation-1 << endl;
+			cout << "Bus next Station  : " << nextStation << endl;
 			cout<<"imprinting what inside mee "<<endl;
 			moving_passenger.printQueue();
 			}
 		
-		Bus* createNBus(int capacity){
-			Bus* bus = new Bus("Normal",capacity, 0);
-			return bus;
-		}
 
-        Bus* createWBus(int capacity){
-			Bus* bus= new Bus("Wheel",capacity, 0);
-			return bus;
-		}
 		template<typename T>
 		void getPassOn(T* p){
 			moving_passenger.enqueueInsideBus(p);
 			maxcapacity--;
 		}
 
-		// void getPassOn(Passenger* p) {
-        // if (moving_passenger.size() < maxcapacity && /*time*/ <= 24.00) {
-        //     moving_passenger.enqueueInsideBus(p);
-        // 	}
-    	// }
+	
 
 		Passenger* getPassOff() {
 			if(!moving_passenger.isEmpty()){
@@ -84,34 +91,18 @@ public:
 			}
 		}
 
-		void nextStation() {
-        currentStation += 1;
+		void nextStation(int lastStation) {
+			if(nextStation==lastStation){
+				direction=1;
+			}
+			if(nextStation==1){
+				direction=0;
+			}
+			if(direction==0)nextStation ++;
+			else nextStation--;
     	}
 		
-		// void loopStation(){
-		// 	int direction=0;
-
-		// 	while(/*the program is working*/){
-		// 		Nodestation<T>* station = ReturnStationPointer(currentStation);
-		// 		if(station->next==nullptr){
-		// 			if(direction==0){direction=1;}
-		// 			else if (direction==1){direction==0;}
-		// 		}
-		// 		while(direction==0 && station->next!=nullptr){
-		// 			currentStation++;
-		// 		}
-		// 		while(direction==1 && station->next!=nullptr){
-		// 			currentStation--;
-		// 		}
-				
-				
-		// 	}
-
-		// }
-
-	// bool isFull(){
 		
-	// }
 };
 
 

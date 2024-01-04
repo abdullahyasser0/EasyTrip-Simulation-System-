@@ -12,14 +12,14 @@ class Nodestation{
 
 private:
     int Snumber; 
-    LinkedListp<Passenger> NP;
-    LinkedListp<Passenger> BNP;
+    Queue<Passenger> NP;
+    Queue<Passenger> BNP;
 
     Queue<Passenger> WP;
     Queue<Passenger> BWP;
     
-    PriorityQueue<Passenger> SP;
-    PriorityQueue<Passenger> BSP;
+    Queue<Passenger> SP;
+    Queue<Passenger> BSP;
 
     Queue<Bus> Ngarage;
     Queue<Bus> Wgarage;
@@ -28,14 +28,14 @@ public :
     void setSnumber(int Number){Snumber=Number;}
     int getSnumber(){return Snumber;}
     
-    LinkedListp<Passenger> *getNP(){return &NP;}
+    Queue<Passenger> *getNP(){return &NP;}
     Queue<Passenger> *getWP(){return &WP;}
 
-    LinkedListp<Passenger> *getBNP(){return &BNP;}
+    Queue<Passenger> *getBNP(){return &BNP;}
     Queue<Passenger> *getBWP(){return &BWP;}
 
-    PriorityQueue<Passenger> *getSP(){return &SP;}
-    PriorityQueue<Passenger> *getBSP(){return &BSP;}
+    Queue<Passenger> *getSP(){return &SP;}
+    Queue<Passenger> *getBSP(){return &BSP;}
 
     Queue<Bus> *getNgarage(){return &Ngarage;}
     Queue<Bus> *getWgarage(){return &Wgarage;}
@@ -49,9 +49,9 @@ public :
     void PrintStationInfo(){ 
     cout<<"Station Number: "<<Snumber<<endl;
     cout<<"Forward NP list: ";
-    NP.PrintList();
+    NP.printQueue();
     cout<<"Backword NP list: ";
-    BNP.PrintList();
+    BNP.printQueue();
     cout<<"Forward WP list: ";
     WP.printQueue();
     cout<<"Backword WP list: ";
@@ -109,18 +109,6 @@ public:
     void dequeueStationZ(char C);
     void busMoving();
     void TestbusMoving();
-    // void printQueue(Queue* queue) const {
-    //     PriorityNode<T>* current = front;
-    //     while (current != nullptr) {
-    //         cout << "[ " << current->getItem()->getID() << " ]";
-    //         cout << "--->";
-
-    //         current = current->getNext();
-    //     }
-    //     cout << "*\n";
-    // }
-
-
 };
 
 
@@ -168,8 +156,8 @@ void Stations<T>::addPassenger(Passenger* passenger){
     int passDrection = passDirection(passenger);
     
     if (passengerType == "NP") {
-        if(passDrection==0) list[startStation].getNP()->Insert(passenger);
-        else list[startStation].getBNP()->Insert(passenger);
+        if(passDrection==0) list[startStation].getNP()->enqueue(passenger);
+        else list[startStation].getBNP()->enqueue(passenger);
     } else if (passengerType == "WP") {
         if(passDrection==0) list[startStation].getWP()->enqueue(passenger);
         else list[startStation].getBWP()->enqueue(passenger);
@@ -203,8 +191,8 @@ template<typename T>
 void Stations<T>::RemovePassenger(Passenger* passenger, int stationNumber){ // This function is used for the leave evvent
     int passDrection = passDirection(passenger);
     //int startStation = passenger->getStartStation();
-    if(passDrection==0) list[stationNumber].getNP()->RemovePassenger(passenger);
-    else list[stationNumber].getBNP()->RemovePassenger(passenger);
+    if(passDrection==0) list[stationNumber].getNP()->dequeue();
+    else list[stationNumber].getBNP()->dequeue();
 }
 template<typename T>
 int Stations<T>::getStationSize(){
@@ -221,18 +209,18 @@ void Stations<T>::dequeueStationZ(char C){
     if(C=='W'&&list[0].getWgarage()->getQSize()!=0)list[1].getWgarage()->enqueue(list[0].getWgarage()->dequeue());
 }
 
-template<typename T>
-void Stations<T>::moveBus(){
-    for(int i = 1; i <2; i++){
-        if(!(list[i].getNgarage()->isEmpty())&& list[i].getNP()->getCount() == 0)
-        {
-            list[i+1].getNgarage()->enqueue(list[i].getNgarage()->dequeue());
-        }
-        if(!(list[i].getWgarage()->isEmpty()) && list[i].getWP()->isEmpty()){
-            list[i+1].getWgarage()->enqueue(list[i].getWgarage()->dequeue());
-        }
-    }
-}
+// template<typename T>
+// void Stations<T>::moveBus(){
+//     for(int i = 1; i <2; i++){
+//         if(!(list[i].getNgarage()->isEmpty())&& list[i].getNP()->getCount() == 0)
+//         {
+//             list[i+1].getNgarage()->enqueue(list[i].getNgarage()->dequeue());
+//         }
+//         if(!(list[i].getWgarage()->isEmpty()) && list[i].getWP()->isEmpty()){
+//             list[i+1].getWgarage()->enqueue(list[i].getWgarage()->dequeue());
+//         }
+//     }
+// }
 
 template<typename T>
 void Stations<T> :: busMoving(){
@@ -244,42 +232,18 @@ void Stations<T> :: busMoving(){
             while (temp->getInBusPass().getFront()->getItem()->getEndStation()!=i+1)
             {
                 temp->getPassOff();
+                
             }
         }
         while (temp->getCapacity()>0 && !(list[i+1].getNP()->isEmpty()))
         {
-            temp->getPassOn(list[i+1].getNP()->returnHead()->getItem());
-            list[i+1].getNP()->DeleteFirst();  
+            Passenger *pass = list[i+1].getNP()->returnHead()->data;
+            temp->getPassOn(pass);
+            list[i+1].getNP()->dequeue();  
         }
     }
     
 }
-
-// template<typename T>
-// void Stations<T> :: TestbusMoving(){
-//     Bus *temp= list[1].getNgarage()->dequeue();
-//     temp->print_bus_info();
-//     list[1+1].getNgarage()->enqueue(temp);
-//     if(!(temp->getInBusPass().isEmpty())){
-        
-//         while (temp->getInBusPass().getFront()->getItem()->getEndStation()==2)
-//         {
-            
-//             temp->getPassOff();
-//         }
-//     }
-//     while (temp->getCapacity()>0 && !(list[1+1].getNP()->isEmpty()))
-//     {
-//         temp->getPassOn(list[2].getNP()->returnHead()->getItem());
-//         list[2].getNP()->DeleteFirst();
-        
-//         // cout<<list[1].getNP()->returnHead()->getItem()->getEndStation();
-//         // list[1].getNP()->DeleteFirst();
-        
-//     }
-    
-// }
-
 
 
 
