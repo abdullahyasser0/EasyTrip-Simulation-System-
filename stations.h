@@ -104,6 +104,8 @@ public:
     int getStationSize();
     void moveBus();
     void passPromote();
+    void printWaitingSP(int stationNumber);
+    void printWaitingWPandNP(int stationNumber);
     // void moveNBus();
     // void moveWBus();
     void dequeueStationZ(char C);
@@ -256,6 +258,73 @@ void Stations<T>::passPromote(int maxW){
         
     }
 }
+
+
+
+
+template<typename T>
+void Stations<T>::printWaitingSP(int stationNumber) {
+    Queue<Passenger>* forwardSP = list[stationNumber].getSP();
+    Queue<Passenger>* backwardSP = list[stationNumber].getBSP();
+
+    cout << "Waiting SP: FWD[" << forwardSP->count() << "]";
+    if (!forwardSP->isEmpty()) {
+        cout << "(";
+        forwardSP->printQueue();
+        cout << ")";
+    }
+
+    cout << " BCK[" << backwardSP->count() << "]";
+    if (!backwardSP->isEmpty()) {
+        cout << "{";
+        backwardSP->printQueue();
+        cout << "}";
+    }
+
+    cout << endl;
+}
+
+template<typename T>
+void Stations<T>::printWaitingWPandNP(int stationNumber) {
+    Queue<Passenger>* forwardWP = list[stationNumber].getWP();
+    Queue<Passenger>* backwardWP = list[stationNumber].getBWP();
+    Queue<Passenger>* forwardNP = list[stationNumber].getNP();
+    Queue<Passenger>* backwardNP = list[stationNumber].getBNP();
+
+    cout << "Waiting WP: FWD[" << forwardWP->count() << "]";
+    if (!forwardWP->isEmpty()) {
+        cout << "{";
+        forwardWP->printQueue();
+        cout << "}";
+    }
+
+    cout << " BCK[" << backwardWP->count() << "]";
+    if (!backwardWP->isEmpty()) {
+        cout << "{";
+        backwardWP->printQueue();
+        cout << "}";
+    }
+
+    cout << endl;
+
+    cout << "Waiting NP: FWD[" << forwardNP->count() << "]";
+    if (!forwardNP->isEmpty()) {
+        cout << "{";
+        forwardNP->printQueue();
+        cout << "}";
+    }
+
+    cout << " BCK[" << backwardNP->count() << "]";
+    if (!backwardNP->isEmpty()) {
+        cout << "{";
+        backwardNP->printQueue();
+        cout << "}";
+    }
+
+    cout << endl;
+}
+
+
 // template<typename T>
 // void Stations<T>::moveNBus(){
 
