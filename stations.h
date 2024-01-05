@@ -111,6 +111,7 @@ public:
     void dequeueStationZ(char C);
     void busMoving();
     void TestbusMoving();
+    void printBusesAtStation(int stationNumber);
 };
 
 
@@ -322,6 +323,14 @@ void Stations<T>::printWaitingWPandNP(int stationNumber) {
     }
 
     cout << endl;
+}
+
+template <typename T>
+void Stations<T>::printBusesAtStation(int stationNumber){
+    int ngarage = list[stationNumber].getNgarage()->count();
+    int wgarage = list[stationNumber].getWgarage()->count();
+    int waitingBuses = ngarage + wgarage;
+    cout << waitingBuses << " buses waiting at this station:"<< endl;
 }
 
 

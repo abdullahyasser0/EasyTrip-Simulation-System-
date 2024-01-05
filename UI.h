@@ -53,22 +53,22 @@ public:
     }
 
 void displayStationStatus(int stationNumber) {
-        int currentHour = company.getCurrentHour();
-        int currentMinute = company.getCurrentMinute();
+    int currentHour = company.getCurrentHour();
+    int currentMinute = company.getCurrentMinute();
 
-        cout << "Current Time (Hour:Min) ==> " << currentHour << ":" << currentMinute << endl;
-        cout << "============== STATION #" << stationNumber << " =================" << endl;
+    cout << "Current Time (Hour:Min) ==> " << currentHour << ":" << currentMinute << endl;
+    cout << "============== STATION #" << stationNumber << " =================" << endl;
 
-        s.printWaitingSP(stationNumber);
-        s.printWaitingWPandNP(stationNumber);
+    s.printWaitingSP(stationNumber);
+    s.printWaitingWPandNP(stationNumber);
 
-        
-        if (interactiveMode) {
-            cout << "Press Enter to display the next station..." << endl;
-            cin.ignore();
-        }
-    
-        system("cls");
+    s.printBusesAtStation(stationNumber);
+
+    if (interactiveMode) {
+        cout << "Press Enter to display the next station..." << endl;
+        cin.ignore();
+    }
+
+    system("cls");
 }
-
 };
