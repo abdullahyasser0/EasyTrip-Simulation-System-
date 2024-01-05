@@ -41,7 +41,6 @@ public :
     Queue<Bus> *getWgarage(){return &Wgarage;}
 
 
-
     Nodestation(){
     Snumber  = 0;
     }
@@ -65,7 +64,6 @@ public :
     cout <<"    Wheel Buses: " <<Wgarage.count() << endl;
     cout<<"-------------------------------------------------"<<endl;
     }
-
 };
 
 /*
@@ -136,13 +134,13 @@ void Stations<T>::addStationsByNumber(int numberOfStations)
     }
 }
 
-template<typename T>
-void Stations<T>::display(int size){
-    for(int i=0;i<size;i++){
-        list[i].Snumber=i;
-        cout<<list[i].Snumber<<endl;
-    }
-}
+// template<typename T>
+// void Stations<T>::display(int size){
+//     for(int i=0;i<size;i++){
+//         list[i].Snumber=i;
+//         cout<<list[i].Snumber<<endl;
+//     }
+// }
 template<typename T>
 void Stations<T>::PrintAllStations(int size) 
 {
@@ -249,8 +247,11 @@ void Stations<T> :: busMoving(){
 template<typename T>
 void Stations<T>::passPromote(int maxW){
     for(int i = 0; i < size; i++){
-        if(list[i].getNP()->peek()->hasReachedMaxTime(maxW)){
+        if(list[i].getNP()->peek()!=nullptr &&list[i].getNP()->peek()->hasReachedMaxTime(maxW)){
             list[i].getSP()->enqueue(list[i].getNP()->dequeue());
+        }
+        if(list[i].getBNP()->peek()!=nullptr &&list[i].getBNP()->peek()->hasReachedMaxTime(maxW)){
+            list[i].getBSP()->enqueue(list[i].getBNP()->dequeue());
         }
         
     }
