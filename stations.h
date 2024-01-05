@@ -265,10 +265,14 @@ void Stations<T>::passPromote(int maxW){
 
 template<typename T>
 void Stations<T>::printWaitingSP(int stationNumber) {
-    Queue<Passenger>* forwardSP = list[stationNumber].getSP();
-    Queue<Passenger>* backwardSP = list[stationNumber].getBSP();
+    int forwardSP = list[stationNumber].getSP()->count();
+    int backwardSP = list[stationNumber].getBSP()->count();
+    int waitingSP = forwardSP + backwardSP;
+    cout << waitingSP << " waiting sp: FWD[" << forwardSP << "] BCK[" << backwardSP << "]" << endl;
 
-    cout << "Waiting SP: FWD[" << forwardSP->count() << "]";
+
+
+    cout << "Waiting SP: FWD[" << forwardSP << "]";
     if (!forwardSP->isEmpty()) {
         cout << "(";
         forwardSP->printQueue();
