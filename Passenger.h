@@ -11,6 +11,7 @@ private:
     int ID,startStation, endStation;
     int OnOffTime, Hours,Minutes;
     string Priority,type;
+    int count = 0;
     int per; // var added for the pri
 
 public: 
@@ -67,14 +68,23 @@ Passenger(string passengerType, int id, int hours, int mins, int startstation, i
         return type;
     }
     
-    void passPromote(int maxW, int currentTime) {
-        int waitingTime = currentTime - OnOffTime;
+    // void passPromote(int maxW, int currentTime) {
+    //     int waitingTime = currentTime - OnOffTime;
 
-        if (waitingTime > maxW) {
-            setPriority(3); 
-            cout << "Passenger with ID: " << getID() << " promoted" << endl;
-        } else {
-            cout << "Passenger with ID: " << getID() << " has decided to leave the station." << endl;
+    //     if (waitingTime > maxW) {
+    //         setPriority(3); 
+    //         cout << "Passenger with ID: " << getID() << " promoted" << endl;
+    //     } else {
+    //         cout << "Passenger with ID: " << getID() << " has decided to leave the station." << endl;
+    //     }
+    // }
+    bool hasReachedMaxTime(int maxW){
+        if(count == maxW){
+            return true;
+        }
+        else  {
+            count++;
+            return false;
         }
     }
 };

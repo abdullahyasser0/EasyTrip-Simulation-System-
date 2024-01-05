@@ -105,6 +105,7 @@ public:
     void RemovePassenger(Passenger* passenger, int stationNumber);
     int getStationSize();
     void moveBus();
+    void passPromote();
     // void moveNBus();
     // void moveWBus();
     void dequeueStationZ(char C);
@@ -244,6 +245,15 @@ void Stations<T> :: busMoving(){
         }
     }
     
+}
+template<typename T>
+void Stations<T>::passPromote(int maxW){
+    for(int i = 0; i < size; i++){
+        if(list[i].getNP()->peek()->hasReachedMaxTime(maxW)){
+            list[i].getSP()->enqueue(list[i].getNP()->dequeue());
+        }
+        
+    }
 }
 // template<typename T>
 // void Stations<T>::moveNBus(){
