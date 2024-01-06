@@ -417,31 +417,31 @@ void Stations<T>::passPromote(int maxW){
 
 
 
-// template<typename T>
-// void Stations<T>::printWaitingSP(int stationNumber) {
-//     int forwardSP = list[stationNumber].getSP()->count();
-//     int backwardSP = list[stationNumber].getBSP()->count();
-//     int waitingSP = forwardSP + backwardSP;
-//     cout << waitingSP << " waiting sp: FWD[" << forwardSP << "] BCK[" << backwardSP << "]" << endl;
+template<typename T>
+void Stations<T>::printWaitingSP(int stationNumber) {
+    Queue<Passenger>* forwardSP = list[stationNumber].getSP();
+    Queue<Passenger>* backwardSP = list[stationNumber].getBSP();
+    int waitingSP = forwardSP->count() + backwardSP->count();
+    cout << waitingSP;
 
 
 
-//     cout << "Waiting SP: FWD[" << forwardSP << "]";
-//     if (!forwardSP.isEmpty()) {
-//         cout << "(";
-//         forwardSP.printQueue();
-//         cout << ")";
-//     }
+    cout << "Waiting SP: FWD[" << forwardSP->count() << "]";
+    if (!forwardSP.isEmpty()) {
+        cout << "[";
+        forwardSP.printQueue();
+        cout << "]";
+    }
 
-//     cout << " BCK[" << backwardSP.count() << "]";
-//     if (!backwardSP.isEmpty()) {
-//         cout << "{";
-//         backwardSP.printQueue();
-//         cout << "}";
-//     }
+    cout << " BCK[" << backwardSP->count() << "]";
+    if (!backwardSP.isEmpty()) {
+        cout << "[";
+        backwardSP.printQueue();
+        cout << "]";
+    }
 
-//     cout << endl;
-// }
+    cout << endl;
+}
 
 template<typename T>
 void Stations<T>::printWaitingWPandNP(int stationNumber) {
@@ -530,8 +530,15 @@ void Stations<T>::printBusesAtStation(int stationNumber) {
 
 template<typename T>
 void Stations<T>::printFinishedPassengers() {
-    cout << "Finished passengers: ";
+    int count = 0;
+    LinkedListp<Passenger>* finishList = list[i].getFinishList();
+    Nodep<Passenger>* Pcounter = finishList->getHead();
+    while(Pcounter != nullptr){
+        count++;
+        Pcounter = Pcounter->getNext();
+    }
 
+    cout << count<<" Finished passengers: ";
     for (int i = 0; i < size; ++i) {
         LinkedListp<Passenger>* finishList = list[i].getFinishList();
         Nodep<Passenger>* current = finishList->getHead();
@@ -544,7 +551,6 @@ void Stations<T>::printFinishedPassengers() {
             current = current->getNext();
         }
     }
-
     cout << endl;
 }
 

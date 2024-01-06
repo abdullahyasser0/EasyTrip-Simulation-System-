@@ -59,10 +59,11 @@ void displayStationStatus(int stationNumber) {
     cout << "Current Time (Hour:Min) ==> " << currentHour << ":" << currentMinute << endl;
     cout << "============== STATION #" << stationNumber << " =================" << endl;
 
-    s.printWaitingSP(stationNumber);
+    //s.printWaitingSP(stationNumber);
     s.printWaitingWPandNP(stationNumber);
-
     s.printBusesAtStation(stationNumber);
+    s.printINCheckUpBuses();
+    s.printFinishedPassengers();
 
     if (interactiveMode) {
         cout << "Press Enter to display the next station..." << endl;
