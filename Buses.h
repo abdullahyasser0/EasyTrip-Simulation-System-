@@ -2,6 +2,7 @@
 #include<iostream>
 #include "dataStructures/LinKedListp.h"
 #include "Passenger.h"
+
 #include "dataStructures/PriorityQueue.h"
 using namespace std;
 
@@ -21,7 +22,15 @@ public:
 		PriorityQueue<Passenger> getInBusPass(){
 			return moving_passenger;
 		}
-		
+		int getNextStation(){
+			return nextStation;
+		}
+		int getMovingmins(){
+			return movingMins;
+		}
+		void setNextStation(int x){
+			nextStation=x;
+		}
         Bus(){
 			BusType = "NULL";
 			maxcapacity = 20;
@@ -79,7 +88,7 @@ public:
 			maxcapacity--;
 		}
 
-	
+		
 
 		Passenger* getPassOff() {
 			if(!moving_passenger.isEmpty()){
@@ -90,7 +99,10 @@ public:
 				return nullptr;
 			}
 		}
+		void setCurrentStation(int number){
+			
 
+		}
 		void gnextStation(int lastStation) {
 			if(nextStation==lastStation){
 				direction=1;

@@ -20,6 +20,8 @@ private:
     //Bus buses;
     int hours, minutes;
     char colon,eventType;
+    LinkedListp<Bus> boardingBusses;
+    LinkedListp<Passenger*> finishedPass;
 
 
 public:
@@ -31,16 +33,19 @@ public:
         for(int h=0;h<24;h++){
             for(int m=0;m<60;m++){
                 countDeqBus++;
-                S.passPromote(MaxW);
+                //S.passPromote(MaxW);
                 //S.moveBus();
                 //S.busMoving();
-                // if(countDeqBus==15){
-                //     countDeqBus=0;
-                //     
-                //     if(deqType=='N')deqType='W';
-                //     else deqType='N';
-
-                // }
+                if (countDeqBus == 15) {
+                    countDeqBus = 0;
+                    if (deqType == 'N'&& !S.list[0].getNgarage()->isEmpty()  ) {
+                        boardingBusses.Insert(S.dequeueStationZ(deqType));
+                        deqType = 'W';
+                    } else if (deqType == 'W'&& !S.list[0].getWgarage()->isEmpty()) {
+                        boardingBusses.Insert(S.dequeueStationZ(deqType));
+                        deqType = 'N';
+                    }
+                }
                 while (!eventsQueue.isEmpty() && h == eventsQueue.getfront()->data->getHours() && m == eventsQueue.getfront()->data->getMinutes())
                 {
                     Events* currentEvent = eventsQueue.dequeue();
@@ -57,17 +62,22 @@ public:
                         
                     }
 
-                }                
+                } 
+                // cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
+                // boardingBusses.PrintList();
+                S.checkBoardingList(boardingBusses,minsStations);
+                S.checkStations(boardingBusses);
+
+
             }
 
-        }
-                S.PrintAllStations(numStations+1); 
+        }       
                 cout<<"+++++++++++++++++++++++++++"<<endl;
                 S.busMoving();            
-                // // S.PrintAllStations(numStations+1);
-                // // cout<<"+++++++++++++++++++++++++++"<<endl;
-                // // S.TestbusMoving(); 
                 // S.PrintAllStations(numStations+1);
+                // cout<<"+++++++++++++++++++++++++++"<<endl;
+                // S.TestbusMoving(); 
+                S.PrintAllStations(numStations+1);
 
     }
 
