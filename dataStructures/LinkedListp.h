@@ -56,9 +56,11 @@ public:
     if (Head == nedded) {
         Nodep<T>* temp = Head;
         Head = Head->getNext(); 
-        delete temp; 
+        delete temp;
+        count--; 
         return;
     }
+    
     Nodep<T>* p = Head;
     while (p != nullptr && p->getNext() != nedded){
         p = p->getNext();
@@ -67,6 +69,7 @@ public:
         Nodep<T>* temp = p->getNext(); 
         p->setNext(p->getNext()->getNext()); 
         delete temp; 
+        count--;
     } else {  
     }
 }
@@ -150,6 +153,18 @@ public:
             }
         }
     }
+void PrintBus() const
+    {
+        Nodep<T>* p = Head;
 
+        while (p)
+        {
+            cout << "[ " << p->getItem()->getNextStation() <<" : "<<p->getItem()->getType()<<" D-> "<<p->getItem()->getDirection() <<" ]";
+            //p->getItem()->print_bus_info();
+            cout << "--->";
+            p = p->getNext();
+        }
+        cout << "*\n";
+    }
 
 };

@@ -238,15 +238,13 @@ void Stations<T>::checkBoardingList(LinkedListp<Bus>&busList,int STS){
             if (current == STS) {
                 Nodep<Bus>* enq = temp;
                 Nodep<Bus>* del = temp;
-                cout<<"IM THE TYPE "<<type<<endl;
-
-                if (type == "Normal") {
-                    cout<<"IM IN AND NORMAL"<<endl;
-                    cout<<"MY DIRECTION IS  "<<direction<<endl;
-
-                    list[next].getNgarage()->enqueue(enq->getItem());
-                } else {
-                    list[next].getWgarage()->enqueue(enq->getItem());
+                if (type == "Normal" ) {
+                    if(direction==0)list[next].getNgarage()->enqueue(enq->getItem());
+                    if(direction==1)list[next].getBNgarage()->enqueue(enq->getItem());
+                } 
+                if(type == "Wheel" ) {
+                    if(direction==0)list[next].getWgarage()->enqueue(enq->getItem());
+                    if(direction==1)list[next].getBWgarage()->enqueue(enq->getItem());
                 }
                 temp = temp->getNext();
                 busList.deletenode(del);
@@ -271,34 +269,85 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList){
               list[i].getFinishList()->Insert(list[i].getNgarage()->peek()->getPassOff());  
             }
         }
+
+        if(!(list[i].getBNgarage()->isEmpty())&&!(list[i].getBNgarage()->peek()->getInBusPass().isEmpty())){
+            while (list[i].getBNgarage()->peek()->getInBusPass().getFront()!=nullptr&&list[i].getBNgarage()->peek()->getInBusPass().getFront()->getItem()->getEndStation()==i)
+            {
+              list[i].getFinishList()->Insert(list[i].getBNgarage()->peek()->getPassOff());  
+            }
+        }
+        //wheel bus
+
         if(!(list[i].getWgarage()->isEmpty())&&!(list[i].getWgarage()->peek()->getInBusPass().isEmpty())){
             while (list[i].getWgarage()->peek()->getInBusPass().getFront()!=nullptr&&list[i].getWgarage()->peek()->getInBusPass().getFront()->getItem()->getEndStation()==i)
             {
               list[i].getFinishList()->Insert(list[i].getWgarage()->peek()->getPassOff());  
             }
         }
+
+        if(!(list[i].getBWgarage()->isEmpty())&&!(list[i].getBWgarage()->peek()->getInBusPass().isEmpty())){
+            while (list[i].getBWgarage()->peek()->getInBusPass().getFront()!=nullptr&&list[i].getBWgarage()->peek()->getInBusPass().getFront()->getItem()->getEndStation()==i)
+            {
+              list[i].getFinishList()->Insert(list[i].getBWgarage()->peek()->getPassOff());  
+            }
+        }
         
         //get pass on
+        //Np
         while (!(list[i].getNP()->isEmpty())&&!(list[i].getNgarage()->isEmpty()))
         {
             Passenger *pass = list[i].getNP()->returnHead()->data;
             list[i].getNgarage()->getfront()->data->getPassOn(pass);
             list[i].getNP()->dequeue();
+
         }
+        while (!(list[i].getBNP()->isEmpty())&&!(list[i].getBNgarage()->isEmpty()))
+        {
+            Passenger *pass = list[i].getBNP()->returnHead()->data;
+            list[i].getBNgarage()->getfront()->data->getPassOn(pass);
+            list[i].getBNP()->dequeue();
+
+        }
+        
+        // wheel
         while (!(list[i].getWP()->isEmpty())&&!(list[i].getWgarage()->isEmpty()))
         {
             Passenger *pass = list[i].getWP()->returnHead()->data;
             list[i].getWgarage()->getfront()->data->getPassOn(pass);
             list[i].getWP()->dequeue();
+
         }
+        while (!(list[i].getBWP()->isEmpty())&&!(list[i].getBWgarage()->isEmpty()))
+        {
+            Passenger *pass = list[i].getBWP()->returnHead()->data;
+            list[i].getBWgarage()->getfront()->data->getPassOn(pass);
+            list[i].getBWP()->dequeue();
+
+        }
+
+
+
         //buss leaves to the boarding list
         if(!(list[i].getNgarage()->isEmpty())){
         list[i].getNgarage()->peek()->gnextStation(size-1);
         busList.Insert(list[i].getNgarage()->dequeue());
         }
+
+        if(!(list[i].getBNgarage()->isEmpty())){
+        list[i].getBNgarage()->peek()->gnextStation(size-1);
+        busList.Insert(list[i].getBNgarage()->dequeue());
+        }
+        //wheel
+
+
         if(!(list[i].getWgarage()->isEmpty())){
         list[i].getWgarage()->peek()->gnextStation(size-1);
         busList.Insert(list[i].getWgarage()->dequeue());
+        }
+
+        if(!(list[i].getBWgarage()->isEmpty())){
+        list[i].getBWgarage()->peek()->gnextStation(size-1);
+        busList.Insert(list[i].getBWgarage()->dequeue());
         }
 
     }

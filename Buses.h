@@ -80,6 +80,7 @@ public:
     		cout << "Bus maintenance : " << maintenance << endl;
 			cout << "Bus current station : " << nextStation-1 << endl;
 			cout << "Bus next Station  : " << nextStation << endl;
+			cout << "Bus direction  : " << direction << endl;
 			cout<<"imprinting what inside mee "<<endl;
 			moving_passenger.printQueue();
 			}
@@ -102,10 +103,14 @@ public:
 				return nullptr;
 			}
 		}
+
+
 		void setCurrentStation(int number){
 			
 
 		}
+
+		
 		void gnextStation(int lastStation) {
 			if(nextStation==lastStation){
 				direction=1;
