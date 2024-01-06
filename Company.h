@@ -104,6 +104,39 @@ public:
 
 
             }
+            int *arr = new int[numStations];
+            if ( h >= 22 && h < 4){
+                for (int i = 0; i <= numStations; i++) {
+                    arr[i] += S.list[i].getNP()->getQSize();
+                    delete S.list[i].getNP();
+
+                    arr[i] += S.list[i].getBNP()->getQSize();
+                    delete S.list[i].getBNP();
+
+                    arr[i] += S.list[i].getBSP()->getSize();
+                    delete S.list[i].getBSP();
+
+                    arr[i] += S.list[i].getBWP()->getQSize();
+                    delete S.list[i].getBWP();
+
+                    arr[i] += S.list[i].getSP()->getSize();
+                    delete S.list[i].getSP();
+
+                    arr[i] += S.list[i].getWP()->getQSize();
+                    delete S.list[i].getWP();                   
+                }
+            }
+            // handling the off hours  0-numstations
+                // loop over the stations when hours = 22 --done
+                    // for each station get all passanger list that are not empty  --done
+                    // create a counter --done
+                    // delete all passanger in the non empty waiting listsand counts them --done
+
+                    // if a bus is empty at any station it should return to station 0
+
+                
+            
+
 
         }       
                 cout<<"+++++++++++++++++++++++++++"<<endl;
