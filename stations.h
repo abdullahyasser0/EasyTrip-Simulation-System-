@@ -18,8 +18,8 @@ private:
     Queue<Passenger> WP;
     Queue<Passenger> BWP;
     
-    Queue<Passenger> SP;
-    Queue<Passenger> BSP;
+    PriorityQueue<Passenger> SP;
+    PriorityQueue<Passenger> BSP;
 
     Queue<Bus> Ngarage;
     Queue<Bus> Wgarage;
@@ -34,8 +34,8 @@ public :
     Queue<Passenger> *getBNP(){return &BNP;}
     Queue<Passenger> *getBWP(){return &BWP;}
 
-    Queue<Passenger> *getSP(){return &SP;}
-    Queue<Passenger> *getBSP(){return &BSP;}
+    PriorityQueue<Passenger> *getSP(){return &SP;}
+    PriorityQueue<Passenger> *getBSP(){return &BSP;}
 
     Queue<Bus> *getNgarage(){return &Ngarage;}
     Queue<Bus> *getWgarage(){return &Wgarage;}
@@ -167,8 +167,8 @@ void Stations<T>::addPassenger(Passenger* passenger){
         if(passDrection==0) list[startStation].getWP()->enqueue(passenger);
         else list[startStation].getBWP()->enqueue(passenger);
     }else if (passengerType == "SP") {
-        if(passDrection==0) list[startStation].getSP()->enqueue(passenger);
-        else list[startStation].getBSP()->enqueue(passenger);        
+        if(passDrection==0) list[startStation].getSP()->enqueue(passenger,passenger->getPriority());
+        else list[startStation].getBSP()->enqueue(passenger,passenger->getPriority());        
         }
 
 }
@@ -322,10 +322,10 @@ template<typename T>
 void Stations<T>::passPromote(int maxW){
     for(int i = 0; i < size; i++){
         if(list[i].getNP()->peek()!=nullptr &&list[i].getNP()->peek()->hasReachedMaxTime(maxW)){
-            list[i].getSP()->enqueue(list[i].getNP()->dequeue());
+            list[i].getSP()->enqueue(list[i].getNP()->dequeue(),3);
         }
         if(list[i].getBNP()->peek()!=nullptr &&list[i].getBNP()->peek()->hasReachedMaxTime(maxW)){
-            list[i].getBSP()->enqueue(list[i].getBNP()->dequeue());
+            list[i].getBSP()->enqueue(list[i].getBNP()->dequeue(),3);
         }
         
     }

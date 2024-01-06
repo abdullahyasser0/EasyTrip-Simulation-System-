@@ -6,7 +6,6 @@
 #include <sstream>
 #include "ArrivalEvents.h"
 #include "LeaveEvents.h"
-//#include "dataStructures/LinkedList.h"
 #include "stations.h"
 using namespace std;
 class Company {
@@ -46,6 +45,7 @@ public:
                         deqType = 'N';
                     }
                 }
+                                cout<<"last time the function worked was at min: "<<m <<"and hour : "<<h<<endl;
                 while (!eventsQueue.isEmpty() && h == eventsQueue.getfront()->data->getHours() && m == eventsQueue.getfront()->data->getMinutes())
                 {
                     Events* currentEvent = eventsQueue.dequeue();
