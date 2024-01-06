@@ -49,4 +49,7 @@ public:
 	char getetype()override{
 		return EventType;
 	}
+	int getSTRT()override{
+		return STRT;
+	}
 };

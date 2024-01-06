@@ -20,6 +20,7 @@ private:
     int hours, minutes;
     char colon,eventType;
     LinkedListp<Bus> boardingBusses;
+    LinkedListp<Bus> CheckupBusses;
     LinkedListp<Passenger*> finishedPass;
     char input;
     UIcla ui;
@@ -33,18 +34,53 @@ public:
         char deqType= 'N';
         for(int h=4;h<6;h++){
             for(int m=0;m<60;m++){
+                Nodep<Bus>* currentCheckupBus = CheckupBusses.getHead();
+                Nodep<Bus>* prevCheckupBus = nullptr;
+                while (currentCheckupBus != nullptr)
+                {
+                    if (currentCheckupBus->getItem()->finishCheckup())
+                    {
+                        boardingBusses.Insert(currentCheckupBus->getItem());
+                        
+                        if (prevCheckupBus == nullptr)
+                        {
+                            CheckupBusses.DeleteFirst();
+                            currentCheckupBus = CheckupBusses.getHead();
+                        }
+                        else
+                        {
+                            prevCheckupBus->setNext(currentCheckupBus->getNext());
+                            delete currentCheckupBus;
+                            currentCheckupBus = prevCheckupBus->getNext();
+                        }
+                    }
+                    else
+                    {
+                        prevCheckupBus = currentCheckupBus;
+                        currentCheckupBus = currentCheckupBus->getNext();
+                    }
+                }
                 countDeqBus++;
-                //S.passPromote(MaxW);
-                //S.moveBus();
-                //S.busMoving();
+                S.passPromote(MaxW);
                 if (h>=4 && countDeqBus%15==0){
                     countDeqBus = 0;
-                    if (deqType == 'N'&& !S.list[0].getNgarage()->isEmpty()  ) {
-                        boardingBusses.Insert(S.dequeueStationZ(deqType));
-                        deqType = 'W';
-                    } else if (deqType == 'W'&& !S.list[0].getWgarage()->isEmpty()) {
-                        boardingBusses.Insert(S.dequeueStationZ(deqType));
-                        deqType = 'N';
+                    if (deqType == 'N') {
+                        if(!S.list[0].getNgarage()->isEmpty()){
+                            boardingBusses.Insert(S.dequeueStationZ(deqType));
+                            deqType = 'W';
+                        }else{
+                            deqType = 'W';  
+                            boardingBusses.Insert(S.dequeueStationZ(deqType));
+                        }
+                    } else if (deqType == 'W') {
+                        if(!S.list[0].getWgarage()->isEmpty()){
+                            boardingBusses.Insert(S.dequeueStationZ(deqType));
+                            deqType = 'N';
+                        }
+                        else if(!S.list[0].getNgarage()->isEmpty()){
+                            deqType = 'N';  
+                            boardingBusses.Insert(S.dequeueStationZ(deqType));
+                        }
                     }
                 }
                 while (!eventsQueue.isEmpty() && h == eventsQueue.getfront()->data->getHours() && m == eventsQueue.getfront()->data->getMinutes())
@@ -53,33 +89,36 @@ public:
 
                     if (currentEvent->getetype() == 'A')
                     {
-                        cout << "Passenger with ID: " << currentEvent->getid() << " reached the station at : " << h << ":" << m << endl;
+                        cout << "Passenger with ID: " << currentEvent->getid() << " reached station "<<currentEvent->getSTRT()<< " at : " << h << ":" << m << endl;
                         currentEvent->execute(S);
                     }
                     else if (currentEvent->getetype() == 'L')
                     {
-                        cout << "Passenger with ID: " << currentEvent->getid() << " left the station at : " << h << ":" << m << endl;
                         currentEvent->execute(S);
-                        
                     }
 
                 }
-                
-                S.checkBoardingList(boardingBusses,numStations-1);
+                //boardingBusses.PrintBus();
+ 
+                //if(S.list[1].getNP()->isEmpty()==true) cout<<"IM EMPTY"<<endl;
+                //if(S.list[1].getNP()->isEmpty()==false) cout<<"I HAS SOMETHING INSIDE"<<endl;
+                //cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
+                S.checkBoardingList(boardingBusses,minsStations);
                 S.checkStations(boardingBusses);
-                ui.runInteractiveMode(S,numStations,h,m);
-                //cout<<"@hour : "<<h<<" min : "<<m<<endl;
-                //S.list[1].getNgarage()->printBusQueue();
+                //boardingBusses.PrintBus();
+                //boardingBusses.PrintBus();
+
+
             }
 
-        }           
-                //S.PrintAllStations(numStations+1);
-    }
-    Stations<Nodestation*> returnStation(){
-        return S;
-    }
-    char getchar(){
-        return input;
+        }       
+                cout<<"+++++++++++++++++++++++++++"<<endl;
+                //S.busMoving(); 
+
+                // S.PrintAllStations(numStations+1);
+                // cout<<"+++++++++++++++++++++++++++"<<endl;
+                // S.TestbusMoving(); 
+                S.PrintAllStations(numStations+1);
     }
     void PrintWaitingPassengers(){
         for(int i =0;i<numStations+1;i++){
@@ -118,25 +157,28 @@ public:
 
 
     void ReadInput() {
-        ifstream input("input.txt");
+        ifstream input("random_file.txt");
         input >> numStations >> minsStations >> numWbuses >> numNbuses >> capacityWBus >> capacityNBus
             >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum ;
-        
+
+        S.setOnOff(OnOffTime);
         S.addStationsByNumber(numStations);
         for (int i = 0; i < numNbuses; i++) {
-            Bus* bus=new Bus("Normal",capacityNBus,0,minsStations);
+            Bus* bus=new Bus(i+1,"Normal",capacityNBus,0,minsStations);
+            bus->setCheckuptripsAndDuration(CheckupTrips,checkupDMBus);
             S.storeNBus(bus);
         }
 
         for (int i = 0; i < numWbuses; i++) {
-            Bus* bus=new Bus("Wheel",capacityNBus,0,minsStations);
+            Bus* bus=new Bus(i+1,"Wheel",capacityNBus,0,minsStations);
+            bus->setCheckuptripsAndDuration(CheckupTrips,checkupDWBus);
             S.storeWBus(bus);
         }
         input.close();
     }
 
     void EventList() {
-        ifstream input("input.txt");
+        ifstream input("random_file.txt");
         string PType, time, priority;
         int id, STRT, END;
 
