@@ -21,7 +21,15 @@ public:
 		PriorityQueue<Passenger> getInBusPass(){
 			return moving_passenger;
 		}
-		
+		int getNextStation(){
+			return nextStation;
+		}
+		int getMovingmins(){
+			return movingMins;
+		}
+		void setNextStation(int x){
+			nextStation=x;
+		}
         Bus(){
 			BusType = "NULL";
 			maxcapacity = 20;
@@ -79,7 +87,7 @@ public:
 			maxcapacity--;
 		}
 
-	
+		
 
 		Passenger* getPassOff() {
 			if(!moving_passenger.isEmpty()){
