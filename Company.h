@@ -64,10 +64,10 @@ public:
                 S.PrintAllStations(numStations+1); 
                 cout<<"+++++++++++++++++++++++++++"<<endl;
                 S.busMoving();            
+                // // S.PrintAllStations(numStations+1);
+                // // cout<<"+++++++++++++++++++++++++++"<<endl;
+                // // S.TestbusMoving(); 
                 // S.PrintAllStations(numStations+1);
-                // cout<<"+++++++++++++++++++++++++++"<<endl;
-                // S.TestbusMoving(); 
-                S.PrintAllStations(numStations+1);
 
     }
 
