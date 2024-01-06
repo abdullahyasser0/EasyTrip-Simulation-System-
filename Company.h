@@ -30,7 +30,7 @@ public:
         EventList();
         int countDeqBus=0;
         char deqType= 'N';
-        for(int h=0;h<1;h++){
+        for(int h=0;h<24;h++){
             for(int m=0;m<60;m++){
                 countDeqBus++;
                 //S.passPromote(MaxW);
@@ -63,19 +63,16 @@ public:
                     }
 
                 } 
-                cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
-                boardingBusses.PrintList();
+                // cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
+                // boardingBusses.PrintList();
                 S.checkBoardingList(boardingBusses,minsStations);
+                S.checkStations(boardingBusses);
+
 
             }
 
         }       
-                //S.PrintAllStations(numStations+1); 
                 cout<<"+++++++++++++++++++++++++++"<<endl;
-                //S.busMoving();            
-                // S.PrintAllStations(numStations+1);
-                // cout<<"+++++++++++++++++++++++++++"<<endl;
-                // S.TestbusMoving(); 
                 S.PrintAllStations(numStations+1);
 
     }

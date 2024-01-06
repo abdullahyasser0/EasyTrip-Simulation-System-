@@ -2,6 +2,7 @@
 #include<iostream>
 #include "dataStructures/LinKedListp.h"
 #include "Passenger.h"
+
 #include "dataStructures/PriorityQueue.h"
 using namespace std;
 
@@ -98,7 +99,10 @@ public:
 				return nullptr;
 			}
 		}
+		void setCurrentStation(int number){
+			
 
+		}
 		void gnextStation(int lastStation) {
 			if(nextStation==lastStation){
 				direction=1;

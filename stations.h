@@ -112,7 +112,8 @@ public:
     void busMoving();
     void TestbusMoving();
     void printBusesAtStation(int stationNumber);
-    void checkBoardingList(LinkedListp<Bus>busList,int STS);
+    void checkBoardingList(LinkedListp<Bus>&busList,int STS);
+    void checkStations(LinkedListp<Bus>&busList);
 };
 
 
@@ -219,20 +220,27 @@ Bus* Stations<T>::dequeueStationZ(char C){
 }
 
 template<typename T>
-void Stations<T>::checkBoardingList(LinkedListp<Bus>busList,int STS){
+void Stations<T>::checkBoardingList(LinkedListp<Bus>&busList,int STS){
     Nodep<Bus>* temp=busList.getHead();
+    Nodep<Bus>* prev = nullptr;
     if(!busList.isEmpty()){
         while (temp!=nullptr)
         {   
-
             int current=temp->getItem()->getMovingmins();
-            int next=temp->getItem()->getNextStation();
-            if(current!=STS)temp->getItem()->plusMoviMins();
+            int next = temp->getItem()->getNextStation();
+            string type = temp->getItem()->getType();
+            if (current != STS) temp->getItem()->plusMoviMins();
 
-            if(current==STS){
-                Nodep<Bus>* enq=temp;
-                list[next].getNgarage()->enqueue(enq->getItem());
-                //busList.deletenode(temp); the problem is heeere 
+            if (current == STS) {
+                Nodep<Bus>* enq = temp;
+                Nodep<Bus>* del = temp;
+                if (type == "Normal") {
+                    list[next].getNgarage()->enqueue(enq->getItem());
+                } else {
+                    list[next].getWgarage()->enqueue(enq->getItem());
+                }
+                temp = temp->getNext();
+                busList.deletenode(del);
             }
             if(temp!=nullptr){
             temp=temp->getNext();
@@ -242,7 +250,40 @@ void Stations<T>::checkBoardingList(LinkedListp<Bus>busList,int STS){
     }
     
 }
-// template<typename T>
+
+
+template<typename T>
+void Stations<T>::checkStations(LinkedListp<Bus>&busList){
+    for (int i=1; i<size;i++){
+        // if(list[i].getNgarage()->getfront()!=nullptr){
+        while (!(list[i].getNP()->isEmpty())&&!(list[i].getNgarage()->isEmpty()))
+        {
+            cout<<"Flag2"<<endl;
+
+            Passenger *pass = list[i].getNP()->returnHead()->data;
+            cout<<"Flag3"<<endl;
+
+            list[i].getNgarage()->getfront()->data->getPassOn(pass);
+            cout<<"Flag4"<<endl;
+
+            list[i].getNP()->dequeue();  
+            cout<<"Flag5"<<endl;
+        }
+        if(!(list[i].getNgarage()->isEmpty())){
+        list[i].getNgarage()->peek()->gnextStation(size);
+        busList.Insert(list[i].getNgarage()->dequeue());
+        }
+        //}
+        //list[i].getNgarage()->getfront()->data.
+       // busList.Insert(list[i].getNgarage()->dequeue())
+        
+    }
+}
+
+
+
+
+
 // void Stations<T>::moveBus(){
 //     for(int i = 1; i <2; i++){
 //         if(!(list[i].getNgarage()->isEmpty())&& list[i].getNP()->getCount() == 0)

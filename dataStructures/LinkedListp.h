@@ -34,40 +34,42 @@ public:
         }
         cout << "*\n";
     }
-    
+    void setHead(Nodep<T>* H){
+        Head=H;
+    }
     
     Nodep<T> *returnHead(){
         return Head;
     }
+    // void deletenode(Nodep<T>* nedded){
+    //     Nodep<T>* p = Head;
+    //     if(p==nedded){Head=nullptr; delete p; return; }
+    //     while(p->getNext()!=nedded){
+    //         p=p->getNext();
+    //     }
+    //     p->setNext(p->getNext()->getNext());
+    // }
     void deletenode(Nodep<T>* nedded){
-        Nodep<T>* p = Head;
-        if(p==nedded){Head=nullptr; delete p; return; }
-        while(p->getNext()!=nedded){
-            p=p->getNext();
-        }
-        p->setNext(p->getNext()->getNext());
+    if (Head == nullptr || nedded == nullptr) {
+        return;
     }
-// void deletenode(Nodep<T>* nedded){
-//     if (Head == nullptr || nedded == nullptr) {
-//         return;
-//     }
-//     if (Head == nedded) {
-//         Nodep<T>* temp = Head;
-//         Head = Head->getNext(); 
-//         delete temp; 
-//         return;
-//     }
-//     Nodep<T>* p = Head;
-//     while (p != nullptr && p->getNext() != nedded){
-//         p = p->getNext();
-//     }
-//     if (p != nullptr && p->getNext() == nedded) {
-//         Nodep<T>* temp = p->getNext(); 
-//         p->setNext(p->getNext()->getNext()); 
-//         delete temp; 
-//     } else {  
-//     }
-// }
+    if (Head == nedded) {
+        Nodep<T>* temp = Head;
+        Head = Head->getNext(); 
+        delete temp; 
+        return;
+    }
+    Nodep<T>* p = Head;
+    while (p != nullptr && p->getNext() != nedded){
+        p = p->getNext();
+    }
+    if (p != nullptr && p->getNext() == nedded) {
+        Nodep<T>* temp = p->getNext(); 
+        p->setNext(p->getNext()->getNext()); 
+        delete temp; 
+    } else {  
+    }
+}
 
 
     void DeleteFirst()
@@ -148,5 +150,6 @@ public:
             }
         }
     }
+
 
 };
