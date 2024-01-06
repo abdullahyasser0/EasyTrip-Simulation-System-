@@ -122,6 +122,8 @@ public:
     void printBusesAtStation(int stationNumber);
     void checkBoardingList(LinkedListp<Bus>&busList,int STS);
     void checkStations(LinkedListp<Bus>&busList);
+    void printINCheckUpBuses();
+    void printFinishedPassengers();
 };
 
 
@@ -381,45 +383,103 @@ void Stations<T>::printWaitingWPandNP(int stationNumber) {
     Queue<Passenger>* forwardNP = list[stationNumber].getNP();
     Queue<Passenger>* backwardNP = list[stationNumber].getBNP();
 
-    cout << "Waiting WP: FWD[" << forwardWP->count() << "]";
+    int waitingWP = forwardWP->count() + backwardWP->count();
+    int waitingNP = forwardNP->count() + backwardNP->count();
+    
+    cout << waitingWP << " waiting WP: FWD[";
     if (!forwardWP->isEmpty()) {
-        cout << "{";
         forwardWP->printQueue();
-        cout << "}";
+        cout << "] ";
     }
 
-    cout << " BCK[" << backwardWP->count() << "]";
+    cout << " BCK[";
     if (!backwardWP->isEmpty()) {
-        cout << "{";
         backwardWP->printQueue();
-        cout << "}";
+        cout << "]" << endl;
     }
 
-    cout << endl;
-
-    cout << "Waiting NP: FWD[" << forwardNP->count() << "]";
-    if (!forwardNP->isEmpty()) {
-        cout << "{";
+    cout << waitingNP << " waiting NP: FWD[";
+    if(!forwardNP->isEmpty()){
         forwardNP->printQueue();
-        cout << "}";
+        cout << "] ";
     }
-
-    cout << " BCK[" << backwardNP->count() << "]";
-    if (!backwardNP->isEmpty()) {
-        cout << "{";
+    cout << "BCK[";
+    if(!backwardNP->isEmpty()){
         backwardNP->printQueue();
-        cout << "}";
+        cout << "]" << endl;
     }
-
-    cout << endl;
 }
 
-template <typename T>
-void Stations<T>::printBusesAtStation(int stationNumber){
+
+// // template<typename T>
+// // void Stations<T>::printINCheckUpBuses() {
+// //     cout << "In-Checkup buses: ";
+    
+// //     for (int i = 0; i < ; ++i) {
+// //         if (!list[i].getNgarage()->isEmpty()) {
+// //             Bus* bus = list[i].getNgarage()->peek();
+// //             if (bus->isInCheckUp()) {
+// //                 cout << bus->getBusID() << ", ";
+// //             }
+// //         }
+// //         if (!list[i].getWgarage()->isEmpty()) {
+// //             Bus* bus = list[i].getWgarage()->peek();
+// //             if (bus->isInCheckUp()) {
+// //                 cout << bus->getBusID() << ", ";
+// //             }
+// //         }
+// //     }
+
+// //     cout << endl;
+// // }
+
+
+template<typename T>
+void Stations<T>::printBusesAtStation(int stationNumber) {
     int ngarage = list[stationNumber].getNgarage()->count();
     int wgarage = list[stationNumber].getWgarage()->count();
     int waitingBuses = ngarage + wgarage;
-    cout << waitingBuses << " buses waiting at this station:"<< endl;
+
+    if (waitingBuses > 0) {
+        cout << waitingBuses << " buses waiting at this station:" << endl;
+        
+        Bus* bus = list[stationNumber].getNgarage()->peek();
+        cout << bus->getType() << "[" << bus->getDirection() << "," << bus->getCapacity() << "] {";
+
+        PriorityQueue<Passenger> inBusPass = bus->getInBusPass();
+        while (!inBusPass.isEmpty()) {
+            Passenger* passengerPtr = inBusPass.dequeue();  
+            Passenger passenger = *passengerPtr;
+            cout << passenger.getID();
+            if (!inBusPass.isEmpty()) {
+                cout << ", ";
+            }
+        }
+
+        cout << "}" << endl;
+        cout << "------------------------------------------------------" << endl;
+    }
 }
+
+template<typename T>
+void Stations<T>::printFinishedPassengers() {
+    cout << "Finished passengers: ";
+
+    for (int i = 0; i < size; ++i) {
+        LinkedListp<Passenger>* finishList = list[i].getFinishList();
+        Nodep<Passenger>* current = finishList->getHead();
+
+        while (current != nullptr) {
+            cout << current->getItem()->getID();
+            if (current->getNext() != nullptr) {
+                cout << ", ";
+            }
+            current = current->getNext();
+        }
+    }
+
+    cout << endl;
+}
+
 
 
