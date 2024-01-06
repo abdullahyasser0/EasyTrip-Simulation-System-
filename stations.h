@@ -70,31 +70,16 @@ public :
     cout<<"Backword SP Queue: ";
     BSP.printQueue();
     cout << "Garage: " << endl;
-    cout <<"    Normal Buses: "<<Ngarage.count() <<endl; 
-    cout <<"    Wheel Buses: " <<Wgarage.count() << endl;
-    cout <<"   Backword Normal Buses: "<<BNgarage.count() <<endl; 
-    cout <<"   Backword Wheel Buses: " <<BWgarage.count() << endl;
+    cout <<"    Normal Buses: "<<Ngarage.getQuqeCount() <<endl; 
+    cout <<"    Wheel Buses: " <<Wgarage.getQuqeCount() << endl;
+    cout <<"   Backword Normal Buses: "<<BNgarage.getQuqeCount() <<endl; 
+    cout <<"   Backword Wheel Buses: " <<BWgarage.getQuqeCount() << endl;
     cout<<"Finish List : "<<endl;
     finishlist.PrintList();
     cout<<"-------------------------------------------------"<<endl;
     }
 };
 
-/*
-PassAdd: adds a new passenger to appropriate waiting list (call it by Arrival event) -->>Done
-PassRemove: removes a passenger who wants to leave (call it by leave event) -->Done
-PassPromote: Promoes maxW NP to SP
-BusAdd: adds a bus to the boarding buses list --Done
-BusBoarding: Uses function of Bus (GetPassOff, GetPassOn)--Done
-BusLeave: Moves a bus from station to the Moving buses (through company class)--Done
-PassFinish: moves a finished Pass. to finished List (thro. Company)
-*/
-
-/*
-TODO
-PassPromote: Promoes maxW NP to SP
-PassFinish: moves a finished Pass. to finished List (thro. Company)
-*/
 template <typename T>
 class Stations{
 
@@ -133,6 +118,7 @@ public:
     void printINCheckUpBuses();
     void printFinishedPassengers();
     void setOnOff(int GOF);
+    void printBusses(int stationNumber);
 };
 
 
@@ -299,7 +285,6 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
             }
         }
         if(!(list[i].getBNgarage()->isEmpty())&&!(list[i].getBNgarage()->peek()->getInBusPass().isEmpty())){
-            // list[i].getBNgarage()->printBusQueue();
             while (list[i].getBNgarage()->peek()->getInBusPass().getFront()!=nullptr&&list[i].getBNgarage()->peek()->getInBusPass().getFront()->getItem()->getEndStation()==i)
             {
             if(onOffSeconds>=60){
@@ -473,29 +458,23 @@ void Stations<T>::passPromote(int maxW){
 
 // template<typename T>
 // void Stations<T>::printWaitingSP(int stationNumber) {
-//     Queue<Passenger>* forwardSP = list[stationNumber].getSP();
-//     Queue<Passenger>* backwardSP = list[stationNumber].getBSP();
-//     int waitingSP = forwardSP->count() + backwardSP->count();
-//     cout << waitingSP;
+//     PriorityQueue<Passenger>* forwardSP = list[stationNumber].getSP();
+//     PriorityQueue<Passenger>* backwardSP = list[stationNumber].getBSP();
+//     int waitingSP = forwardSP->getSize() + backwardSP->getSize();
+//     cout << waitingSP <<" ";
 
 
 
-//     cout << "Waiting SP: FWD[" << forwardSP->count() << "]";
-//     if (!forwardSP.isEmpty()) {
-//         cout << "[";
-//         forwardSP.printQueue();
-//         cout << "]";
-//     }
+    cout << "Waiting SP: FWD[";
+    forwardSP->printQueue();
+        cout << "]";
+   
 
-//     cout << " BCK[" << backwardSP->count() << "]";
-//     if (!backwardSP.isEmpty()) {
-//         cout << "[";
-//         backwardSP.printQueue();
-//         cout << "]";
-//     }
+    cout << " BCK[";
+    backwardSP->printQueue();
+    cout << "]"<<endl;
 
-//     cout << endl;
-// }
+}
 
 template<typename T>
 void Stations<T>::printWaitingWPandNP(int stationNumber) {
@@ -504,31 +483,27 @@ void Stations<T>::printWaitingWPandNP(int stationNumber) {
     Queue<Passenger>* forwardNP = list[stationNumber].getNP();
     Queue<Passenger>* backwardNP = list[stationNumber].getBNP();
 
-    int waitingWP = forwardWP->count() + backwardWP->count();
-    int waitingNP = forwardNP->count() + backwardNP->count();
+    int waitingWP = forwardWP->getQuqeCount() + backwardWP->getQuqeCount();
+    int waitingNP = forwardNP->getQuqeCount() + backwardNP->getQuqeCount();
     
-    cout << waitingWP << " waiting WP: FWD[";
-    if (!forwardWP->isEmpty()) {
+    
+        cout << waitingWP << " waiting WP: FWD[";
         forwardWP->printQueue();
-        cout << "] ";
-    }
+        cout << "]";
 
-    cout << " BCK[";
-    if (!backwardWP->isEmpty()) {
+        cout << " BCK[";
         backwardWP->printQueue();
         cout << "]" << endl;
-    }
 
-    cout << waitingNP << " waiting NP: FWD[";
-    if(!forwardNP->isEmpty()){
+    
+        cout << waitingNP << " waiting NP: FWD[";
         forwardNP->printQueue();
-        cout << "] ";
-    }
-    cout << "BCK[";
-    if(!backwardNP->isEmpty()){
+        cout << "]";
+    
+        cout << " BCK[";
         backwardNP->printQueue();
         cout << "]" << endl;
-    }
+    
 }
 
 
@@ -555,17 +530,16 @@ void Stations<T>::printWaitingWPandNP(int stationNumber) {
 // // }
 
 
-// template<typename T>
-// void Stations<T>::printBusesAtStation(int stationNumber) {
-//     int ngarage = list[stationNumber].getNgarage()->count();
-//     int wgarage = list[stationNumber].getWgarage()->count();
-//     int waitingBuses = ngarage + wgarage;
-
-//     if (waitingBuses > 0) {
-//         cout << waitingBuses << " buses waiting at this station:" << endl;
-        
-//         Bus* bus = list[stationNumber].getNgarage()->peek();
-//         cout << bus->getType() << "[" << bus->getDirection() << "," << bus->getCapacity() << "] {";
+template<typename T>
+void Stations<T>::printBusesAtStation(int stationNumber) {
+    int ngarage = list[stationNumber].getNgarage()->getQuqeCount();
+    int wgarage = list[stationNumber].getWgarage()->getQuqeCount();
+    int waitingBuses = ngarage + wgarage;
+    cout<<waitingBuses;
+    if (waitingBuses > 0) {
+        cout << waitingBuses << " buses waiting at this station:" << endl;
+        Bus* bus = list[stationNumber].getNgarage()->peek();
+        cout << bus->getType() << "[" << bus->getDirection() << "," << bus->getCapacity() << "] {";
 
 //         PriorityQueue<Passenger> inBusPass = bus->getInBusPass();
 //         while (!inBusPass.isEmpty()) {
@@ -577,25 +551,17 @@ void Stations<T>::printWaitingWPandNP(int stationNumber) {
 //             }
 //         }
 
-//         cout << "}" << endl;
-//         cout << "------------------------------------------------------" << endl;
-//     }
-// }
+        cout << "}" << endl;
+        cout << "------------------------------------------------------" << endl;
+    }
+}
 
-// template<typename T>
-// void Stations<T>::printFinishedPassengers() {
-//     int count = 0;
-//     LinkedListp<Passenger>* finishList = list[i].getFinishList();
-//     Nodep<Passenger>* Pcounter = finishList->getHead();
-//     while(Pcounter != nullptr){
-//         count++;
-//         Pcounter = Pcounter->getNext();
-//     }
-
-//     cout << count<<" Finished passengers: ";
-//     for (int i = 0; i < size; ++i) {
-//         LinkedListp<Passenger>* finishList = list[i].getFinishList();
-//         Nodep<Passenger>* current = finishList->getHead();
+template<typename T>
+void Stations<T>::printFinishedPassengers() {
+    cout <<" Finished passengers: ";
+    for (int i = 0; i < size; ++i) {
+        LinkedListp<Passenger>* finishList = list[i].getFinishList();
+        Nodep<Passenger>* current = finishList->getHead();
 
 //         while (current != nullptr) {
 //             cout << current->getItem()->getID();

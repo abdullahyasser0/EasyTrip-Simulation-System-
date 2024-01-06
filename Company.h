@@ -1,12 +1,12 @@
 #pragma once
 #include <cstdlib>  
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include "ArrivalEvents.h"
 #include "LeaveEvents.h"
 #include "stations.h"
+#include "UI.h"
 using namespace std;
 class Company {
 private:
@@ -22,15 +22,17 @@ private:
     LinkedListp<Bus> boardingBusses;
     LinkedListp<Bus> CheckupBusses;
     LinkedListp<Passenger*> finishedPass;
-
+    char input;
+    UIcla ui;
 
 public:
+    
     Company() {
         ReadInput();
         EventList();
         int countDeqBus=0;
         char deqType= 'N';
-        for(int h=0;h<24;h++){
+        for(int h=4;h<6;h++){
             for(int m=0;m<60;m++){
                 Nodep<Bus>* currentCheckupBus = CheckupBusses.getHead();
                 Nodep<Bus>* prevCheckupBus = nullptr;
@@ -98,8 +100,12 @@ public:
                 }
                 //boardingBusses.PrintBus();
  
+                //if(S.list[1].getNP()->isEmpty()==true) cout<<"IM EMPTY"<<endl;
+                //if(S.list[1].getNP()->isEmpty()==false) cout<<"I HAS SOMETHING INSIDE"<<endl;
+                //cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
                 S.checkBoardingList(boardingBusses,minsStations);
-                S.checkStations(boardingBusses,CheckupBusses);
+                S.checkStations(boardingBusses);
+                //boardingBusses.PrintBus();
                 //boardingBusses.PrintBus();
 
 
@@ -140,19 +146,13 @@ public:
 
         }       
                 cout<<"+++++++++++++++++++++++++++"<<endl;
-                CheckupBusses.PrintBus();
-                cout<<"+++++++++++++++++++++++++++"<<endl;
-                cout<<"BOARDING BUSES"<<endl;
-                boardingBusses.PrintBus();
-                cout<<"+++++++++++++++++++++++++++"<<endl;
-
                 //S.busMoving(); 
 
                 // S.PrintAllStations(numStations+1);
                 // cout<<"+++++++++++++++++++++++++++"<<endl;
+                // S.TestbusMoving(); 
                 S.PrintAllStations(numStations+1);
     }
-
     void PrintWaitingPassengers(){
         for(int i =0;i<numStations+1;i++){
             cout << "Waiting passengers at Station #" << S.list[i].getSnumber()<< ":" << endl;
