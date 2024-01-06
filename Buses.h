@@ -133,9 +133,26 @@ public:
 		
 
 		template<typename T>
+		// void getPassOn(T* p){
+		// 	moving_passenger.enqueueInsideBus(p);    //modified
+		// 	maxcapacity--;
+		// }
+
+
 		void getPassOn(T* p){
+			if (direction==0){
 			moving_passenger.enqueueInsideBus(p);
-			currentcapacity--;
+			maxcapacity--;
+			}
+		else{
+			moving_passenger.enqueue(p);
+			maxcapacity--;
+			}
+		}
+
+		
+		void setDirection(int x){
+			direction=x;
 		}
 		Passenger* getPassOff() {
 			if(!moving_passenger.isEmpty()){
@@ -147,6 +164,7 @@ public:
 				return nullptr;
 			}
 		}
+
 
 
 
