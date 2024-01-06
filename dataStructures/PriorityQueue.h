@@ -64,7 +64,7 @@ public:
         else return nullptr;
     }
     bool enqueue(T* newPassenger, int prio) {
-        newPassenger.setPriority(prio);
+        newPassenger->setPriority(prio);
         PriorityNode<T>* newNode = new PriorityNode<T>(newPassenger);
         if (isEmpty() || newPassenger->getPriority() > front->getItem()->getPriority()) { 
             newNode->setNext(front);
