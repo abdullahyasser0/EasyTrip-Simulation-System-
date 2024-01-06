@@ -275,9 +275,7 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList){
               list[i].getFinishList()->Insert(list[i].getNgarage()->peek()->getPassOff());  
             }
         }
-cout<< "AT STATION "<<i<<" "<<endl;
         if(!(list[i].getBNgarage()->isEmpty())&&!(list[i].getBNgarage()->peek()->getInBusPass().isEmpty())){
-            cout<< "AT STATION "<<i<<" "<<endl;
             list[i].getBNgarage()->printBusQueue();
             while (list[i].getBNgarage()->peek()->getInBusPass().getFront()!=nullptr&&list[i].getBNgarage()->peek()->getInBusPass().getFront()->getItem()->getEndStation()==i)
             {
@@ -302,12 +300,25 @@ cout<< "AT STATION "<<i<<" "<<endl;
         
         //get pass on
         //Np
-        while (!(list[i].getNP()->isEmpty())&&!(list[i].getNgarage()->isEmpty()))
+        while (!(list[i].getSP()->isEmpty())&&!(list[i].getNgarage()->isEmpty()) )
+        {
+            Passenger *Spass = list[i].getSP()->returnHead()->getItem();
+            list[i].getNgarage()->getfront()->data->getPassOn(Spass);
+            list[i].getSP()->dequeue();
+        }
+        while (!(list[i].getNP()->isEmpty())&&!(list[i].getNgarage()->isEmpty()) )
         {
             Passenger *pass = list[i].getNP()->returnHead()->data;
             list[i].getNgarage()->getfront()->data->getPassOn(pass);
             list[i].getNP()->dequeue();
 
+        }
+
+        while (!(list[i].getBSP()->isEmpty())&&!(list[i].getBNgarage()->isEmpty()) )
+        {
+            Passenger *Spass = list[i].getBSP()->returnHead()->getItem();
+            list[i].getBNgarage()->getfront()->data->getPassOn(Spass);
+            list[i].getBSP()->dequeue();
         }
         while (!(list[i].getBNP()->isEmpty())&&!(list[i].getBNgarage()->isEmpty()))
         {

@@ -71,7 +71,7 @@ public:
                 S.checkBoardingList(boardingBusses,minsStations);
                 S.checkStations(boardingBusses);
                 //boardingBusses.PrintBus();
-                boardingBusses.PrintBus();
+                //boardingBusses.PrintBus();
 
 
             }

@@ -148,7 +148,8 @@ public:
         }
         count++;
     }
-    int getCount(){
-        return count;
+    PriorityNode<T>* returnHead(){
+        return front;
     }
+    
 };
