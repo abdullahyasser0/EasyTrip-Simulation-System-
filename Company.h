@@ -1,12 +1,12 @@
 #pragma once
 #include <cstdlib>  
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include "ArrivalEvents.h"
 #include "LeaveEvents.h"
 #include "stations.h"
+#include "UI.h"
 using namespace std;
 class Company {
 private:
@@ -21,15 +21,17 @@ private:
     char colon,eventType;
     LinkedListp<Bus> boardingBusses;
     LinkedListp<Passenger*> finishedPass;
-
+    char input;
+    UIcla ui;
 
 public:
+    
     Company() {
         ReadInput();
         EventList();
         int countDeqBus=0;
         char deqType= 'N';
-        for(int h=0;h<24;h++){
+        for(int h=4;h<6;h++){
             for(int m=0;m<60;m++){
                 countDeqBus++;
                 //S.passPromote(MaxW);
@@ -45,7 +47,6 @@ public:
                         deqType = 'N';
                     }
                 }
-                               // cout<<"last time the function worked was at min: "<<m <<"and hour : "<<h<<endl;
                 while (!eventsQueue.isEmpty() && h == eventsQueue.getfront()->data->getHours() && m == eventsQueue.getfront()->data->getMinutes())
                 {
                     Events* currentEvent = eventsQueue.dequeue();
@@ -63,29 +64,23 @@ public:
                     }
 
                 }
-                //boardingBusses.PrintBus();
- 
-                //if(S.list[1].getNP()->isEmpty()==true) cout<<"IM EMPTY"<<endl;
-                //if(S.list[1].getNP()->isEmpty()==false) cout<<"I HAS SOMETHING INSIDE"<<endl;
-                //cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
-                S.checkBoardingList(boardingBusses,minsStations);
+                
+                S.checkBoardingList(boardingBusses,numStations-1);
                 S.checkStations(boardingBusses);
-                //boardingBusses.PrintBus();
-                //boardingBusses.PrintBus();
-
-
+                ui.runInteractiveMode(S,numStations,h,m);
+                //cout<<"@hour : "<<h<<" min : "<<m<<endl;
+                //S.list[1].getNgarage()->printBusQueue();
             }
 
-        }       
-                cout<<"+++++++++++++++++++++++++++"<<endl;
-                //S.busMoving(); 
-
-                // S.PrintAllStations(numStations+1);
-                // cout<<"+++++++++++++++++++++++++++"<<endl;
-                // S.TestbusMoving(); 
-                S.PrintAllStations(numStations+1);
+        }           
+                //S.PrintAllStations(numStations+1);
     }
-
+    Stations<Nodestation*> returnStation(){
+        return S;
+    }
+    char getchar(){
+        return input;
+    }
     void PrintWaitingPassengers(){
         for(int i =0;i<numStations+1;i++){
             cout << "Waiting passengers at Station #" << S.list[i].getSnumber()<< ":" << endl;
