@@ -14,6 +14,7 @@ public:
     virtual int getHours() = 0;
     virtual int getMinutes() = 0;
     virtual char getetype() = 0;
+    virtual int getSTRT() = 0;
 
 
 };

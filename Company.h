@@ -45,21 +45,18 @@ public:
                         deqType = 'N';
                     }
                 }
-                               // cout<<"last time the function worked was at min: "<<m <<"and hour : "<<h<<endl;
                 while (!eventsQueue.isEmpty() && h == eventsQueue.getfront()->data->getHours() && m == eventsQueue.getfront()->data->getMinutes())
                 {
                     Events* currentEvent = eventsQueue.dequeue();
 
                     if (currentEvent->getetype() == 'A')
                     {
-                        cout << "Passenger with ID: " << currentEvent->getid() << " reached the station at : " << h << ":" << m << endl;
+                        cout << "Passenger with ID: " << currentEvent->getid() << " reached the station "<<currentEvent->getSTRT()<< " at : " << h << ":" << m << endl;
                         currentEvent->execute(S);
                     }
                     else if (currentEvent->getetype() == 'L')
                     {
-                        cout << "Passenger with ID: " << currentEvent->getid() << " left the station at : " << h << ":" << m << endl;
                         currentEvent->execute(S);
-                        
                     }
 
                 }
@@ -123,10 +120,11 @@ public:
 
 
     void ReadInput() {
-        ifstream input("input.txt");
+        ifstream input("random_file.txt");
         input >> numStations >> minsStations >> numWbuses >> numNbuses >> capacityWBus >> capacityNBus
             >> CheckupTrips >> checkupDWBus >> checkupDMBus >> MaxW >> OnOffTime >> EventsNum ;
-        
+
+        S.setOnOff(OnOffTime);
         S.addStationsByNumber(numStations);
         for (int i = 0; i < numNbuses; i++) {
             Bus* bus=new Bus("Normal",capacityNBus,0,minsStations);
@@ -141,7 +139,7 @@ public:
     }
 
     void EventList() {
-        ifstream input("input.txt");
+        ifstream input("random_file.txt");
         string PType, time, priority;
         int id, STRT, END;
 

@@ -17,9 +17,8 @@ public:
 		EventType=etype;
 	}
 
-	void execute(Stations<Nodestation*> S) {
-		passenger = new Passenger(ID,STRT,Hours,Minutes);
-		S.RemovePassenger(passenger,passenger->getStartStation());
+	void execute(Stations<Nodestation*> S) override {
+		S.RemovePassenger(ID,STRT);
 	} 
 
 	int getid () override {
@@ -36,5 +35,8 @@ public:
 
 	char getetype()override{
 		return EventType;
+	}
+	int getSTRT()override{
+		return STRT;
 	}
 };
