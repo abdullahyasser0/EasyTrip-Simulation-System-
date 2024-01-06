@@ -27,7 +27,7 @@ public:
 
         while (p)
         {
-            cout << "[ " << p->getItem()->getNextStation()<< " : " <<p->getItem()->getType()<< " ]";
+            cout << "[ " << p->getItem()->getID()<< " ]";
             
             cout << "--->";
             p = p->getNext();

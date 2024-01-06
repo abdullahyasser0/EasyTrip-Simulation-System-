@@ -71,6 +71,9 @@ public:
 		int getCapacity(){
 			return maxcapacity;
 		}
+		int getDirection(){
+			return direction;
+		}
      	void print_bus_info() {
     		cout << "Bus type : " << BusType << endl;
     		cout << "Bus capacity : " << maxcapacity << endl;
