@@ -159,7 +159,7 @@ void PrintBus() const
 
         while (p)
         {
-            cout << "[ " << p->getItem()->getNextStation() <<" : "<<p->getItem()->getType()<<" D-> "<<p->getItem()->getDirection() <<" ]";
+            cout << "[ " << " Next" <<p->getItem()->getNextStation()<<" : "<< "Current " <<p->getItem()->getCurrentStation() <<" : "<<p->getItem()->getType()<<" D-> "<<p->getItem()->getDirection() <<" ]";
             //p->getItem()->print_bus_info();
             cout << "--->";
             p = p->getNext();

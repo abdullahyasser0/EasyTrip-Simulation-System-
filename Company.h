@@ -29,13 +29,13 @@ public:
         EventList();
         int countDeqBus=0;
         char deqType= 'N';
-        for(int h=4;h<6;h++){
+        for(int h=0;h<24;h++){
             for(int m=0;m<60;m++){
                 countDeqBus++;
                 //S.passPromote(MaxW);
                 //S.moveBus();
                 //S.busMoving();
-                if (h>=4 && countDeqBus%15==0) {
+                if (h>=4 && countDeqBus%15==0){
                     countDeqBus = 0;
                     if (deqType == 'N'&& !S.list[0].getNgarage()->isEmpty()  ) {
                         boardingBusses.Insert(S.dequeueStationZ(deqType));
@@ -45,7 +45,7 @@ public:
                         deqType = 'N';
                     }
                 }
-                                cout<<"last time the function worked was at min: "<<m <<"and hour : "<<h<<endl;
+                               // cout<<"last time the function worked was at min: "<<m <<"and hour : "<<h<<endl;
                 while (!eventsQueue.isEmpty() && h == eventsQueue.getfront()->data->getHours() && m == eventsQueue.getfront()->data->getMinutes())
                 {
                     Events* currentEvent = eventsQueue.dequeue();
@@ -67,7 +67,7 @@ public:
  
                 //if(S.list[1].getNP()->isEmpty()==true) cout<<"IM EMPTY"<<endl;
                 //if(S.list[1].getNP()->isEmpty()==false) cout<<"I HAS SOMETHING INSIDE"<<endl;
-                cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
+                //cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
                 S.checkBoardingList(boardingBusses,minsStations);
                 S.checkStations(boardingBusses);
                 //boardingBusses.PrintBus();
@@ -78,7 +78,8 @@ public:
 
         }       
                 cout<<"+++++++++++++++++++++++++++"<<endl;
-                S.busMoving();            
+                //S.busMoving(); 
+
                 // S.PrintAllStations(numStations+1);
                 // cout<<"+++++++++++++++++++++++++++"<<endl;
                 // S.TestbusMoving(); 

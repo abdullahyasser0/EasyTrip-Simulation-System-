@@ -13,12 +13,42 @@ class Bus {
         int maxcapacity;
         int maintenance;
         int nextStation;
+		int currentStation;
 		int direction; //0>>forward  ,, 1>>backword 
 		int movingMins;// bus progress 
 		int STSmins; //station to station mints 
 		PriorityQueue<Passenger> moving_passenger;
 
 public:
+		
+        Bus(){
+			BusType = "NULL";
+			maxcapacity = 20;
+			maintenance = 0;
+			nextStation = 1;
+			direction=0;
+			movingMins=0;
+			STSmins=0;
+			currentStation=0;
+        }
+
+		Bus (string type, int cap , int maint, int STS){
+			BusType = type;
+			maxcapacity = cap;
+			maintenance = maint;
+			nextStation = 1;
+			direction=0;
+			movingMins=0;
+			STSmins=STS;
+			currentStation=0;
+		}
+		int getCurrentStation(){
+			return currentStation;
+		}
+		void setCurrentStation(int x){
+			currentStation=x;
+		}
+
 		PriorityQueue<Passenger> getInBusPass(){
 			return moving_passenger;
 		}
@@ -30,26 +60,6 @@ public:
 		}
 		void setNextStation(int x){
 			nextStation=x;
-		}
-        Bus(){
-			BusType = "NULL";
-			maxcapacity = 20;
-			maintenance = 0;
-			nextStation = 0;
-			direction=0;
-			movingMins=0;
-			STSmins=0;
-        }
-
-		Bus (string type, int cap , int maint, int STS){
-			BusType = type;
-			maxcapacity = cap;
-			maintenance = maint;
-			nextStation = 0;
-			direction=0;
-			movingMins=0;
-			STSmins=STS;
-
 		}
 		void plusMoviMins(){
 			movingMins++;
@@ -78,7 +88,7 @@ public:
     		cout << "Bus type : " << BusType << endl;
     		cout << "Bus capacity : " << maxcapacity << endl;
     		cout << "Bus maintenance : " << maintenance << endl;
-			cout << "Bus current station : " << nextStation-1 << endl;
+			cout << "Bus current station : " << currentStation << endl;
 			cout << "Bus next Station  : " << nextStation << endl;
 			cout << "Bus direction  : " << direction << endl;
 			cout<<"imprinting what inside mee "<<endl;
@@ -93,7 +103,9 @@ public:
 		}
 
 		
-
+		void setDirection(int x){
+			direction=x;
+		}
 		Passenger* getPassOff() {
 			if(!moving_passenger.isEmpty()){
 			Passenger *p = moving_passenger.dequeue();
@@ -105,21 +117,24 @@ public:
 		}
 
 
-		void setCurrentStation(int number){
-			
-
-		}
 
 		
 		void gnextStation(int lastStation) {
 			if(nextStation==lastStation){
 				direction=1;
+				currentStation++;
+				nextStation--;
+				return;
 			}
-			if(nextStation==1){
+			else if(nextStation==1){
 				direction=0;
+				currentStation--;
+				nextStation++;
+				return;
 			}
-			if(direction==0)nextStation ++;
-			else nextStation--;
+
+			if(direction==0){nextStation ++; currentStation++;}
+			else {nextStation--;currentStation--;}
     	}
 		
 		

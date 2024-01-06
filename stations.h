@@ -214,11 +214,14 @@ template<typename T>
 Bus* Stations<T>::dequeueStationZ(char C){
     
         if(C=='N' && list[0].getNgarage()->getQSize() != 0){
-            list[0].getNgarage()->peek()->setNextStation(1);
+            list[0].getNgarage()->peek()->setNextStation(2);
+            list[0].getNgarage()->peek()->setCurrentStation(1);
             return list[0].getNgarage()->dequeue();
         }
+
         if(C=='W' && list[0].getWgarage()->getQSize() != 0){
-            list[0].getWgarage()->peek()->setNextStation(1);
+            list[0].getWgarage()->peek()->setNextStation(2);
+            list[0].getWgarage()->peek()->setCurrentStation(1);
             return list[0].getWgarage()->dequeue();
         }
     return nullptr;
@@ -232,21 +235,22 @@ void Stations<T>::checkBoardingList(LinkedListp<Bus>&busList,int STS){
         while (temp!=nullptr)
         {   
             int direction = temp->getItem()->getDirection();
-            int current=temp->getItem()->getMovingmins();
+            int current=temp->getItem()->getCurrentStation();
+            int Movingmins = temp->getItem()->getMovingmins();
             int next = temp->getItem()->getNextStation();
             string type = temp->getItem()->getType();
-            if (current != STS) temp->getItem()->plusMoviMins();
+            if (Movingmins != STS) temp->getItem()->plusMoviMins();
 
-            if (current == STS) {
+            if (Movingmins == STS) {
                 Nodep<Bus>* enq = temp;
                 Nodep<Bus>* del = temp;
                 if (type == "Normal" ) {
-                    if(direction==0)list[next].getNgarage()->enqueue(enq->getItem());
-                    if(direction==1)list[next].getBNgarage()->enqueue(enq->getItem());
+                    if(direction==0)list[current].getNgarage()->enqueue(enq->getItem());
+                    if(direction==1)list[current].getBNgarage()->enqueue(enq->getItem());
                 } 
                 if(type == "Wheel" ) {
-                    if(direction==0)list[next].getWgarage()->enqueue(enq->getItem());
-                    if(direction==1)list[next].getBWgarage()->enqueue(enq->getItem());
+                    if(direction==0){list[current].getWgarage()->enqueue(enq->getItem());}
+                    if(direction==1){list[current].getBWgarage()->enqueue(enq->getItem());}
                 }
                 temp = temp->getNext();
                 busList.deletenode(del);
@@ -271,8 +275,10 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList){
               list[i].getFinishList()->Insert(list[i].getNgarage()->peek()->getPassOff());  
             }
         }
-
+cout<< "AT STATION "<<i<<" "<<endl;
         if(!(list[i].getBNgarage()->isEmpty())&&!(list[i].getBNgarage()->peek()->getInBusPass().isEmpty())){
+            cout<< "AT STATION "<<i<<" "<<endl;
+            list[i].getBNgarage()->printBusQueue();
             while (list[i].getBNgarage()->peek()->getInBusPass().getFront()!=nullptr&&list[i].getBNgarage()->peek()->getInBusPass().getFront()->getItem()->getEndStation()==i)
             {
               list[i].getFinishList()->Insert(list[i].getBNgarage()->peek()->getPassOff());  
@@ -328,10 +334,11 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList){
         }
 
 
-
+        
         //buss leaves to the boarding list
         if(!(list[i].getNgarage()->isEmpty())){
         list[i].getNgarage()->peek()->gnextStation(size-1);
+        //if(list[i].getNgarage()->peek()->getNextStation()==size-1){list[i].getNgarage()->peek()->setDirection(1);}
         busList.Insert(list[i].getNgarage()->dequeue());
         }
 

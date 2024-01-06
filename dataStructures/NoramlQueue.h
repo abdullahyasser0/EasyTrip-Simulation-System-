@@ -89,7 +89,16 @@ public:
         }
         cout << "*\n";
     }
+    void printBusQueue() const {
+        NormalNode<T>* current = front;
+        while (current != nullptr) {
+            cout << "[ " << current->data->getNextStation() << " ]";
+            cout << "--->";
 
+            current = current->next;
+        }
+        cout << "*\n";
+    }
     int count(){
         return Qsize;
     }
