@@ -24,6 +24,8 @@ private:
     Queue<Bus> Ngarage;
     Queue<Bus> Wgarage;
 
+    LinkedListp<Passenger> finishlist;
+
 public :
     void setSnumber(int Number){Snumber=Number;}
     int getSnumber(){return Snumber;}
@@ -40,6 +42,7 @@ public :
     Queue<Bus> *getNgarage(){return &Ngarage;}
     Queue<Bus> *getWgarage(){return &Wgarage;}
 
+    LinkedListp<Passenger> *getFinishList(){return &finishlist;}
 
     Nodestation(){
     Snumber  = 0;
@@ -62,6 +65,8 @@ public :
     cout << "Garage: " << endl;
     cout <<"    Normal Buses: "<<Ngarage.count() <<endl; 
     cout <<"    Wheel Buses: " <<Wgarage.count() << endl;
+    cout<<"Finish List : "<<endl;
+    finishlist.PrintList();
     cout<<"-------------------------------------------------"<<endl;
     }
 };
@@ -88,10 +93,8 @@ class Stations{
 public:
     int size;
     Nodestation* list;
-    
     Stations();
     Stations(int size);
-
     void addStationsByNumber(int numberOfStations);
     void display(int size);
     void PrintAllStations(int size);
@@ -106,8 +109,6 @@ public:
     void passPromote();
     void printWaitingSP(int stationNumber);
     void printWaitingWPandNP(int stationNumber);
-    // void moveNBus();
-    // void moveWBus();
     Bus* dequeueStationZ(char C);
     void busMoving();
     void TestbusMoving();
@@ -146,6 +147,7 @@ void Stations<T>::addStationsByNumber(int numberOfStations)
 //         cout<<list[i].Snumber<<endl;
 //     }
 // }
+
 template<typename T>
 void Stations<T>::PrintAllStations(int size) 
 {
@@ -255,28 +257,25 @@ void Stations<T>::checkBoardingList(LinkedListp<Bus>&busList,int STS){
 template<typename T>
 void Stations<T>::checkStations(LinkedListp<Bus>&busList){
     for (int i=1; i<size;i++){
-        // if(list[i].getNgarage()->getfront()!=nullptr){
+        
+        if(!(list[i].getNgarage()->isEmpty())&&!(list[i].getNgarage()->peek()->getInBusPass().isEmpty())){
+            while (list[i].getNgarage()->peek()->getInBusPass().getFront()!=nullptr&&list[i].getNgarage()->peek()->getInBusPass().getFront()->getItem()->getEndStation()==i)
+            {
+              list[i].getFinishList()->Insert(list[i].getNgarage()->peek()->getPassOff());  
+            }
+        }
+        
         while (!(list[i].getNP()->isEmpty())&&!(list[i].getNgarage()->isEmpty()))
         {
-            cout<<"Flag2"<<endl;
-
             Passenger *pass = list[i].getNP()->returnHead()->data;
-            cout<<"Flag3"<<endl;
-
             list[i].getNgarage()->getfront()->data->getPassOn(pass);
-            cout<<"Flag4"<<endl;
-
-            list[i].getNP()->dequeue();  
-            cout<<"Flag5"<<endl;
+            list[i].getNP()->dequeue();
         }
         if(!(list[i].getNgarage()->isEmpty())){
-        list[i].getNgarage()->peek()->gnextStation(size);
+        list[i].getNgarage()->peek()->gnextStation(size-1);
         busList.Insert(list[i].getNgarage()->dequeue());
         }
-        //}
-        //list[i].getNgarage()->getfront()->data.
-       // busList.Insert(list[i].getNgarage()->dequeue())
-        
+
     }
 }
 
