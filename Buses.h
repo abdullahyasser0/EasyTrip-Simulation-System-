@@ -97,9 +97,21 @@ public:
 		
 
 		template<typename T>
+		// void getPassOn(T* p){
+		// 	moving_passenger.enqueueInsideBus(p);    //modified
+		// 	maxcapacity--;
+		// }
+
+
 		void getPassOn(T* p){
+			if (direction==0){
 			moving_passenger.enqueueInsideBus(p);
 			maxcapacity--;
+			}
+		else{
+			moving_passenger.enqueue(p);
+			maxcapacity--;
+			}
 		}
 
 		
@@ -115,6 +127,7 @@ public:
 				return nullptr;
 			}
 		}
+
 
 
 
