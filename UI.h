@@ -7,64 +7,36 @@
 
 class UIcla {
 private:
-    //Company company;
-    //Stations<Nodestation> s;
-    //Nodestation n;
     bool interactiveMode;
     int stationNumber;
 public:
-    // Constructor to initialize interactiveMode
-    //UIcla(bool isInteractiveMode) : interactiveMode(isInteractiveMode) {}
+    
     UIcla() :interactiveMode(1), stationNumber(0){} 
-    // void run() {
-    //     char ask;
-    //     cout << "Do you want to run interactive mode(Y/N) ? " << endl;
-    //     cin >> ask;
-    //     if (ask == 'Y' || ask == 'y') {
-    //         runInteractiveMode();
-    //     } else {
-    //         runSilentMode();
-    //     }
-    // }
-    // void runInteractiveMode(Stations<Nodestation*> s,int size,int h,int m) {
-    //     // char userInput;
-    //     // cout<<"Hour : "<<h<<" --> min : "<<m<<endl;
-    //     // do {
-    //     //     //s.printWaitingSP(stationNumber);
-    //     //     cout<<"NOW @ STATION "<<stationNumber<<endl;
-    //     //     //s.list[stationNumber].getNP()->printQueue();
-    //     //     //s.printWaitingWPandNP(stationNumber);
-    //     //     cout << "Press Enter to display the next station or 'q' to quit: ";
-    //     //     userInput = cin.get();
-    //     //     cin.ignore();
-    //     //     stationNumber++; // Ignore the newline character
-    //     // } 
-    //     // while 
-    //     // (userInput != 'q' && userInput != 'Q' && stationNumber<size-1);
-    //         char userInput;
-    //         cout<<"Hour : "<<h<<" --> min : "<<m<<endl;
-    //     
-    void runInteractiveMode(Stations<Nodestation*> s, int size, int h, int m) {
-    int stationNumber = 1;
-    while (stationNumber <= size) {
-        cout << "Current Time (Hour:Min) ==> " << h << ":" << m << endl;
-        cout << "============== STATION #" << stationNumber << " =================" << endl;
-        s.printWaitingSP(stationNumber);
-        s.printWaitingWPandNP(stationNumber);
-        s.printBusesAtStation(stationNumber);
-        cout<<endl;
-        char userInput;
-        cout << "Press Enter to display the next station or 'q' to quit: "<<endl;
-        userInput = cin.get();
-        cin.ignore();
-
-        if (userInput == 'q' || userInput == 'Q') {
-            
-            break;
+      
+    void runInteractiveMode(Stations<Nodestation*> s, int size, int h, int m,LinkedListp<Bus> CheckupBusses,int choice) {
+        static bool hasExecuted = false;
+        if(choice==1){
+        int stationNumber = 1;
+        while (stationNumber <= size) {
+            cout << "Current Time (Hour:Min) ==> " << h << ":" << m << endl;
+            cout << "============== STATION #" << stationNumber << " =================" << endl;
+            s.printWaitingSP(stationNumber);
+            s.printWaitingWPandNP(stationNumber);
+            s.printBusesAtStation(stationNumber);
+            CheckupBusses.printCheckupBusses();
+            s.printFinishedPassengers(stationNumber);
+            cout<<endl;
+            char userInput;
+            cout << "Press Any key to display the next station "<<endl;
+            userInput = cin.get();
+            stationNumber++; 
         }
-
-        stationNumber++; 
     }
+    else if(!hasExecuted){
+        cout<<"Silent Mode\nSimulation starts...\nSimulation ends, Outputt file created\n";
+        hasExecuted = true;
+    }
+
 
     // Additional actions after the loop (if needed)
 }

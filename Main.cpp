@@ -24,18 +24,11 @@ if next station ==size {
 station 1 
 same bus direction = 0
 nextstation ++
-
-
-
-
-
-
 */
 
 
-
-
 using namespace std;
+
 int main() {
     Company BusProject;
     // UI ui(1);

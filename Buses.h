@@ -48,6 +48,7 @@ public:
 			movingMins=0;
 			STSmins=STS;
 			currentStation=0;
+			BusID=id;
 		}
 		int getCurrentStation(){
 			return currentStation;
