@@ -39,6 +39,7 @@ public:
         priority = prio;
     }
 
+
     PriorityNode(T* p) : item(p), next(nullptr), prev(nullptr) {}
 };
 
@@ -48,6 +49,8 @@ private:
     PriorityNode<T>* front;
     PriorityNode<T>* back;
     int count = 0;
+    //for function size
+    int size;
 
 public:
     PriorityQueue() : front(nullptr), back(nullptr) {}
@@ -173,4 +176,7 @@ public:
         return count;
     }
 
+    int getSize() const {
+        return size;
+    }
 };
