@@ -8,5 +8,5 @@ int main() {
     Company BusProject;
     BusProject.outPut();
 return 0;
-/////////////////
+///////////////////
 }
