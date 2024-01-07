@@ -127,7 +127,20 @@ public:
                     delete S.list[i].getSP();
 
                     arr[i] += S.list[i].getWP()->getQSize();
-                    delete S.list[i].getWP();                   
+                    delete S.list[i].getWP();
+
+                    if (S.list->getNgarage()->isEmpty() == true) {
+                        S.list[0].getNgarage()->enqueue(S.list[i].getNgarage()->dequeue());
+                    }
+                    if (S.list->getWgarage()->isEmpty() == true) {
+                        S.list[0].getWgarage()->enqueue(S.list[i].getWgarage()->dequeue());
+                    }
+                    if (S.list->getBNgarage()->isEmpty() == true) {
+                        S.list[0].getBNgarage()->enqueue(S.list[i].getBNgarage()->dequeue());
+                    }
+                    if (S.list->getBWgarage()->isEmpty() == true) {
+                        S.list[0].getBWgarage()->enqueue(S.list[i].getBWgarage()->dequeue());
+                    }               
                 }
             }
             // handling the off hours  0-numstations
