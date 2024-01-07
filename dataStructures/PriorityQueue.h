@@ -39,6 +39,7 @@ public:
         priority = prio;
     }
 
+
     PriorityNode(T* p) : item(p), next(nullptr), prev(nullptr) {}
 };
 
@@ -48,6 +49,8 @@ private:
     PriorityNode<T>* front;
     PriorityNode<T>* back;
     int count = 0;
+    //for function size
+    int size;
 
 public:
     PriorityQueue() : front(nullptr), back(nullptr) {}
@@ -62,6 +65,9 @@ public:
         return front;
         }
         else return nullptr;
+    }
+    int getCount(){
+        return count;
     }
     bool enqueue(T* newPassenger, int prio) {
         newPassenger->setPriority(prio);
@@ -116,12 +122,20 @@ public:
     void printQueue() const {
         PriorityNode<T>* current = front;
         while (current != nullptr) {
-            cout << "[ " << current->getItem()->getID() << " ]";
-            cout << "--->";
+            cout <<  current->getItem()->getID() << ",";
 
             current = current->getNext();
         }
-        cout << "*\n";
+    }
+
+    void printSPQueue() const {
+        PriorityNode<T>* current = front;
+        while (current != nullptr) {
+            cout <<  current->getItem()->getID()<<"("<<current->getItem()->getStrPriopity() <<")"<< ",";
+            
+
+            current = current->getNext();
+        }
     }
   
     void enqueueInsideBus(T* newPassenger) {
@@ -151,5 +165,18 @@ public:
     PriorityNode<T>* returnHead(){
         return front;
     }
-    
+    int getSize(){
+        int count=0;
+        PriorityNode<T> *temp=front;
+        while (temp!=nullptr)
+        {
+            temp=temp->getNext();
+            count++;
+        }
+        return count;
+    }
+
+    int getSize() const {
+        return size;
+    }
 };
