@@ -10,6 +10,9 @@
 using namespace std;
 class Company {
 private:
+    int NPCounter = 0 ;
+    int SPCounter = 0 ;
+    int WPCounter = 0 ;
     int numStations, minsStations;
     int numWbuses, numNbuses, capacityWBus, capacityNBus;
     int CheckupTrips, checkupDWBus, checkupDMBus;
@@ -30,7 +33,7 @@ public:
         EventList();
         int countDeqBus=0;
         char deqType= 'N';
-        for(int h=0;h<24;h++){
+        for(int h=4;h<22;h++){
             for(int m=0;m<60;m++){
                 Nodep<Bus>* currentCheckupBus = CheckupBusses.getHead();
                 Nodep<Bus>* prevCheckupBus = nullptr;
@@ -97,9 +100,8 @@ public:
 
                 }
                 //boardingBusses.PrintBus();
- 
                 S.checkBoardingList(boardingBusses,minsStations);
-                S.checkStations(boardingBusses,CheckupBusses);
+                S.checkStations(boardingBusses,CheckupBusses,h,m);
                 //boardingBusses.PrintBus();
 
 
@@ -115,9 +117,8 @@ public:
 
                 //S.busMoving(); 
 
-                // S.PrintAllStations(numStations+1);
-                // cout<<"+++++++++++++++++++++++++++"<<endl;
                 S.PrintAllStations(numStations+1);
+                // cout<<"+++++++++++++++++++++++++++"<<endl;
     }
 
     void PrintWaitingPassengers(){
@@ -194,6 +195,15 @@ public:
                 getline(input, priority);
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
+
+            if (PType == "NP") {
+                NPCounter++;
+            }else if(PType=="SP"){
+                SPCounter++;
+            }else if(PType=="WP"){
+                WPCounter++;
+            }
+
                 ArrivalEvents* arrivalEvent = new ArrivalEvents(eventType,PType, priority, id, STRT, END, hours, minutes, OnOffTime);
 
                 eventsQueue.enqueue(arrivalEvent);
@@ -208,5 +218,10 @@ public:
         }
 
         input.close();
+    }
+    void outPut(){
+            ofstream outputFile("output.txt");
+                outputFile << "ay 7aga." << endl;
+                outputFile.close();
     }
 };

@@ -129,7 +129,7 @@ public:
     void TestbusMoving();
     void printBusesAtStation(int stationNumber);
     void checkBoardingList(LinkedListp<Bus>&busList,int STS);
-    void checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&CheckupList);
+    void checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&CheckupList,int h, int m);
     void printINCheckUpBuses();
     void printFinishedPassengers();
     void setOnOff(int GOF);
@@ -194,8 +194,8 @@ void Stations<T>::addPassenger(Passenger* passenger){
         }
 
 }
-template<typename T>
 
+template<typename T>
 void Stations<T>::storeNBus(Bus* bus)
 {
     list[0].getNgarage()->enqueue(bus);
@@ -263,7 +263,7 @@ void Stations<T>::checkBoardingList(LinkedListp<Bus>&busList,int STS){
                 if (type == "Normal" ) {
                     if(direction==0)list[current].getNgarage()->enqueue(enq->getItem());
                     if(direction==1)list[current].getBNgarage()->enqueue(enq->getItem());
-                } 
+                }
                 if(type == "Wheel" ) {
                     if(direction==0){list[current].getWgarage()->enqueue(enq->getItem());}
                     if(direction==1){list[current].getBWgarage()->enqueue(enq->getItem());}
@@ -282,9 +282,9 @@ void Stations<T>::checkBoardingList(LinkedListp<Bus>&busList,int STS){
 
 
 template<typename T>
-void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&CheckupList){
+void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&CheckupList,int h,int m){
     for (int i=1; i<size;i++){
-        //get passanger off
+        // get passanger off
         if(!(list[i].getNgarage()->isEmpty())&&!(list[i].getNgarage()->peek()->getInBusPass().isEmpty())){
             while (list[i].getNgarage()->peek()->getInBusPass().getFront()!=nullptr&&list[i].getNgarage()->peek()->getInBusPass().getFront()->getItem()->getEndStation()==i)
             {
@@ -295,11 +295,10 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
               }
               list[i].getFinishList()->Insert(list[i].getNgarage()->peek()->getPassOff()); 
               onOffSeconds+=getOnOff;
-              Nready=true;
+              Nready=true; 
             }
         }
         if(!(list[i].getBNgarage()->isEmpty())&&!(list[i].getBNgarage()->peek()->getInBusPass().isEmpty())){
-            // list[i].getBNgarage()->printBusQueue();
             while (list[i].getBNgarage()->peek()->getInBusPass().getFront()!=nullptr&&list[i].getBNgarage()->peek()->getInBusPass().getFront()->getItem()->getEndStation()==i)
             {
             if(onOffSeconds>=60){
@@ -342,76 +341,125 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
             }
         }
         
-        //get pass on
+        //get pass on -----------------------------------------------------------------------------------------------
         //Np
+        onOffSeconds=0;
         while (!(list[i].getSP()->isEmpty())&&!(list[i].getNgarage()->isEmpty()) )
         {
             if(list[i].getNgarage()->peek()->isFull()){
                 Nready=true;
                 break;
             }
+            
+            if(onOffSeconds>=60){
+                onOffSeconds=0;
+                Nready=false;
+                break;
+              }
             Passenger *Spass = list[i].getSP()->returnHead()->getItem();
             list[i].getNgarage()->getfront()->data->getPassOn(Spass);
             list[i].getSP()->dequeue();
+            onOffSeconds+=getOnOff;
+            Nready=true;
         }
+        onOffSeconds=0;
         while (!(list[i].getNP()->isEmpty())&&!(list[i].getNgarage()->isEmpty()) )
         {
             if(list[i].getNgarage()->peek()->isFull()){
                 Nready=true;
                 break;
             }
+            if(onOffSeconds>=60){
+                onOffSeconds=0;
+                Nready=false;
+                break;
+              }
             Passenger *pass = list[i].getNP()->returnHead()->data;
             list[i].getNgarage()->getfront()->data->getPassOn(pass);
             list[i].getNP()->dequeue();
+            onOffSeconds+=getOnOff;
 
         }
-
+        onOffSeconds=0;
         while (!(list[i].getBSP()->isEmpty())&&!(list[i].getBNgarage()->isEmpty()) )
         {
             if(list[i].getBNgarage()->peek()->isFull()){
                 BNready=true;
                 break;
             }
+            if(onOffSeconds>=60){
+                onOffSeconds=0;
+                BNready=false;
+                break;
+              }
             Passenger *Spass = list[i].getBSP()->returnHead()->getItem();
             list[i].getBNgarage()->getfront()->data->getPassOn(Spass);
             list[i].getBSP()->dequeue();
+            onOffSeconds+=getOnOff;
+
         }
+        onOffSeconds=0;
         while (!(list[i].getBNP()->isEmpty())&&!(list[i].getBNgarage()->isEmpty()))
         {
             if(list[i].getBNgarage()->peek()->isFull()){
                 BNready=true;
                 break;
             }
+            if(onOffSeconds>=60){
+                onOffSeconds=0;
+                BNready=false;
+                break;
+              }
             Passenger *pass = list[i].getBNP()->returnHead()->data;
             list[i].getBNgarage()->getfront()->data->getPassOn(pass);
             list[i].getBNP()->dequeue();
+            onOffSeconds+=getOnOff;
 
         }
         
         // wheel
+        onOffSeconds=0;
         while (!(list[i].getWP()->isEmpty())&&!(list[i].getWgarage()->isEmpty()))
         {
             if(list[i].getWgarage()->peek()!=nullptr&&list[i].getWgarage()->peek()->isFull()){
                 Wready=true;
                 break;
             }
+            if(onOffSeconds>=60){
+                onOffSeconds=0;
+                Wready=false;
+                break;
+              }
             Passenger *pass = list[i].getWP()->returnHead()->data;
             list[i].getWgarage()->getfront()->data->getPassOn(pass);
             list[i].getWP()->dequeue();
+            onOffSeconds+=getOnOff;
+
 
         }
+        onOffSeconds=0;
         while (!(list[i].getBWP()->isEmpty())&&!(list[i].getBWgarage()->isEmpty()))
         {
             if(list[i].getBWgarage()->peek()!=nullptr&&list[i].getBWgarage()->peek()->isFull()){
                 BWready=true;
                 break;
             }
+            if(onOffSeconds>=60){
+                onOffSeconds=0;
+                BWready=false;
+                break;
+              }
             Passenger *pass = list[i].getBWP()->returnHead()->data;
             list[i].getBWgarage()->getfront()->data->getPassOn(pass);
             list[i].getBWP()->dequeue();
-
+            onOffSeconds+=getOnOff;
         }
-        
+
+        // if(m==0&&(h==1||h==10||h==20)){
+        //     cout<<"Stations at: "<<h<<" : "<<m<<endl;
+        // PrintAllStations(size);
+        // }
+
         //buss leaves to the boarding list
         if(Nready && !(list[i].getNgarage()->isEmpty())){
         list[i].getNgarage()->peek()->gnextStation(size-1);
