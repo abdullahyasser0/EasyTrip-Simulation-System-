@@ -237,9 +237,9 @@ public:
                 eventsQueue.enqueue(leaveEvent);
             }
         }
-
         input.close();
     }
+
     void generateOutput(){
         ofstream outputFile("outputFile.txt");
         streambuf *coutBuffer = cout.rdbuf();

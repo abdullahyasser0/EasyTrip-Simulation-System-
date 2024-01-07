@@ -84,6 +84,7 @@ template <typename T>
 class Stations{
 
 public:
+    int currentTime;
     bool Nready = true;
     bool BNready = true;
     bool Wready = true;
@@ -91,6 +92,9 @@ public:
     int size;
     int getOnOff;
     int onOffSeconds=0;
+    int waitingSP;
+    int waitingWP;
+    int waitingNP;
     Nodestation* list;
     Stations();
     Stations(int size);
@@ -119,6 +123,9 @@ public:
     void printFinishedPassengers(int stationNumber);
     void setOnOff(int GOF);
     void printBusses(int stationNumber);
+    void printPassengerStatistics();
+    void printPassengerCounts();
+    void printBusCounts();    
 };
 
 
@@ -480,8 +487,8 @@ void Stations<T>::printWaitingWPandNP(int stationNumber) {
     Queue<Passenger>* forwardNP = list[stationNumber].getNP();
     Queue<Passenger>* backwardNP = list[stationNumber].getBNP();
 
-    int waitingWP = forwardWP->getQuqeCount() + backwardWP->getQuqeCount();
-    int waitingNP = forwardNP->getQuqeCount() + backwardNP->getQuqeCount();
+    waitingWP = forwardWP->getQuqeCount() + backwardWP->getQuqeCount();
+    waitingNP = forwardNP->getQuqeCount() + backwardNP->getQuqeCount();
     
     
         cout << waitingWP << " waiting WP: FWD[";
