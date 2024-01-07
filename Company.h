@@ -100,17 +100,11 @@ public:
                     }
 
                 }
-                //boardingBusses.PrintBus();
- 
-                //if(S.list[1].getNP()->isEmpty()==true) cout<<"IM EMPTY"<<endl;
-                //if(S.list[1].getNP()->isEmpty()==false) cout<<"I HAS SOMETHING INSIDE"<<endl;
-                //cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
+                
                 S.checkBoardingList(boardingBusses,minsStations);
-                S.checkBoardingList(boardingBusses,minsStations,CheckupBusses);                //boardingBusses.PrintBus();
-                //boardingBusses.PrintBus();
+                
                 ui.runInteractiveMode(S,numStations,h,m,CheckupBusses,choice);
-               // cout<<"++++++++++++++++++++++++++++++++++++++IM HEEEETEEEEE============================="<<endl;
-               // boardingBusses.PrintBus();
+               
 
 
             }
@@ -245,5 +239,17 @@ public:
         }
 
         input.close();
+    }
+    void generateOutput(){
+        ofstream outputFile("outputFile.txt");
+        streambuf *coutBuffer = cout.rdbuf();
+        cout.rdbuf(outputFile.rdbuf());
+
+        S.printPassengerCounts();
+        S.printBusCounts();
+
+        cout.rdbuf(coutBuffer);
+
+        outputFile.close();
     }
 };
