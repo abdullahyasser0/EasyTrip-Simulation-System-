@@ -84,6 +84,7 @@ template <typename T>
 class Stations{
 
 public:
+    int currentTime;
     bool Nready = true;
     bool BNready = true;
     bool Wready = true;
@@ -91,6 +92,9 @@ public:
     int size;
     int getOnOff;
     int onOffSeconds=0;
+    int waitingSP;
+    int waitingWP;
+    int waitingNP;
     Nodestation* list;
     Stations();
     Stations(int size);
@@ -119,6 +123,9 @@ public:
     void printFinishedPassengers();
     void setOnOff(int GOF);
     void printBusses(int stationNumber);
+    void printPassengerStatistics();
+    void printPassengerCounts();
+    void printBusCounts();    
 };
 
 
@@ -456,15 +463,12 @@ void Stations<T>::passPromote(int maxW){
 
 
 
-// template<typename T>
-// void Stations<T>::printWaitingSP(int stationNumber) {
-//     PriorityQueue<Passenger>* forwardSP = list[stationNumber].getSP();
-//     PriorityQueue<Passenger>* backwardSP = list[stationNumber].getBSP();
-//     int waitingSP = forwardSP->getSize() + backwardSP->getSize();
-//     cout << waitingSP <<" ";
-
-
-
+template<typename T>
+void Stations<T>::printWaitingSP(int stationNumber) {
+    PriorityQueue<Passenger>* forwardSP = list[stationNumber].getSP();
+    PriorityQueue<Passenger>* backwardSP = list[stationNumber].getBSP();
+    waitingSP = forwardSP->getSize() + backwardSP->getSize();
+    cout << waitingSP <<" ";
     cout << "Waiting SP: FWD[";
     forwardSP->printQueue();
         cout << "]";
@@ -483,8 +487,8 @@ void Stations<T>::printWaitingWPandNP(int stationNumber) {
     Queue<Passenger>* forwardNP = list[stationNumber].getNP();
     Queue<Passenger>* backwardNP = list[stationNumber].getBNP();
 
-    int waitingWP = forwardWP->getQuqeCount() + backwardWP->getQuqeCount();
-    int waitingNP = forwardNP->getQuqeCount() + backwardNP->getQuqeCount();
+    waitingWP = forwardWP->getQuqeCount() + backwardWP->getQuqeCount();
+    waitingNP = forwardNP->getQuqeCount() + backwardNP->getQuqeCount();
     
     
         cout << waitingWP << " waiting WP: FWD[";
@@ -563,13 +567,55 @@ void Stations<T>::printFinishedPassengers() {
         LinkedListp<Passenger>* finishList = list[i].getFinishList();
         Nodep<Passenger>* current = finishList->getHead();
 
-//         while (current != nullptr) {
-//             cout << current->getItem()->getID();
-//             if (current->getNext() != nullptr) {
-//                 cout << ", ";
-//             }
-//             current = current->getNext();
-//         }
-//     }
-//     cout << endl;
-// }
+        while (current != nullptr) {
+            cout << current->getItem()->getID();
+            if (current->getNext() != nullptr) {
+                cout << ", ";
+            }
+            current = current->getNext();
+        }
+    }
+    cout << endl;
+}
+
+
+
+template<typename T>
+void Stations<T>::printPassengerCounts(){
+    int totalPassengers = 0;
+    int numNormalPassengers = 0;
+    int numSpecialPassengers = 0;
+    int numWheelPassengers = 0;
+
+    for (int i = 1; i < size; i++) {
+        numNormalPassengers += list[i].getNP()->getQuqeCount();
+        numNormalPassengers += list[i].getBNP()->getQuqeCount();
+
+        numSpecialPassengers += list[i].getSP()->getSize();
+        numSpecialPassengers += list[i].getBSP()->getSize();
+
+        numWheelPassengers += list[i].getWP()->getQuqeCount();
+        numWheelPassengers += list[i].getBWP()->getQuqeCount();
+    }
+
+    totalPassengers = numNormalPassengers + numSpecialPassengers + numWheelPassengers;
+
+    cout << "passengers: " << totalPassengers << " [ NP: " << numNormalPassengers
+         << ", SP: " << numSpecialPassengers << ", WP: " << numWheelPassengers << "]" << endl;
+}
+
+template<typename T>
+void Stations<T>::printBusCounts(){
+    int totalBuses = 0;
+    int totalWBus = 0;
+    int totalNBus = 0;
+
+    for (int i = 1; i < size; ++i) {
+        totalWBus += list[i].getWgarage()->getQuqeCount();
+        totalNBus += list[i].getNgarage()->getQuqeCount();
+    }
+
+    totalBuses = totalWBus + totalNBus;
+
+    cout << "buses: " << totalBuses << " [WBus: " << totalWBus << ", MBus: " << totalNBus << "]" << endl;
+}

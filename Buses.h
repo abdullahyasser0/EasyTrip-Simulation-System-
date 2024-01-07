@@ -144,10 +144,6 @@ public:
 			moving_passenger.enqueueInsideBus(p);
 			maxcapacity--;
 			}
-		else{
-			moving_passenger.enqueue(p);
-			maxcapacity--;
-			}
 		}
 
 		

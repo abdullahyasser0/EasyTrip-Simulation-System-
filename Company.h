@@ -104,7 +104,7 @@ public:
                 //if(S.list[1].getNP()->isEmpty()==false) cout<<"I HAS SOMETHING INSIDE"<<endl;
                 //cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
                 S.checkBoardingList(boardingBusses,minsStations);
-                S.checkStations(boardingBusses);
+                S.checkStations(boardingBusses,CheckupBusses);
                 //boardingBusses.PrintBus();
                 //boardingBusses.PrintBus();
 
@@ -206,7 +206,19 @@ public:
                 eventsQueue.enqueue(leaveEvent);
             }
         }
-
         input.close();
+    }
+
+    void generateOutput(){
+        ofstream outputFile("outputFile.txt");
+        streambuf *coutBuffer = cout.rdbuf();
+        cout.rdbuf(outputFile.rdbuf());
+
+        S.printPassengerCounts();
+        S.printBusCounts();
+
+        cout.rdbuf(coutBuffer);
+
+        outputFile.close();
     }
 };
