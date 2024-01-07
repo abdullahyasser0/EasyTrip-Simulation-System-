@@ -13,6 +13,8 @@ private:
     string Priority,type;
     int count = 0;
     int per; // var added for the pri
+    int fhour,fmin;
+    int Whour,Wmin;
 
 public: 
 Passenger(string passengerType, int id, int hours, int mins, int startstation, int endStation, int OnoffTime, string priority)
@@ -23,6 +25,34 @@ Passenger(string passengerType, int id, int hours, int mins, int startstation, i
     Passenger(int id,  int startStation,int hours, int mins)
     : ID(id), startStation(startStation), Hours(hours), Minutes(mins)
 {
+}
+
+void setWtime(int wh,int wm){
+    Whour=wh;
+    Wmin=wm;
+}
+int getWhours(){
+    return Whour;
+}
+int getWminutes(){
+    return Wmin;
+}
+
+void setftime(int fh,int fm){
+    fhour=fh;
+    fmin=fm;
+}
+int getHours(){
+    return Hours;
+}
+int getMinutes(){
+    return Minutes;
+}
+int getfhour(){
+    return fhour;
+}
+int getfmin(){
+    return fmin;
 }
 
     int getID() const

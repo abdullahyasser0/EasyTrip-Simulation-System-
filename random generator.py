@@ -10,7 +10,7 @@ import random
 #     scenario = 'crowded'
 # else:
 #     scenario = 'overCrowded'
-scenario = 'overCrowded'
+scenario = 'simple'
 print('Selected scenario is', scenario)
 
 

@@ -162,6 +162,17 @@ public:
 			}
 		}
 
+		Passenger* getPassOff2() {
+			if(!moving_passenger.isEmpty()){
+			Passenger *p = moving_passenger.peek();
+			currentcapacity++;
+			return p;
+			}
+			else{
+				return nullptr;
+			}
+		}
+
 
 
 

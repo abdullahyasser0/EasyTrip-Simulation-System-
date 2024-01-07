@@ -24,7 +24,7 @@ private:
     char colon,eventType;
     LinkedListp<Bus> boardingBusses;
     LinkedListp<Bus> CheckupBusses;
-    LinkedListp<Passenger*> finishedPass;
+    LinkedListp<Passenger> finishedPass;
     char input;
     UIcla ui;
 
@@ -32,14 +32,55 @@ public:
     
     Company() {
         int choice;
-        cout<<"Select Mode\n"<<" 1 For Interactive Mode\n"<<"2 For Silent Mode"<<endl;
-        cin>>choice;
+        // cout<<"Select Mode\n"<<" 1 For Interactive Mode\n"<<"2 For Silent Mode"<<endl;
+        // cin>>choice;
         ReadInput();
         EventList();
         int countDeqBus=0;
         char deqType= 'N';
         for(int h=4;h<22;h++){
             for(int m=0;m<60;m++){
+                int totalPassengers = NPCounter + WPCounter + SPCounter;
+            int *arr = new int[numStations];
+            int deletedPassengersCounter = 0;
+            int passengercouldnotcatchbus = 0;
+            if ( h >= 22 && h < 4){
+                for (int i = 0; i <= numStations; i++) {
+                    arr[i] += S.list[i].getNP()->getQSize();
+                    delete S.list[i].getNP();
+
+                    arr[i] += S.list[i].getBNP()->getQSize();
+                    delete S.list[i].getBNP();
+
+                    arr[i] += S.list[i].getBSP()->getSize();
+                    delete S.list[i].getBSP();
+
+                    arr[i] += S.list[i].getBWP()->getQSize();
+                    delete S.list[i].getBWP();
+
+                    arr[i] += S.list[i].getSP()->getSize();
+                    delete S.list[i].getSP();
+
+                    arr[i] += S.list[i].getWP()->getQSize();
+                    delete S.list[i].getWP();
+
+                    if (S.list->getNgarage()->isEmpty() == true) {
+                        S.list[0].getNgarage()->enqueue(S.list[i].getNgarage()->dequeue());
+                    }
+                    if (S.list->getWgarage()->isEmpty() == true) {
+                        S.list[0].getWgarage()->enqueue(S.list[i].getWgarage()->dequeue());
+                    }
+                    if (S.list->getBNgarage()->isEmpty() == true) {
+                        S.list[0].getBNgarage()->enqueue(S.list[i].getBNgarage()->dequeue());
+                    }
+                    if (S.list->getBWgarage()->isEmpty() == true) {
+                        S.list[0].getBWgarage()->enqueue(S.list[i].getBWgarage()->dequeue());
+                    }
+
+                    deletedPassengersCounter += arr[i];
+                    passengercouldnotcatchbus = (deletedPassengersCounter / totalPassengers)*100;
+                }
+            }
                 Nodep<Bus>* currentCheckupBus = CheckupBusses.getHead();
                 Nodep<Bus>* prevCheckupBus = nullptr;
                 while (currentCheckupBus != nullptr)
@@ -105,12 +146,12 @@ public:
                 }
                 //boardingBusses.PrintBus();
                 S.checkBoardingList(boardingBusses,minsStations);
-                S.checkStations(boardingBusses,CheckupBusses,h,m);
+                S.checkStations(boardingBusses,CheckupBusses,h,m,finishedPass);
                 //boardingBusses.PrintBus();
                 
                 S.checkBoardingList(boardingBusses,minsStations);
                 
-                ui.runInteractiveMode(S,numStations,h,m,CheckupBusses,choice);
+                // ui.runInteractiveMode(S,numStations,h,m,CheckupBusses,choice);
                
 
 
@@ -279,11 +320,6 @@ public:
         }
         input.close();
     }
-    void outPut(){
-            ofstream outputFile("output.txt");
-                outputFile << "ay 7aga." << endl;
-                outputFile.close();
-
     void generateOutput(){
         ofstream outputFile("outputFile.txt");
         streambuf *coutBuffer = cout.rdbuf();
@@ -294,10 +330,49 @@ public:
 
         outputFile.close();
     }
-    void outPut(){
-        ofstream outputFile("output.txt");
-        outputFile  << "passengers: " << NPCounter+SPCounter+WPCounter << " [ NP: " << NPCounter
-         << ", SP: " << SPCounter << ", WP: " << WPCounter << "]"   << endl;
-        outputFile.close();
+void outPut() {
+    ofstream outputFile("output.txt");
+    outputFile << "FT   ID   AT   WT   TT" << endl;
+    
+    Nodep<Passenger>* temp = finishedPass.getHead();
+    int totalWaitTime = 0;
+    int totalTripTime = 0;
+    int passengerCount = 0;
+
+    while (temp != nullptr) {
+        outputFile << temp->getItem()->getfhour() << ":" << temp->getItem()->getfmin() << "  "
+                   << temp->getItem()->getID() << "  " << temp->getItem()->getHours() << ":"
+                   << temp->getItem()->getMinutes() << "  "
+                   << temp->getItem()->getHours() - temp->getItem()->getWhours() << ":"
+                   << abs(temp->getItem()->getMinutes() - temp->getItem()->getWminutes()) << "  "
+                   << abs(temp->getItem()->getHours() - temp->getItem()->getWhours() - temp->getItem()->getHours()) << ":"
+                   << abs(abs(temp->getItem()->getMinutes() - temp->getItem()->getWminutes()) - temp->getItem()->getMinutes()) << endl;
+
+        // Calculate wait time and trip time
+        int waitTime = temp->getItem()->getHours() - temp->getItem()->getWhours();
+        int tripTime = abs(temp->getItem()->getHours() - temp->getItem()->getWhours() - temp->getItem()->getHours())
+                     + abs(abs(temp->getItem()->getMinutes() - temp->getItem()->getWminutes()) - temp->getItem()->getMinutes());
+
+        totalWaitTime += waitTime;
+        totalTripTime += tripTime;
+        passengerCount++;
+
+        temp = temp->getNext();
     }
+
+    // Calculate averages
+    double avgWaitTime = static_cast<double>(totalWaitTime) / passengerCount;
+    double avgTripTime = static_cast<double>(totalTripTime) / passengerCount;
+
+    outputFile << "--------------------------------------------------------------------------------" << endl;
+    outputFile << "passengers: " << NPCounter + SPCounter + WPCounter << " [ NP: " << NPCounter
+               << ", SP: " << SPCounter << ", WP: " << WPCounter << "]" << endl;
+    outputFile << "Buses: " << numWbuses + numNbuses << " [WBus: " << numWbuses << ", NBus: " << numNbuses << "]" << endl;
+    outputFile << "Passenger AVG wait time= " << avgWaitTime << endl;
+    outputFile << "Passenger AVG trip time (TT)= " << avgTripTime << endl;
+    outputFile << "Auto-Promoted Passengers: " << S.calculateAutoPromotedPercentage(MaxW)<<"%" << endl;
+
+    outputFile.close();
+}
+
 };

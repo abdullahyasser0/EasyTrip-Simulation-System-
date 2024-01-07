@@ -118,7 +118,7 @@ public:
     void TestbusMoving();
     void printBusesAtStation(int stationNumber);
     void checkBoardingList(LinkedListp<Bus>&busList,int STS);
-    void checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&CheckupList,int h, int m);
+    void checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&CheckupList,int h, int m,LinkedListp<Passenger>& finishedPass);
     void printINCheckUpBuses();
     void printFinishedPassengers(int stationNumber);
     void setOnOff(int GOF);
@@ -126,6 +126,7 @@ public:
     void printPassengerStatistics();
     void printPassengerCounts();
     void printBusCounts();    
+    double calculateAutoPromotedPercentage(int maxW);
 };
 
 
@@ -275,7 +276,7 @@ void Stations<T>::checkBoardingList(LinkedListp<Bus>&busList,int STS){
 
 
 template<typename T>
-void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&CheckupList,int h,int m){
+void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&CheckupList,int h,int m,LinkedListp<Passenger>& finishedPass){
     for (int i=1; i<size;i++){
         // get passanger off
         if(!(list[i].getNgarage()->isEmpty())&&!(list[i].getNgarage()->peek()->getInBusPass().isEmpty())){
@@ -286,7 +287,10 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
                 Nready=false;
                 break;
               }
-              list[i].getFinishList()->Insert(list[i].getNgarage()->peek()->getPassOff()); 
+              Passenger *pass = list[i].getNgarage()->peek()->getPassOff();
+              pass->setftime(h, m);
+              finishedPass.Insert(pass);
+              list[i].getFinishList()->Insert(pass); 
               onOffSeconds+=getOnOff;
               Nready=true; 
             }
@@ -299,7 +303,10 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
                 BNready=false;
                 break;
               }
-              list[i].getFinishList()->Insert(list[i].getBNgarage()->peek()->getPassOff()); 
+              Passenger *pass = list[i].getBNgarage()->peek()->getPassOff();
+              pass->setftime(h, m);
+              finishedPass.Insert(pass);
+              list[i].getFinishList()->Insert(pass); 
               onOffSeconds+=getOnOff;
               BNready=true; 
             }
@@ -314,7 +321,10 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
                 Wready=false;
                 break;
               }
-              list[i].getFinishList()->Insert(list[i].getWgarage()->peek()->getPassOff());
+              Passenger *pass = list[i].getWgarage()->peek()->getPassOff();
+              pass->setftime(h, m);
+              finishedPass.Insert(pass);
+              list[i].getFinishList()->Insert(pass);
               onOffSeconds+=getOnOff;
               Wready=true;   
             }
@@ -328,7 +338,10 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
                 BWready=false;
                 break;
               }
-              list[i].getFinishList()->Insert(list[i].getBWgarage()->peek()->getPassOff()); 
+              Passenger *pass = list[i].getBWgarage()->peek()->getPassOff();
+              pass->setftime(h, m);
+              finishedPass.Insert(pass);
+              list[i].getFinishList()->Insert(pass); 
               onOffSeconds+=getOnOff;
               BWready=true;   
             }
@@ -350,6 +363,7 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
                 break;
               }
             Passenger *Spass = list[i].getSP()->returnHead()->getItem();
+            Spass->setWtime(h, m);
             list[i].getNgarage()->getfront()->data->getPassOn(Spass);
             list[i].getSP()->dequeue();
             onOffSeconds+=getOnOff;
@@ -368,6 +382,7 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
                 break;
               }
             Passenger *pass = list[i].getNP()->returnHead()->data;
+                        pass->setWtime(h, m);
             list[i].getNgarage()->getfront()->data->getPassOn(pass);
             list[i].getNP()->dequeue();
             onOffSeconds+=getOnOff;
@@ -386,6 +401,7 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
                 break;
               }
             Passenger *Spass = list[i].getBSP()->returnHead()->getItem();
+                        Spass->setWtime(h, m);
             list[i].getBNgarage()->getfront()->data->getPassOn(Spass);
             list[i].getBSP()->dequeue();
             onOffSeconds+=getOnOff;
@@ -404,6 +420,7 @@ void Stations<T>::checkStations(LinkedListp<Bus>&busList,LinkedListp<Bus>&Checku
                 break;
               }
             Passenger *pass = list[i].getBNP()->returnHead()->data;
+                        pass->setWtime(h, m);
             list[i].getBNgarage()->getfront()->data->getPassOn(pass);
             list[i].getBNP()->dequeue();
             onOffSeconds+=getOnOff;
@@ -509,7 +526,43 @@ void Stations<T>::passPromote(int maxW){
     }
 }
 
+template<typename T>
+double Stations<T>::calculateAutoPromotedPercentage(int maxW) {
+    int totalNormalPassengers = 0;
+    int autoPromotedPassengers = 0;
 
+    for (int i = 0; i < size; i++) {
+        NormalNode<Passenger>* currentNormalPassenger = list[i].getNP()->returnHead();
+        while (currentNormalPassenger != nullptr) {
+
+            totalNormalPassengers++;
+
+            if (currentNormalPassenger->data->hasReachedMaxTime(maxW)) {
+                autoPromotedPassengers++;
+            }
+
+            currentNormalPassenger = currentNormalPassenger->next;
+        }
+
+        currentNormalPassenger = list[i].getBNP()->returnHead();
+        while (currentNormalPassenger != nullptr) {
+            totalNormalPassengers++;
+
+            if (currentNormalPassenger->data->hasReachedMaxTime(maxW)) {
+                autoPromotedPassengers++;
+            }
+
+            currentNormalPassenger = currentNormalPassenger->next;
+        }
+    }
+
+    // Calculate and return the percentage
+    if (totalNormalPassengers > 0) {
+        return (static_cast<double>(autoPromotedPassengers) / totalNormalPassengers) * 100.0;
+    } else {
+        return 0.0; // Avoid division by zero
+    }
+}
 
 
 template<typename T>

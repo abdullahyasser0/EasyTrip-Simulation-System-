@@ -176,6 +176,14 @@ public:
         return count;
     }
 
+        T* peek() const {
+        if (!isEmpty()) {
+            return front->getItem();
+        } else {
+            return nullptr;
+        }
+    }
+
     int getSize() const {
         return size;
     }
