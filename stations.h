@@ -467,8 +467,11 @@ template<typename T>
 void Stations<T>::printWaitingSP(int stationNumber) {
     PriorityQueue<Passenger>* forwardSP = list[stationNumber].getSP();
     PriorityQueue<Passenger>* backwardSP = list[stationNumber].getBSP();
-    waitingSP = forwardSP->getSize() + backwardSP->getSize();
+    int waitingSP = forwardSP->getSize() + backwardSP->getSize();
     cout << waitingSP <<" ";
+
+
+
     cout << "Waiting SP: FWD[";
     forwardSP->printQueue();
         cout << "]";
@@ -576,46 +579,4 @@ void Stations<T>::printFinishedPassengers() {
         }
     }
     cout << endl;
-}
-
-
-
-template<typename T>
-void Stations<T>::printPassengerCounts(){
-    int totalPassengers = 0;
-    int numNormalPassengers = 0;
-    int numSpecialPassengers = 0;
-    int numWheelPassengers = 0;
-
-    for (int i = 1; i < size; i++) {
-        numNormalPassengers += list[i].getNP()->getQuqeCount();
-        numNormalPassengers += list[i].getBNP()->getQuqeCount();
-
-        numSpecialPassengers += list[i].getSP()->getSize();
-        numSpecialPassengers += list[i].getBSP()->getSize();
-
-        numWheelPassengers += list[i].getWP()->getQuqeCount();
-        numWheelPassengers += list[i].getBWP()->getQuqeCount();
-    }
-
-    totalPassengers = numNormalPassengers + numSpecialPassengers + numWheelPassengers;
-
-    cout << "passengers: " << totalPassengers << " [ NP: " << numNormalPassengers
-         << ", SP: " << numSpecialPassengers << ", WP: " << numWheelPassengers << "]" << endl;
-}
-
-template<typename T>
-void Stations<T>::printBusCounts(){
-    int totalBuses = 0;
-    int totalWBus = 0;
-    int totalNBus = 0;
-
-    for (int i = 1; i < size; ++i) {
-        totalWBus += list[i].getWgarage()->getQuqeCount();
-        totalNBus += list[i].getNgarage()->getQuqeCount();
-    }
-
-    totalBuses = totalWBus + totalNBus;
-
-    cout << "buses: " << totalBuses << " [WBus: " << totalWBus << ", MBus: " << totalNBus << "]" << endl;
 }
