@@ -36,6 +36,13 @@ public:
         cout<<"Silent Mode\nSimulation starts...\nSimulation ends, Outputt file created\n";
         hasExecuted = true;
     }
+        // ofstream outputFile("outputFile.txt");
+        // streambuf *coutBuffer = cout.rdbuf();
+        // cout.rdbuf(outputFile.rdbuf());
+        // s.printPassengerCounts();
+        // s.printBusCounts();
+        // cout.rdbuf(coutBuffer);
+        // outputFile.close();
 
 
     // Additional actions after the loop (if needed)

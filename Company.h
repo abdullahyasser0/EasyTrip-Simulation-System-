@@ -24,6 +24,9 @@ private:
     LinkedListp<Passenger*> finishedPass;
     char input;
     UIcla ui;
+    int NPCounter = 0 ;
+    int SPCounter = 0 ;
+    int WPCounter = 0 ;
 
 public:
     
@@ -150,7 +153,10 @@ public:
                 // cout<<"+++++++++++++++++++++++++++"<<endl;
                 // S.TestbusMoving(); 
                 //S.PrintAllStations(numStations+1);
+                //generateOutput();
+                outPut();
     }
+    
     void PrintWaitingPassengers(){
         for(int i =0;i<numStations+1;i++){
             cout << "Waiting passengers at Station #" << S.list[i].getSnumber()<< ":" << endl;
@@ -217,7 +223,7 @@ public:
             int temp;
             input >> temp;
         }
-
+        
         for (int i = 0; i < EventsNum; i++) {
             input >> eventType;
             if (eventType == 'A') {
@@ -226,7 +232,13 @@ public:
                 istringstream iss(time);
                 iss >> hours >> colon >> minutes;
                 ArrivalEvents* arrivalEvent = new ArrivalEvents(eventType,PType, priority, id, STRT, END, hours, minutes, OnOffTime);
-
+            if (PType == "NP") {
+                NPCounter++;
+            }else if(PType=="SP"){
+                SPCounter++;
+            }else if(PType=="WP"){
+                WPCounter++;
+            }
                 eventsQueue.enqueue(arrivalEvent);
             } else if (eventType == 'L') {
                 input >> time >> id >> STRT;
@@ -244,12 +256,16 @@ public:
         ofstream outputFile("outputFile.txt");
         streambuf *coutBuffer = cout.rdbuf();
         cout.rdbuf(outputFile.rdbuf());
-
         S.printPassengerCounts();
         S.printBusCounts();
-
         cout.rdbuf(coutBuffer);
 
+        outputFile.close();
+    }
+    void outPut(){
+        ofstream outputFile("output.txt");
+        outputFile  << "passengers: " << NPCounter+SPCounter+WPCounter << " [ NP: " << NPCounter
+         << ", SP: " << SPCounter << ", WP: " << WPCounter << "]"   << endl;
         outputFile.close();
     }
 };
