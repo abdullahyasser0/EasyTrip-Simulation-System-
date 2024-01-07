@@ -20,7 +20,7 @@ bool passengerLeave(int id) {
                 previous->next = current->next;
                 delete current;
             }
-            cout << "Passenger with ID: " << id << " left the station"<< endl;
+            //cout << "Passenger with ID: " << id << " left the station"<< endl;
             return true; 
         }
 

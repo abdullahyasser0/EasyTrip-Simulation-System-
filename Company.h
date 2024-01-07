@@ -28,11 +28,14 @@ private:
 public:
     
     Company() {
+        int choice;
+        cout<<"Select Mode\n"<<" 1 For Interactive Mode\n"<<"2 For Silent Mode"<<endl;
+        cin>>choice;
         ReadInput();
         EventList();
         int countDeqBus=0;
         char deqType= 'N';
-        for(int h=4;h<6;h++){
+        for(int h=0;h<24;h++){
             for(int m=0;m<60;m++){
                 Nodep<Bus>* currentCheckupBus = CheckupBusses.getHead();
                 Nodep<Bus>* prevCheckupBus = nullptr;
@@ -89,7 +92,6 @@ public:
 
                     if (currentEvent->getetype() == 'A')
                     {
-                        cout << "Passenger with ID: " << currentEvent->getid() << " reached station "<<currentEvent->getSTRT()<< " at : " << h << ":" << m << endl;
                         currentEvent->execute(S);
                     }
                     else if (currentEvent->getetype() == 'L')
@@ -104,21 +106,22 @@ public:
                 //if(S.list[1].getNP()->isEmpty()==false) cout<<"I HAS SOMETHING INSIDE"<<endl;
                 //cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
                 S.checkBoardingList(boardingBusses,minsStations);
-                S.checkStations(boardingBusses);
+                S.checkStations(boardingBusses,CheckupBusses);                //boardingBusses.PrintBus();
                 //boardingBusses.PrintBus();
-                //boardingBusses.PrintBus();
-
+                ui.runInteractiveMode(S,numStations,h,m,CheckupBusses,choice);
+               // cout<<"++++++++++++++++++++++++++++++++++++++IM HEEEETEEEEE============================="<<endl;
+               // boardingBusses.PrintBus();
 
             }
 
         }       
-                cout<<"+++++++++++++++++++++++++++"<<endl;
+                //cout<<"+++++++++++++++++++++++++++"<<endl;
                 //S.busMoving(); 
 
                 // S.PrintAllStations(numStations+1);
                 // cout<<"+++++++++++++++++++++++++++"<<endl;
                 // S.TestbusMoving(); 
-                S.PrintAllStations(numStations+1);
+                //S.PrintAllStations(numStations+1);
     }
     void PrintWaitingPassengers(){
         for(int i =0;i<numStations+1;i++){

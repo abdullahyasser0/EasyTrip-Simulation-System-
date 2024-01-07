@@ -134,6 +134,7 @@ public:
         if (Head == nullptr)
         {
             InsertBeg(data);
+            count++;
             return;
         }
         else
@@ -199,5 +200,18 @@ void PrintBus() const
         }
         cout << "*\n";
     }
-
+    void printCheckupBusses(){
+        cout<<"-----------------------------------------" <<endl;
+        Nodep<T>* p = Head;
+        int size = getCount();
+        cout<<size<<" In-Checkup buses : ";
+        while (p)
+        {
+            cout <<p->getItem()->getBusID()<<"TYPE "<<p->getItem()->getType();
+            cout << ", ";
+            p = p->getNext();
+        }
+        cout<<endl;
+        cout<<"-----------------------------------------"<<endl;
+    }
 };

@@ -48,6 +48,7 @@ public:
 			movingMins=0;
 			STSmins=STS;
 			currentStation=0;
+			BusID=id;
 		}
 		int getCurrentStation(){
 			return currentStation;
@@ -142,10 +143,6 @@ public:
 		void getPassOn(T* p){
 			if (direction==0){
 			moving_passenger.enqueueInsideBus(p);
-			maxcapacity--;
-			}
-		else{
-			moving_passenger.enqueue(p);
 			maxcapacity--;
 			}
 		}

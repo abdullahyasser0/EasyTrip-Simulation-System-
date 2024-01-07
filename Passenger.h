@@ -39,7 +39,9 @@ Passenger(string passengerType, int id, int hours, int mins, int startstation, i
     {
         return endStation;
     }
-
+    string getStrPriopity(){
+        return Priority;
+    }
     int getPriority()
     {   
 

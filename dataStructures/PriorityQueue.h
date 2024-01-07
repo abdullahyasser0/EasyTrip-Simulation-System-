@@ -120,11 +120,19 @@ public:
         PriorityNode<T>* current = front;
         while (current != nullptr) {
             cout <<  current->getItem()->getID() << ",";
-            //cout << "--->";
 
             current = current->getNext();
         }
-        //cout << "*\n";
+    }
+
+    void printSPQueue() const {
+        PriorityNode<T>* current = front;
+        while (current != nullptr) {
+            cout <<  current->getItem()->getID()<<"("<<current->getItem()->getStrPriopity() <<")"<< ",";
+            
+
+            current = current->getNext();
+        }
     }
   
     void enqueueInsideBus(T* newPassenger) {
