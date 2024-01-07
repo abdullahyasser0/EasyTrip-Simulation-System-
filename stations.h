@@ -456,12 +456,12 @@ void Stations<T>::passPromote(int maxW){
 
 
 
-// template<typename T>
-// void Stations<T>::printWaitingSP(int stationNumber) {
-//     PriorityQueue<Passenger>* forwardSP = list[stationNumber].getSP();
-//     PriorityQueue<Passenger>* backwardSP = list[stationNumber].getBSP();
-//     int waitingSP = forwardSP->getSize() + backwardSP->getSize();
-//     cout << waitingSP <<" ";
+template<typename T>
+void Stations<T>::printWaitingSP(int stationNumber) {
+    PriorityQueue<Passenger>* forwardSP = list[stationNumber].getSP();
+    PriorityQueue<Passenger>* backwardSP = list[stationNumber].getBSP();
+    int waitingSP = forwardSP->getSize() + backwardSP->getSize();
+    cout << waitingSP <<" ";
 
 
 
@@ -563,13 +563,13 @@ void Stations<T>::printFinishedPassengers() {
         LinkedListp<Passenger>* finishList = list[i].getFinishList();
         Nodep<Passenger>* current = finishList->getHead();
 
-//         while (current != nullptr) {
-//             cout << current->getItem()->getID();
-//             if (current->getNext() != nullptr) {
-//                 cout << ", ";
-//             }
-//             current = current->getNext();
-//         }
-//     }
-//     cout << endl;
-// }
+        while (current != nullptr) {
+            cout << current->getItem()->getID();
+            if (current->getNext() != nullptr) {
+                cout << ", ";
+            }
+            current = current->getNext();
+        }
+    }
+    cout << endl;
+}

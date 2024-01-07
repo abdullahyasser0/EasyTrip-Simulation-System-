@@ -104,7 +104,7 @@ public:
                 //if(S.list[1].getNP()->isEmpty()==false) cout<<"I HAS SOMETHING INSIDE"<<endl;
                 //cout<<"Hourse"<<h <<" : "<<"mins "<<m<<endl;
                 S.checkBoardingList(boardingBusses,minsStations);
-                S.checkStations(boardingBusses);
+                S.checkBoardingList(boardingBusses,minsStations);
                 //boardingBusses.PrintBus();
                 //boardingBusses.PrintBus();
 
