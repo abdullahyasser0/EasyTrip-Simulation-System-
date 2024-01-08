@@ -32,8 +32,8 @@ public:
     
     Company() {
         int choice;
-        // cout<<"Select Mode\n"<<" 1 For Interactive Mode\n"<<"2 For Silent Mode"<<endl;
-        // cin>>choice;
+        cout<<"Select Mode\n"<<" 1 For Interactive Mode\n"<<"2 For Silent Mode"<<endl;
+        cin>>choice;
         ReadInput();
         EventList();
         int countDeqBus=0;
@@ -151,7 +151,7 @@ public:
                 
                 S.checkBoardingList(boardingBusses,minsStations);
                 
-                // ui.runInteractiveMode(S,numStations,h,m,CheckupBusses,choice);
+                ui.runInteractiveMode(S,numStations,h,m,CheckupBusses,choice);
                
 
 

@@ -616,7 +616,6 @@ void Stations<T>::printWaitingWPandNP(int stationNumber) {
 // // template<typename T>
 // // void Stations<T>::printINCheckUpBuses() {
 // //     cout << "In-Checkup buses: ";
-    
 // //     for (int i = 0; i < ; ++i) {
 // //         if (!list[i].getNgarage()->isEmpty()) {
 // //             Bus* bus = list[i].getNgarage()->peek();
@@ -631,7 +630,6 @@ void Stations<T>::printWaitingWPandNP(int stationNumber) {
 // //             }
 // //         }
 // //     }
-
 // //     cout << endl;
 // // }
 
